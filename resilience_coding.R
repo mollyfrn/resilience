@@ -13,8 +13,8 @@ install.packages("tidyverse")
 library(tidyverse)
 setwd("C:/Users/molly/OneDrive/Desktop")
 
-case_studies <- read.csv("addresses_raw.txt") #database file
-resilience_keywords <- read.csv("resilience+indicators.csv") #resilience keyword file 
+case_studies <- read.csv("EPICN4ORD_rawdata.csv") #database file
+resilience_keywords <- read.csv("resilience_indicators.csv") #resilience keyword file 
 
 #take database, comb for matches with each resilience search term, 
 #assigning an indicator and domain category to each match
