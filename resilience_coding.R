@@ -11,23 +11,27 @@
 
 install.packages("tidyverse")
 library(tidyverse)
-setwd("C:/Users/molly/OneDrive/Desktop")
+setwd("C:/Users/mjenkins/OneDrive - Environmental Protection Agency (EPA)/Analyses/Resilience_EpicN")
 
 case_studies <- read.csv("EPICN4ORD_rawdata.csv") #database file
-resilience_keywords <- read.csv("resilience_indicators.csv") #resilience keyword file 
+resilience_keywords <- read.csv("EPICN_search_keywords_indicators_SDGs.csv") #resilience keyword file 
 
 #take database, comb for matches with each resilience search term, 
 #assigning an indicator and domain category to each match
 
-#I think this is the best right track right now? no loop necessary? 
 mini_data = case_studies %>% 
-  filter(ProjectName %in% resilience_keywords$suggestedsupplementalsearchterms |
-           ProjectAbstract %in% resilience_keywords$suggestedsupplementalsearchterms | 
-           ProjectDescript %in% resilience_keywords$suggestedsupplementalsearchterms) %>% 
-  mutate(category == resilience_keywords$searchcategory) %>% 
-  select(everything)
+  slice(10:20) #test subset of case studies for code dev
 
-mini_data
+#need to make keyword search categories, supplemental search terms, project Names searchable strings 
+
+#I think this is the best right track right now? no loop necessary? 
+mini_data2 = mini_data %>% 
+  filter(Project.Name %in% resilience_keywords$Search.categories..refined..final.pass. |
+           Project.Name %in% resilience_keywords$suggested.supplemental.search.terms) # %>% #add | (e.g. the OR operator when more columns about project abstracts added) 
+  #mutate(category == resilience_keywords$Search.categories..refined..final.pass.) %>% 
+  #select(everything)
+
+mini_data2
 
 ######code snippets####
 
