@@ -23,6 +23,10 @@ mini_data = case_studies %>%
   slice(10:20) #test subset of case studies for code dev
 
 #need to make keyword search categories, supplemental search terms, project Names searchable strings 
+#may need to use str_subset and regex, gsub replace "," with "|"
+resilience_keywords$suggested.supplemental.search.terms = gsub(",", " |", resilience_keywords$suggested.supplemental.search.terms)
+
+write.csv(resilience_keywords, "resilience_keywords_intermed.csv", row.names = FALSE)
 
 #I think this is the best right track right now? no loop necessary? 
 mini_data2 = mini_data %>% 
@@ -35,7 +39,18 @@ mini_data2
 
 ######code snippets####
 
+#str_subset(, regex(a|b|c, ignore_case = TRUE)) <-function pattern I want 
+#gov
+dru_gov = str_subset(as.character(drupal$Email), alt("key1|key2|key3", ignore_case = TRUE)) #need to run sep times for sep column strings
+dru_gov2 = str_subset(as.character(drupal$Affiliation), regex("government|govt", ignore_case = TRUE))
+#check to see if worked 
+dru_gov
+dru_gov2
 
+#filter data by group type 
+drupal_gov = drupal %>% 
+  filter(Email %in% dru_gov | Affiliation %in% dru_gov2) %>% 
+  mutate(occupation_type = c("gov")) 
 
 
 cases = case_studies$projectName 
