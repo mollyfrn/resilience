@@ -26,16 +26,29 @@ mini_data = case_studies %>%
 #may need to use str_subset and regex, gsub replace "," with "|"
 resilience_keywords$suggested.supplemental.search.terms = gsub(",", " |", resilience_keywords$suggested.supplemental.search.terms)
 
-write.csv(resilience_keywords, "resilience_keywords_intermed.csv", row.names = FALSE)
+write.csv(resilience_keywords, "resilience_keywords_imd.csv", row.names = FALSE)
+names(mini_data)
+categories = resilience_keywords$Search.categories..refined..final.pass.
 
-#I think this is the best right track right now? no loop necessary? 
-mini_data2 = mini_data %>% 
-  filter(Project.Name %in% resilience_keywords$Search.categories..refined..final.pass. |
-           Project.Name %in% resilience_keywords$suggested.supplemental.search.terms) # %>% #add | (e.g. the OR operator when more columns about project abstracts added) 
-  #mutate(category == resilience_keywords$Search.categories..refined..final.pass.) %>% 
+df_final = data.frame()
+
+for(c in categories){
+matched_categories = mini_data %>% 
+  filter(resilience_keywords$Search.categories..refined..final.pass. %in% Project.Name |
+           resilience_keywords$suggested.supplemental.search.terms %in% Project.Name |
+           resilience_keywords$Search.categories..refined..final.pass. %in% Project.Abstract|
+           resilience_keywords$suggested.supplemental.search.terms %in% Project.Abstract) %>% #add | (e.g. the OR operator when more columns about project abstracts added) 
+  mutate(category = c) #%>% 
   #select(everything)
+  #probably need to add line that pads with NA's for rows where no criteria are matched 
+  #probably also need to add line that tells R to parse the character content since it also contains | segments
+  
+  df_final = rbind(matched_categories, df_final)
 
-mini_data2
+}
+
+write.csv(df_final, "Categorized_case_studies_EPICN.csv", row.names = FALSE)
+
 
 ######code snippets####
 
