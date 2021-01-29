@@ -38,9 +38,12 @@ categories = res_tidy$EPA.Resilience.categories
 df_final = data.frame()
 
 for(c in categories){
+  res_mini = res_tidy %>% 
+    filter(EPA.Resilience.categories == c)
+  
 matched_categories = mini_data %>% 
-  filter(res_tidy$search.terms %in% Project.Name |
-           res_tidy$search.terms %in% Project.Abstract) %>% #add | (e.g. the OR operator when more columns about project abstracts added) 
+  filter(res_mini$search.terms %in% Project.Name |
+           res_mini$search.terms %in% Project.Abstract) %>% #add | (e.g. the OR operator when more columns about project abstracts added) 
   mutate(category = c) #%>% 
   #select(everything)
   #probably need to add line that pads with NA's for rows where no criteria are matched 
