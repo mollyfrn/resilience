@@ -14,30 +14,33 @@ library(tidyverse)
 setwd("C:/Users/mjenkins/OneDrive - Environmental Protection Agency (EPA)/Analyses/Resilience_EpicN")
 
 case_studies <- read.csv("EPICN4ORD_rawdata.csv") #database file
-resilience_keywords <- read.csv("EPICN_search_keywords_indicators_SDGs.csv") #resilience keyword file 
+resilience_keywords <- read.csv("ResilienceKeywords_tidy.csv") #resilience keyword file 
 
 #take database, comb for matches with each resilience search term, 
 #assigning an indicator and domain category to each match
 
 mini_data = case_studies %>% 
   slice(10:20) #test subset of case studies for code dev
+names(mini_data)
 
 #need to make keyword search categories, supplemental search terms, project Names searchable strings 
 #may need to use str_subset and regex, gsub replace "," with "|"
-resilience_keywords$suggested.supplemental.search.terms = gsub(",", " |", resilience_keywords$suggested.supplemental.search.terms)
 
-write.csv(resilience_keywords, "resilience_keywords_imd.csv", row.names = FALSE)
-names(mini_data)
-categories = resilience_keywords$Search.categories..refined..final.pass.
+#actually what I should do is stretch the dataset so each keyword has its own row 
+#separate_rows(table3, rate, sep = "/")
 
+res_tidy = separate_rows(resilience_keywords, search.terms, sep = ",")
+
+write.csv(res_tidy, "res_tidy_search_as_rows.csv", row.names = FALSE)
+
+####for loop assigning categories to case studies based on keyword criteria match####
+categories = res_tidy$EPA.Resilience.categories
 df_final = data.frame()
 
 for(c in categories){
 matched_categories = mini_data %>% 
-  filter(resilience_keywords$Search.categories..refined..final.pass. %in% Project.Name |
-           resilience_keywords$suggested.supplemental.search.terms %in% Project.Name |
-           resilience_keywords$Search.categories..refined..final.pass. %in% Project.Abstract|
-           resilience_keywords$suggested.supplemental.search.terms %in% Project.Abstract) %>% #add | (e.g. the OR operator when more columns about project abstracts added) 
+  filter(res_tidy$search.terms %in% Project.Name |
+           res_tidy$search.terms %in% Project.Abstract) %>% #add | (e.g. the OR operator when more columns about project abstracts added) 
   mutate(category = c) #%>% 
   #select(everything)
   #probably need to add line that pads with NA's for rows where no criteria are matched 
