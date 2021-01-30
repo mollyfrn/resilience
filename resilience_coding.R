@@ -19,10 +19,6 @@ resilience_keywords <- read.csv("ResilienceKeywords_tidy.csv") #resilience keywo
 #take database, comb for matches with each resilience search term, 
 #assigning an indicator and domain category to each match
 
-mini_data = case_studies %>% 
-  slice(10:20) #test subset of case studies for code dev
-names(mini_data)
-
 #need to make keyword search categories, supplemental search terms, project Names searchable strings 
 #may need to use str_subset and regex, gsub replace "," with "|"
 
@@ -34,23 +30,31 @@ res_tidy = separate_rows(resilience_keywords, search.terms, sep = ",")
 write.csv(res_tidy, "res_tidy_search_as_rows.csv", row.names = FALSE)
 
 ####for loop assigning categories to case studies based on keyword criteria match####
+mini_data = case_studies %>% 
+  slice(10:20) #test subset of case studies for code dev
+names(mini_data)
+
 categories = res_tidy$EPA.Resilience.categories
 df_final = data.frame()
 
 for(c in categories){
   res_mini = res_tidy %>% 
     filter(EPA.Resilience.categories == c)
+  searchterms = res_mini$search.terms
   
-matched_categories = mini_data %>% 
-  filter(res_mini$search.terms %in% Project.Name |
-           res_mini$search.terms %in% Project.Abstract) %>% #add | (e.g. the OR operator when more columns about project abstracts added) 
-  mutate(category = c) #%>% 
+  for(s in searchterms){
+
+    matched_categories = case_studies %>% 
+    filter(s %in% Project.Name |
+           s %in% Project.Abstract) %>% #add | (e.g. the OR operator when more columns about project abstracts added) 
+  mutate(category = c, keyword = s) #%>% 
   #select(everything)
+    
   #probably need to add line that pads with NA's for rows where no criteria are matched 
   #probably also need to add line that tells R to parse the character content since it also contains | segments
   
   df_final = rbind(matched_categories, df_final)
-
+  }
 }
 
 write.csv(df_final, "Categorized_case_studies_EPICN.csv", row.names = FALSE)
