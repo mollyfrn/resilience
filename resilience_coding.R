@@ -44,13 +44,17 @@ for(c in categories){
   
   for(s in searchterms){
 
+    abstract_match = str_subset(as.character(case_studies$Project.Abstract), regex(s, ignore_case = TRUE))
+    name_match = str_subset(as.character(case_studies$Project.Name), regex(s, ignore_case = TRUE))
+
     matched_categories = 
       case_studies %>% 
+      filter(Project.Name %in% name_match | Project.Abstract %in% abstract_match) %>%
       mutate(category = c, 
-         keyword = s, 
-         abstract_match = str_subset(as.character(case_studies$Project.Abstract), regex(s, ignore_case = TRUE)),
-         name_match = str_subset(as.character(case_studies$Project.Name), regex(s, ignore_case = TRUE))) %>% 
-  select(category, keyword, abstract_match, name_match)
+          keyword = s, 
+          name = Project.Name, 
+          abstract = Project.Abstract) %>% 
+  select(category, keyword, name, abstract)
     
   #probably need to add line that pads with NA's for rows where no criteria are matched 
   #probably also need to add line that tells R to parse the character content since it also contains | segments
