@@ -35,7 +35,7 @@ mini_data = case_studies %>%
 names(mini_data)
 
 categories = res_tidy$EPA.Resilience.categories
-df_final = data.frame(category = NULL, keyword = NULL, abstract_match = NULL, name_match = NULL)
+df_final = data.frame(category = NULL, keyword = NULL, name = NULL, abstract = NULL)
 
 for(c in categories){
   res_mini = res_tidy %>% 
@@ -66,7 +66,7 @@ for(c in categories){
 write.csv(df_final, "Categorized_case_studies_EPICN.csv", row.names = FALSE)
 
 #code works but need to account for * operator for search terms to optimize search 
-
+#need to make sure it's KEEPING everything from each iteration 
 ######code snippets####
 
 #str_subset(, regex(a|b|c, ignore_case = TRUE)) <-function pattern I want 
