@@ -35,7 +35,7 @@ mini_data = case_studies %>%
 names(mini_data)
 
 categories = res_tidy$EPA.Resilience.categories
-df_final = data.frame()
+df_final = data.frame(category = NULL, keyword = NULL, abstract_match = NULL, name_match = NULL)
 
 for(c in categories){
   res_mini = res_tidy %>% 
@@ -44,11 +44,13 @@ for(c in categories){
   
   for(s in searchterms){
 
-    matched_categories = case_studies %>% 
-    filter(s %in% Project.Name |
-           s %in% Project.Abstract) %>% #add | (e.g. the OR operator when more columns about project abstracts added) 
-  mutate(category = c, keyword = s) #%>% 
-  #select(everything)
+    matched_categories = 
+      case_studies %>% 
+      mutate(category = c, 
+         keyword = s, 
+         abstract_match = str_subset(as.character(case_studies$Project.Abstract), regex(s, ignore_case = TRUE)),
+         name_match = str_subset(as.character(case_studies$Project.Name), regex(s, ignore_case = TRUE))) %>% 
+  select(category, keyword, abstract_match, name_match)
     
   #probably need to add line that pads with NA's for rows where no criteria are matched 
   #probably also need to add line that tells R to parse the character content since it also contains | segments
@@ -69,6 +71,8 @@ dru_gov2 = str_subset(as.character(drupal$Affiliation), regex("government|govt",
 #check to see if worked 
 dru_gov
 dru_gov2
+
+
 
 #filter data by group type 
 drupal_gov = drupal %>% 
