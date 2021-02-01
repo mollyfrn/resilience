@@ -64,7 +64,8 @@ for(c in categories){
 }
 
 write.csv(df_final, "Categorized_case_studies_EPICN.csv", row.names = FALSE)
-#code "works" but I don't think it's actually parsing correctly - need to use stringr functions in lieu of %in%
+
+#code works but need to account for * operator for search terms to optimize search 
 
 ######code snippets####
 
