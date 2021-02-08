@@ -29,6 +29,9 @@ res_tidy = separate_rows(resilience_keywords, search.terms, sep = ",")
 
 write.csv(res_tidy, "res_tidy_search_as_rows.csv", row.names = FALSE)
 
+#think about adding just "collaboration" to keywords and then use NVivo 
+#simplifying terms to encompass what people actually use e.g. "trust" and not just "institutional trust" 
+
 ####for loop assigning categories to case studies based on keyword criteria match####
 mini_data = case_studies %>% 
   slice(10:20) #test subset of case studies for code dev
@@ -67,6 +70,23 @@ write.csv(df_final, "Categorized_case_studies_EPICN.csv", row.names = FALSE)
 
 #code works but need to account for * operator for search terms to optimize search 
 #need to make sure it's KEEPING everything from each iteration 
+
+####NVivo Data Prep####
+#Tidy case studies csv database to sep and save each project entry as a unique txt file so optimized for NVivo
+library(tidyverse)
+setwd("C:/Users/mjenkins/OneDrive - Environmental Protection Agency (EPA)/Analyses/Resilience_EpicN")
+
+case_studies <- read.csv("EPICN4ORD_rawdata.csv") #database file
+tidy_case = case_studies %>%
+  select(Project.., Project.Name, Project.Abstract)
+
+cases = tidy_case$Project..
+for (c in cases) {
+  mini_case = tidy_case %>% 
+    filter(Project.. == c)
+  write.table(mini_case, paste("mini_case", c, ".txt", sep = ""))
+}
+
 ######code snippets####
 
 #str_subset(, regex(a|b|c, ignore_case = TRUE)) <-function pattern I want 
