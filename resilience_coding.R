@@ -29,16 +29,16 @@ res_tidy = separate_rows(resilience_keywords, search.terms, sep = ",")
 
 write.csv(res_tidy, "res_tidy_search_as_rows.csv", row.names = FALSE)
 
+
+####
+res_tidy = read.csv("res_tidy_search_as_rows.csv")
+
 #think about adding just "collaboration" to keywords and then use NVivo 
 #simplifying terms to encompass what people actually use e.g. "trust" and not just "institutional trust" 
 
 ####for loop assigning categories to case studies based on keyword criteria match####
-mini_data = case_studies %>% 
-  slice(10:20) #test subset of case studies for code dev
-names(mini_data)
-
 categories = res_tidy$EPA.Resilience.categories
-df_final = data.frame(category = NULL, keyword = NULL, name = NULL, abstract = NULL)
+df_final = data.frame(category = NULL, keyword = NULL, name = NULL, abstract = NULL) #, sdgs = NULL)
 
 for(c in categories){
   res_mini = res_tidy %>% 
@@ -49,7 +49,8 @@ for(c in categories){
 
     abstract_match = str_subset(as.character(case_studies$Project.Abstract), regex(s, ignore_case = TRUE))
     name_match = str_subset(as.character(case_studies$Project.Name), regex(s, ignore_case = TRUE))
-
+    #sdgs = res_mini$Corresponding.SDG.indicator
+    
     matched_categories = 
       case_studies %>% 
       filter(Project.Name %in% name_match | Project.Abstract %in% abstract_match) %>%
@@ -59,6 +60,7 @@ for(c in categories){
           abstract = Project.Abstract) %>% 
   select(category, keyword, name, abstract)
     
+  #matched_categories2 = cbind(matched_categories, sdgs)  
   #probably need to add line that pads with NA's for rows where no criteria are matched 
   #probably also need to add line that tells R to parse the character content since it also contains | segments
   
@@ -70,6 +72,23 @@ write.csv(df_final, "Categorized_case_studies_EPICN.csv", row.names = FALSE)
 
 #code works but need to account for * operator for search terms to optimize search 
 #need to make sure it's KEEPING everything from each iteration 
+
+####Join with sdgs assignments####
+
+df_sdgs = df_final %>% 
+  rename(search.terms = keyword) 
+
+df2 = df_sdgs %>%
+  left_join(res_tidy, by = "search.terms")
+
+write.csv(df2, "cases_wsdgs_resilience.csv", row.names = FALSE)
+
+####Join with all data for Marshall####
+case_studies = rename(case_studies, name = Project.Name)
+df_fullepic = df2 %>% 
+  left_join(case_studies, by = "name")
+
+write.csv(df_fullepic, "EPICcases_final.csv")
 
 ####NVivo Data Prep####
 #Tidy case studies csv database to sep and save each project entry as a unique txt file so optimized for NVivo
