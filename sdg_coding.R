@@ -25,6 +25,20 @@ names(mini_data)
 categories = unique(sdg_keywords$Sustainable.Development.Goals.for.Target.Alignment)
 df_final = data.frame(category = NULL, keyword = NULL, secndkey = NULL, name = NULL, abstract = NULL)
 
+if(k !is.na(k)){
+  matched_categories =
+    case_studies %>% 
+    filter(Project.Name %in% name_match1 & Project.Name %in% name_match2 |
+           Project.Abstract %in% abstract_match1 & Project.Abstract %in% abstract_match2)
+} else{
+  matched_categories = 
+    case_studies %>% 
+    filter(Project.Name %in% name_match1 |
+             Project.Abstract %in% abstract_match2) %>% 
+    mutate(secndkey = NA)
+}
+
+
 for(c in categories){
   res_mini = sdg_keywords %>% 
     filter(Sustainable.Development.Goals.for.Target.Alignment == c)
