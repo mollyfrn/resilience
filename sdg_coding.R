@@ -31,14 +31,16 @@ for(c in categories){
     filter(Sustainable.Development.Goals.for.Target.Alignment == c)
   searchterms = res_mini$Indicators.Keywords
   
-  for(s in res_mini$Indicators.Keywords){ 
-    for(k in res_mini$AND.KEYWORD.1){
-      if(k !is.na(k)){
+  for(s in searchterms){ 
+    res_k = res_mini %>% 
+      filter(Indicators.Keywords %in% s)
+    for(k in res_k$AND.KEYWORD.1){
+      if(!is.na(k)){
   
         abstract_match1 = str_subset(as.character(case_studies$Project.Abstract), regex(s, ignore_case = TRUE)) #use str_match in new iteration
         name_match1 = str_subset(as.character(case_studies$Project.Name), regex(s, ignore_case = TRUE))
-        abstract_match2 =
-        name_match2 
+        abstract_match2 = str_subset(as.character(case_studies$Project.Abstract), regex(k, ignore_case = TRUE))
+        name_match2 = str_subset(as.character(case_studies$Project.Name), regex(k, ignore_case = TRUE))
         
         matched_categories =
           case_studies %>% 
@@ -61,7 +63,7 @@ for(c in categories){
                    Project.Abstract %in% abstract_match1) %>% 
           mutate(category = c, 
                 keyword = s, 
-                secndkey = NA,
+                secndkey = 'NA',
                 name = Project.Name, 
                 abstract = Project.Abstract) %>% 
           select(category, keyword, secndkey, name, abstract)
@@ -78,6 +80,12 @@ for(c in categories){
     
 
 write.csv(df_final, "SDG_case_studies_EPICN_test.csv", row.names = FALSE)
+
+####Reshape with spread and piping operators####
+#Gather all of the keywords identified into one column, separated by piping operators 
+
+#spread all of the categories into unique columns with a boolean true false cell content
+
 
 ####Join with all data for Marshall####
 case_studies = rename(case_studies, name = Project.Name)
