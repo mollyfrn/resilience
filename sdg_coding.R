@@ -25,19 +25,6 @@ names(mini_data)
 categories = unique(sdg_keywords$Sustainable.Development.Goals.for.Target.Alignment)
 df_final = data.frame(category = NULL, keyword = NULL, secndkey = NULL, name = NULL, abstract = NULL)
 
-if(k !is.na(k)){
-  matched_categories =
-    case_studies %>% 
-    filter(Project.Name %in% name_match1 & Project.Name %in% name_match2 |
-           Project.Abstract %in% abstract_match1 & Project.Abstract %in% abstract_match2)
-} else{
-  matched_categories = 
-    case_studies %>% 
-    filter(Project.Name %in% name_match1 |
-             Project.Abstract %in% abstract_match2) %>% 
-    mutate(secndkey = NA)
-}
-
 
 for(c in categories){
   res_mini = sdg_keywords %>% 
@@ -45,31 +32,50 @@ for(c in categories){
   searchterms = res_mini$Indicators.Keywords
   
   for(s in res_mini$Indicators.Keywords){ 
-    for(k in res_mini$AND.KEYWORD.1){ #may want to do a IF k != NA then, else version of this where k is printed as NA
-    
-    abstract_match = str_subset(as.character(case_studies$Project.Abstract), regex(s, ignore_case = TRUE)) #use str_match in new iteration
-    name_match = str_subset(as.character(case_studies$Project.Name), regex(s, ignore_case = TRUE))
-    #abstract_match_k = str_subset(as.character(case_studies$Project.Abstract), regex(k, ignore_case = TRUE))
-    #name_match_k = str_subset(as.character(case_studies$Project.Name), regex(k, ignore_case = TRUE))
-    
-    matched_categories = 
-      case_studies %>% 
-      filter(Project.Name %in% name_match | Project.Abstract %in% abstract_match &
-               Project.Name %in% name_match_k | Project.Abstract %in% abstract_match_k) %>%
-      mutate(category = c, 
-             keyword = s, 
-             secndkey = k,
-             name = Project.Name, 
-             abstract = Project.Abstract) %>% 
-      select(category, keyword, secndkey, name, abstract)
-    
-    #probably need to add line that pads with NA's for rows where no criteria are matched 
-    #probably also need to add line that tells R to parse the character content since it also contains | segments
-    
-    df_final = rbind(matched_categories, df_final)
+    for(k in res_mini$AND.KEYWORD.1){
+      if(k !is.na(k)){
+  
+        abstract_match1 = str_subset(as.character(case_studies$Project.Abstract), regex(s, ignore_case = TRUE)) #use str_match in new iteration
+        name_match1 = str_subset(as.character(case_studies$Project.Name), regex(s, ignore_case = TRUE))
+        abstract_match2 =
+        name_match2 
+        
+        matched_categories =
+          case_studies %>% 
+          filter(Project.Name %in% name_match1 & Project.Name %in% name_match2 |
+                 Project.Abstract %in% abstract_match1 & Project.Abstract %in% abstract_match2) %>%
+          mutate(category = c, 
+                 keyword = s, 
+                 secndkey = k,
+                 name = Project.Name, 
+                 abstract = Project.Abstract) %>% 
+          select(category, keyword, secndkey, name, abstract)
+      } else{
+        
+        abstract_match1 = str_subset(as.character(case_studies$Project.Abstract), regex(s, ignore_case = TRUE)) #use str_match in new iteration
+        name_match1 = str_subset(as.character(case_studies$Project.Name), regex(s, ignore_case = TRUE))
+        
+        matched_categories = 
+          case_studies %>% 
+          filter(Project.Name %in% name_match1 |
+                   Project.Abstract %in% abstract_match1) %>% 
+          mutate(category = c, 
+                keyword = s, 
+                secndkey = NA,
+                name = Project.Name, 
+                abstract = Project.Abstract) %>% 
+          select(category, keyword, secndkey, name, abstract)
+      }
+      df_final = rbind(matched_categories, df_final) 
     }
   }
 }
+
+
+###### #may want to do a IF k != NA then, else version of this where k is printed as NA
+    
+   
+    
 
 write.csv(df_final, "SDG_case_studies_EPICN_test.csv", row.names = FALSE)
 
