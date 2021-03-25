@@ -82,11 +82,51 @@ for(c in categories){
 write.csv(df_final, "SDG_case_studies_EPICN_test.csv", row.names = FALSE)
 
 ####Reshape with spread and piping operators####
-#Gather all of the keywords identified into one column, separated by piping operators 
+#Summarize all of the keywords identified into one column, separated by piping operators 
+#group by project name 
+df_reshaped = df_final %>% 
+  group_by(name) %>%
+  transmute(keywords = paste(keyword, secndkey, sep = "|"),
+            name = name, 
+            abstract = abstract,
+            category = category) 
+
+df_reshaped$name = as.factor(df_reshaped$name)
+
+
+df_condensed = df_reshaped %>%
+  group_by(name, abstract) %>% 
+  transmute(key = str_c(keywords, collapse = "|"),
+            name = name,
+            abstract = abstract, 
+            categories = str_c(category, collapse = "|")) %>%
+  distinct()
+
+
+
+df_reshaped$objectId = seq(1:length(df_reshaped$name)) 
+df_reshaped2 = df_reshaped %>%
+  group_by(name)%>%
+  summarise(keys = paste(keywords, sep = "|"),
+                         name = name,
+                         abstract = abstract,
+                         category = category, 
+                         objectId = objectId)
+
+#try making additional column with "sdg1 sd2....sdg17" to use w/category
+
+df_spread = df_reshaped %>%
+  group_by(category) %>%
+  mutate(sdgs = paste('sdg', category, sep = " ")) %>%
+  spread(category, sdgs) #right now instead of keeping NAME column, 
 
 #spread all of the categories into unique columns with a boolean true false cell content
+#need to deduplicate, condense to unique project names, 
 
-
+df_condensed = df_spread %>% 
+  group_by(name) %>% 
+  mutate(keys = paste(keywords, sep = "|")) #%>% 
+  rename()
 ####Join with all data for Marshall####
 case_studies = rename(case_studies, name = Project.Name)
 df_full = df_final %>% 
