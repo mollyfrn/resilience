@@ -88,10 +88,11 @@ for(c in categories){
 
 ###### #may want to do a IF k != NA then, else version of this where k is printed as NA
     
-   
+  #anchoring not successful, asterisks still messing things up 
+#also input case studies not clean - lots of random characters in text 
     
 
-write.csv(df_final, "SDG_case_studies_EPICN_full_anchor.csv", row.names = FALSE)
+write.csv(df_final, "SDG_case_studies_EPICN_full.csv", row.names = FALSE)
 
 ####Reshape with spread and piping operators####
 #Summarize all of the keywords identified into one column, separated by piping operators 
