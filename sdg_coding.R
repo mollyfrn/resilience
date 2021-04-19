@@ -25,9 +25,16 @@ names(mini_data)
 categories = unique(sdg_keywords$Sustainable.Development.Goals.for.Target.Alignment)
 df_final = data.frame(category = NULL, keyword = NULL, secndkey = NULL, name = NULL, abstract = NULL)
 
+#test with dummy variable keywords and subset of full case study dataset, go line by line 
+#mini_data = case study subset 
+#line 16 of keyword df is the first to include additional and/conditional keywords 
+# key_mini = sdg_keywords[16,]
+# c = "01 No Poverty"
+# s = "disaster*"
+# k = "economic*" #dummy testing seems to work - picked out both/and when k was present in test
 
 for(c in categories){
-  res_mini = sdg_keywords %>% 
+  res_mini = sdg_keywords %>% #key_mini %>%
     filter(Sustainable.Development.Goals.for.Target.Alignment == c)
   searchterms = res_mini$Indicators.Keywords
   
@@ -72,7 +79,7 @@ for(c in categories){
     }
   }
 }
-
+#write.csv(df_final, "dummy_output_testingSDGS.csv", row.names = FALSE) 
 
 ###### #may want to do a IF k != NA then, else version of this where k is printed as NA
     
@@ -95,14 +102,14 @@ df_reshaped$name = as.factor(df_reshaped$name)
 
 
 df_condensed = df_reshaped %>%
-  group_by(name, abstract) %>% 
+  group_by(name, abstract, category) %>% 
   transmute(key = str_c(keywords, collapse = "|"),
             name = name,
             abstract = abstract, 
-            categories = str_c(category, collapse = "|")) %>%
+            category = category) %>%
   distinct()
 
-
+#need to make it so one project can have multiple categories at the same time
 
 df_reshaped$objectId = seq(1:length(df_reshaped$name)) 
 df_reshaped2 = df_reshaped %>%
