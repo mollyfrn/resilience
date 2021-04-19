@@ -50,9 +50,9 @@ for(c in categories){
       if(!is.na(k)){
   
         abstract_match1 = str_subset(as.character(case_studies$Project.Abstract), regex(paste("^", s, sep =""), ignore_case = TRUE)) #use str_match in new iteration
-        name_match1 = str_subset(as.character(case_studies$Project.Name), regex(s, ignore_case = TRUE))
-        abstract_match2 = str_subset(as.character(case_studies$Project.Abstract), regex(k, ignore_case = TRUE))
-        name_match2 = str_subset(as.character(case_studies$Project.Name), regex(k, ignore_case = TRUE))
+        name_match1 = str_subset(as.character(case_studies$Project.Name), regex(paste("^", s, sep =""), ignore_case = TRUE))
+        abstract_match2 = str_subset(as.character(case_studies$Project.Abstract), regex(paste("^", k, sep =""), ignore_case = TRUE))
+        name_match2 = str_subset(as.character(case_studies$Project.Name), regex(paste("^", k, sep =""), ignore_case = TRUE))
         
         matched_categories =
           case_studies %>% 
@@ -66,8 +66,8 @@ for(c in categories){
           select(category, keyword, secndkey, name, abstract)
       } else{
         
-        abstract_match1 = str_subset(as.character(case_studies$Project.Abstract), regex(s, ignore_case = TRUE)) #use str_match in new iteration
-        name_match1 = str_subset(as.character(case_studies$Project.Name), regex(s, ignore_case = TRUE))
+        abstract_match1 = str_subset(as.character(case_studies$Project.Abstract), regex(paste("^", s, sep =""), ignore_case = TRUE)) #use str_match in new iteration
+        name_match1 = str_subset(as.character(case_studies$Project.Name), regex(paste("^", s, sep =""), ignore_case = TRUE))
         
         matched_categories = 
           case_studies %>% 
@@ -91,7 +91,7 @@ for(c in categories){
    
     
 
-write.csv(df_final, "SDG_case_studies_EPICN_full.csv", row.names = FALSE)
+write.csv(df_final, "SDG_case_studies_EPICN_full_anchor.csv", row.names = FALSE)
 
 ####Reshape with spread and piping operators####
 #Summarize all of the keywords identified into one column, separated by piping operators 
