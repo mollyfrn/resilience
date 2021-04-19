@@ -32,6 +32,11 @@ df_final = data.frame(category = NULL, keyword = NULL, secndkey = NULL, name = N
 # c = "01 No Poverty"
 # s = "disaster*"
 # k = "economic*" #dummy testing seems to work - picked out both/and when k was present in test
+#problems seem to be happening where there are asterisks and where the keyword is the beginning of a word
+#but R is looking for those character patterns irrespective of context
+#so I need to specify I am looking for the root of the word, the beginning 
+#need to work in regex anchor ^ to look for pattern at START of strings 
+#eg anchor(^s) anchor(^k)
 
 for(c in categories){
   res_mini = sdg_keywords %>% #key_mini %>%
@@ -44,7 +49,7 @@ for(c in categories){
     for(k in res_k$AND.KEYWORD.1){
       if(!is.na(k)){
   
-        abstract_match1 = str_subset(as.character(case_studies$Project.Abstract), regex(s, ignore_case = TRUE)) #use str_match in new iteration
+        abstract_match1 = str_subset(as.character(case_studies$Project.Abstract), regex(paste("^", s, sep =""), ignore_case = TRUE)) #use str_match in new iteration
         name_match1 = str_subset(as.character(case_studies$Project.Name), regex(s, ignore_case = TRUE))
         abstract_match2 = str_subset(as.character(case_studies$Project.Abstract), regex(k, ignore_case = TRUE))
         name_match2 = str_subset(as.character(case_studies$Project.Name), regex(k, ignore_case = TRUE))
@@ -86,7 +91,7 @@ for(c in categories){
    
     
 
-write.csv(df_final, "SDG_case_studies_EPICN_test.csv", row.names = FALSE)
+write.csv(df_final, "SDG_case_studies_EPICN_full.csv", row.names = FALSE)
 
 ####Reshape with spread and piping operators####
 #Summarize all of the keywords identified into one column, separated by piping operators 
