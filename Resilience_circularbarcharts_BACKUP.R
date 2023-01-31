@@ -241,3 +241,17 @@ for(c in cities){
 
 #01/31/23 St Paul test runthru works flawlessly now 
 #need to adjust scaling now so plots are more visually meaningful
+
+#Error in `geom_textpath()`:
+# ! Problem while setting up geom aesthetics.
+# ℹ Error occurred in the 5th layer.
+# Caused by error in `check_aesthetics()`:
+#   ! Aesthetics must be either length 1 or the same as the data (3) 
+#(so there's an instance where a city has NO representation 
+#in one of the categories and so it's missing and ends up with only 3 levels
+#how to make sure it gets filled in anyway? an if or which statement? 
+#this is the state of the error 
+
+# ✖ Fix the following mappings: `hjust`
+# Run `rlang::last_error()` to see where the error occurred.
+# There were 50 or more warnings (use warnings() to see the first 50)
