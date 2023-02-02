@@ -136,7 +136,7 @@ df_comnames = df %>%
 df_topcities = df_comnames  %>% 
   filter(City %in% selectedcommunities$City)
 
-cities = factor(df_topcities$City)
+cities = unique(factor(df_topcities$City)) #maybe Pontotoc is problem child?
 
 #test walkthru: c = "Saint Paul"
 for(c in cities){
@@ -228,13 +228,13 @@ for(c in cities){
     coord_polar() + 
     geom_text(data=label_data, aes(x=id, y=nichecounts+10, label=niche, hjust=hjust),
               color="black", fontface="bold",alpha=0.6, size=2, angle= label_data$angle, 
-              inherit.aes = FALSE ) +
+              inherit.aes = FALSE) +
     #annotate(geom = "text", x = 1)
     # Add base line information
     #geom_segment(data=base_data, aes(x = start, y = -5, xend = end, yend = 0), colour = "black", alpha=0.8, size=0.4 , inherit.aes = FALSE )  +
     geom_textpath(data=base_data, aes(x = title, y = 1500, label=category), 
                   hjust=c(1,1,1,1), 
-                  colour = "black", alpha=0.8, size=4, fontface="bold", inherit.aes = FALSE)
+                  colour = "black", alpha=0.8, size=4, fontface="bold", inherit.aes = FALSE, drop = FALSE)
   ggsave(paste0("test_polarplot", c,".png"), width = 7, height = 7, units = c("in"))
   
 }
@@ -251,6 +251,11 @@ for(c in cities){
 #in one of the categories and so it's missing and ends up with only 3 levels
 #how to make sure it gets filled in anyway? an if or which statement? 
 #this is the state of the error 
+#stackoverflow says I just need to set (drop = FALSE) to all scale statements in plotting
+#02/02 - trying drop = FALSE in geomtextpath argument first 
+#it works! Pontotoc was indeed the problem child and so was the lack of (drop = FALSE)
+
+
 
 # ✖ Fix the following mappings: `hjust`
 # Run `rlang::last_error()` to see where the error occurred.
