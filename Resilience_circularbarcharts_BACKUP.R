@@ -136,11 +136,19 @@ df_comnames = df %>%
 df_topcities = df_comnames  %>% 
   filter(City %in% selectedcommunities$City)
 
-cities = unique(factor(df_topcities$City)) #maybe Pontotoc is problem child?
+topcities = df_topcities %>% 
+  filter(City != "Bellefonte" & City != "Big Lake" & 
+           City != "Austin" & City != "Glendale" & City != "Omaha" & 
+           City != "Jonestown" & City != "New Bedford" & City != "Salinas" &
+           City != "Chico" & City != "Milesburg" & City != "Navasota" &
+           City != "West Palm Beach" & City != "Arvada" & City!= "Providence" &
+           City != "Beaufort" & City != "Winthrop" & City != "Ferguson Township")
+
+cities = unique(factor(topcities$City)) #maybe Pontotoc is problem child?
 
 #test walkthru: c = "Saint Paul"
 for(c in cities){
-  df_mini = df_topcities %>% 
+  df_mini = topcities %>% 
     filter(City == c)
   
   #count up keywords in subset according to niche and category rankings 
@@ -237,6 +245,7 @@ for(c in cities){
                   colour = "black", alpha=0.8, size=4, fontface="bold", inherit.aes = FALSE, drop = FALSE)
   ggsave(paste0("test_polarplot", c,".png"), width = 7, height = 7, units = c("in"))
   
+  #iowa city now where the error is happening
 }
 
 #01/31/23 St Paul test runthru works flawlessly now 
