@@ -213,6 +213,7 @@ write.csv(idf_ranked, "tf_idf_top100.csv")
 
 #run in loop thru individual collections of cities 
 #rejoin cities info by project name 
+case_words4 = idf 
 cases_wcities = case_words4 %>% 
   left_join(case_studies) %>% 
   dplyr::select(Project.Name, City, word, n, tf, idf, tf_idf)
@@ -254,6 +255,54 @@ wordcloud(words = idf$word, freq = idf$tf_idf, min.freq = 1,
 #02/03 where I left off - need to polish and export wordclouds with city names in titles 
 #also need to return to radar plots and scale if possible or index from 0-1, but that may be a follow up job for tomorrow
 
+df = read.csv("Cases_EPICN_Josekeywords.csv") 
+#retain or re-add community name column; subset to just communities we are interested in 
+data_full = read.csv("EPICN4ORD_rawdata.csv")
+selectedcommunities = read.csv("CitiestoHighlight.csv") #want city names probs
+idf = read.csv("tf_idf_parsingofcasestudiestext.csv") #idf = case_words4
+
+
+idf_ranked = idf %>% 
+  arrange(desc(tf_idf)) %>%
+  slice(1:100)
+write.csv(idf_ranked, "tf_idf_top100.csv")
+
+#run in loop thru individual collections of cities 
+#rejoin cities info by project name 
+cases_wcities = case_words4 %>% 
+  left_join(case_studies, by = "Project.Name") %>% 
+  dplyr::select(Project.Name, City, word, n, tf, idf, tf_idf)
+
+
+selectedcommunities = read.csv("CitiestoHighlight.csv")
+priorities_bycity = cases_wcities %>% 
+  filter(City %in% selectedcommunities$City) %>% #about halves the data
+  mutate(City = factor(City))
+
+# df_comnames = df %>% 
+#   left_join(data_full, by = c("name" = "Project.Name")) %>% 
+#   dplyr::select(category, niche, keyword, name, abstract, City, State)%>%
+#   distinct()
+
+df_topcities = priorities_bycity  %>% 
+  filter(City %in% selectedcommunities$City)
+
+cities = unique(factor(priorities_bycity$City)) #may need to exclude some
+#with idf setting word size 
+
+for(c in cities){
+  df_mini = priorities_bycity %>% 
+    filter(City == c) %>%
+    unique()
+  
+set.seed(9005) #use random num gen to set seed
+png(paste0("wordcloudtf_idf", c,".png"), width=1280,height=800)
+
+wordcloud(words = df_mini$word, freq = df_mini$tf_idf, min.freq = 2,
+          max.words=200, random.order=FALSE, random.color = TRUE) #, scale = c(7, 0.50))
+dev.off()
+
+}
 
 
 ####tf idf raw loop####
