@@ -254,25 +254,54 @@ wordcloud(words = idf$word, freq = idf$tf_idf, min.freq = 1,
 ####tf_idf informed wordcloud forloop with clouds for each community####
 #02/03 where I left off - need to polish and export wordclouds with city names in titles 
 #also need to return to radar plots and scale if possible or index from 0-1, but that may be a follow up job for tomorrow
+setwd("C:/Users/mjenkins/OneDrive - Environmental Protection Agency (EPA)/Analyses/Resilience_EpicN")
+case_studies <- read.csv("EPICN4ORD_rawdata07_14_22.csv") #database file
+res_updated <- read.csv("resilience_keywords_51921.csv")
+
+res_updated = res_updated %>% 
+  rename(BroadCategories = BroadCategories,
+         search.terms = SearchTerm)
+
+case_words = case_studies %>% 
+  unnest_tokens(word, Project.Abstract) %>%
+  mutate(word = str_extract(word, "[a-z']+"))%>%
+  count(City, word, sort = TRUE)
+
+total_words <- case_words %>% 
+  group_by(City) %>% 
+  summarize(total = sum(n))
+
+case_words2 = left_join(case_words, total_words)
+case_words3 = case_words2 %>%
+  bind_tf_idf(word, City, n) #I want this by city 
+
+case_words4 = case_words3 %>% 
+  dplyr::select(-total) %>% 
+  arrange(desc(tf_idf))%>% 
+  filter(!word %in% stop_words$word)
+
+write.csv(case_words4, "wordrankings_bycity.csv", row.names = FALSE)
+
 
 df = read.csv("Cases_EPICN_Josekeywords.csv") 
 #retain or re-add community name column; subset to just communities we are interested in 
 data_full = read.csv("EPICN4ORD_rawdata.csv")
 selectedcommunities = read.csv("CitiestoHighlight.csv") #want city names probs
-idf = read.csv("tf_idf_parsingofcasestudiestext.csv") #idf = case_words4
-
+case_words4 = idf
+idf = case_words4
+case_studies <- read.csv("EPICN4ORD_rawdata07_14_22.csv") #database file
 
 idf_ranked = idf %>% 
   arrange(desc(tf_idf)) %>%
   slice(1:100)
-write.csv(idf_ranked, "tf_idf_top100.csv")
+write.csv(idf_ranked, "tf_idf_top100_cities.csv")
 
 #run in loop thru individual collections of cities 
 #rejoin cities info by project name 
-cases_wcities = case_words4 %>% 
-  left_join(case_studies, by = "Project.Name") %>% 
-  dplyr::select(Project.Name, City, word, n, tf, idf, tf_idf)
-
+cases_wcities = case_words4 
+#   left_join(case_studies, by = "Project.Name") %>% 
+#   dplyr::select(Project.Name, City, word, n, tf, idf, tf_idf)
+# write.csv(cases_wcities, "cases_wcities.csv", row.names = FALSE)
 
 selectedcommunities = read.csv("CitiestoHighlight.csv")
 priorities_bycity = cases_wcities %>% 
@@ -287,20 +316,31 @@ priorities_bycity = cases_wcities %>%
 df_topcities = priorities_bycity  %>% 
   filter(City %in% selectedcommunities$City)
 
-cities = unique(factor(priorities_bycity$City)) #may need to exclude some
+cities = priorities_bycity 
+#%>%
+  #filter(City != "Austin") 
+cities = unique(factor(priorities_bycity$City))
+#may need to exclude some
 #with idf setting word size 
+#make sure text in priorities by city normal characters - it's not, need to clean
+#may be better to rerun from scratch
+#I know I need to end with a) a clean vector of city names for c AND
+#b) a clean df of control words by city with n freq and idf rankings
+#for some reason words plotting separately maybe bc of projects? 
+
 
 for(c in cities){
   df_mini = priorities_bycity %>% 
     filter(City == c) %>%
     unique()
   
-set.seed(9005) #use random num gen to set seed
-png(paste0("wordcloudtf_idf", c,".png"), width=1280,height=800)
+  set.seed(9005) #use random num gen to set seed
+  png(paste0("wordcloudtf_idf", c,".png"), width=1280,height=800)
 
-wordcloud(words = df_mini$word, freq = df_mini$tf_idf, min.freq = 2,
-          max.words=200, random.order=FALSE, random.color = TRUE) #, scale = c(7, 0.50))
-dev.off()
+  wordcloud(words = df_mini$word, freq = df_mini$n, min.freq = 2,
+          max.words=200, random.order=FALSE, random.color = TRUE, 
+          colors=brewer.pal(8, "Dark2")) #, scale = c(7, 0.50))
+  dev.off()
 
 }
 
