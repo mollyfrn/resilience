@@ -13,6 +13,24 @@ setwd("C:/Users/mjenkins/OneDrive - Environmental Protection Agency (EPA)/Analys
 #with a separate chart for each selected community 
 #effectively rendering a quick visual characterization of that community
 
+####02/15 notes for coding this week####
+#as it stands, right now this code is NOT plotting niche bars if there are no words or hits within the niche. 
+#However, the categories are still plotted and labeled 
+#I need to specify that a niche category label should still be created for an "empty" bar, the empty bar should still be created and invisible
+#right? is that important to me that it's created but blank? I think it's important for ease of visual comparability so someone can say 
+#oh this one community ranked really high on this metric, but this other one ranked low/nothing in that niche metric 
+#I think disappearing niche bars that don't let you know that they're missing, I think that loses some of the point of having these plots 
+
+#also want to restructure as a normalized index on a scale of 0-1 so the scaling on the plots is again, more easily comparable 
+#just because a community had a more longstanding relationship with epicn and more database entries, and therefore more text, it shouldn't 
+#should 'score' higher in all categories. 
+
+#want to do this for each keyword entry/observation *before* rolling them up and summarizing them per niche
+#should be really starightforward transformation on the keyword frequencies
+#compare with tf_idf rankings and see about using those or rolling those up into the niche categories since tf-idf incorporates normalization
+#vs manual min-max feature scaling normalization
+
+
 # library
 library(tidyverse)
 library(geomtextpath)

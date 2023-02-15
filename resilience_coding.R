@@ -9,10 +9,9 @@
 
 ####Pre-requisites: set working directory, install tidy library, and read in files####
 #rqda
-install.packages("tidyverse")
+#install.packages("tidyverse")
 library(tidyverse)
 library(tidytext)
-library(tidydata)
 library(igraph)
 library(ggraph)
 library(tm)
