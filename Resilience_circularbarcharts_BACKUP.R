@@ -152,7 +152,7 @@ df_comnames = df %>%
   dplyr::select(category, niche, keyword, name, abstract, City, State)%>%
   distinct()
   
-df_topcities = df_comnames  %>% 
+topcities = df_comnames  %>% 
   filter(City %in% selectedcommunities$City)
 
 topcities = df_topcities %>% 
@@ -194,10 +194,14 @@ for(c in cities){
   data_pre = df_nichebroad %>% 
     mutate(id = seq(1:dim(df_nichebroad)),
            nichecounts = as.numeric(nichecounts)) 
+  
   data_empty = data_pre %>%
-    filter(nichecounts = is.na(nichecounts) | nichecounts = "0") %>%
-    mutate(nichecounts = "0.0001") #may need to do 2 sep dfs
+    filter(nichecounts == is.na(nichecounts) | nichecounts == "0") %>%
+    mutate(nichecounts = "0.0001") %>%
+    mutate(nichecounts = as.numeric(nichecounts))#may need to do 2 sep dfs
     #and stitch back together 
+  #will just be an empty data frame if renders nothing, 
+  #so should be no problems with join
   
   data_nomisc= data_pre %>% 
       filter(category != "Misc") %>% #removing the misc in the data grid creation 1/31/23
