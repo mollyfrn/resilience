@@ -178,6 +178,9 @@ for(c in cities){
   #and with category calcs that empty nichecounts shoould not be dropped
   #but handled or filled with a 0.01 so the representation is still there
   #so that droplevels not necessary 
+  #so make sure levels are NOT dropped and scale_x_discrete(droplevels=FALSE)
+  #but also that the levels are not dropped prior to that and are allowed to persist
+  
   
   #re-join to include broad categories
   df_nichebroad = df_hitsniche %>% 
@@ -191,8 +194,14 @@ for(c in cities){
   data = df_nichebroad %>% 
     mutate(id = seq(1:dim(df_nichebroad)),
            nichecounts = as.numeric(nichecounts)) %>%
+    #filter(nichecounts is.na(nichecounts) | nichecounts = "0") %>%
+    #mutate(nichecounts = "0.0001") #may need to do 2 sep dfs
+    #and stitch back together 
     filter(category != "Misc") %>% #removing the misc in the data grid creation 1/31/23
     mutate( category = droplevels(category))#retrieve annotation from above
+  #remove misc and remove values for misc specifically, but DONT remove other 
+  #or ensure that PRIOR to doing this, that any category values that are is.na = TRUE, are mutated and filled with a 0.01 
+  #so that the droplevels doesn't affect them 
   
   #data = droplevels(data) #but this won't render rankings of "0" on the plot, and when it does happen
   #it causes an hjust error and short circuits the plotting. So I need to find a way to instead make sure 0's added.
