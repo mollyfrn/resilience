@@ -37,6 +37,7 @@ library(geomtextpath)
 
 # Read in and count data 
 df = read.csv("Cases_EPICN_Josekeywords.csv")
+#02/17 - want to normalize 
 df_hits = df %>% 
   count(keyword)
 
@@ -173,7 +174,10 @@ for(c in cities){
   df_hitsniche = df_mini %>% 
     count(niche) %>% 
     rename(nichecounts = n) %>%
-    mutate(niche = factor(niche))
+    mutate(niche = factor(niche)) #02/17 need to specify here
+  #and with category calcs that empty nichecounts shoould not be dropped
+  #but handled or filled with a 0.01 so the representation is still there
+  #so that droplevels not necessary 
   
   #re-join to include broad categories
   df_nichebroad = df_hitsniche %>% 
