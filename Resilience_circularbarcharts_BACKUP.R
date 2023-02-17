@@ -191,18 +191,22 @@ for(c in cities){
            category = factor(category))%>%
     slice(-(1:4)) #%>% group_by(niche, .drop = FALSE)
   
-  data = df_nichebroad %>% 
+  data_pre = df_nichebroad %>% 
     mutate(id = seq(1:dim(df_nichebroad)),
-           nichecounts = as.numeric(nichecounts)) %>%
-    #filter(nichecounts is.na(nichecounts) | nichecounts = "0") %>%
-    #mutate(nichecounts = "0.0001") #may need to do 2 sep dfs
+           nichecounts = as.numeric(nichecounts)) 
+  data_empty = data_pre %>%
+    filter(nichecounts = is.na(nichecounts) | nichecounts = "0") %>%
+    mutate(nichecounts = "0.0001") #may need to do 2 sep dfs
     #and stitch back together 
-    filter(category != "Misc") %>% #removing the misc in the data grid creation 1/31/23
-    mutate( category = droplevels(category))#retrieve annotation from above
+  
+  data_nomisc= data_pre %>% 
+      filter(category != "Misc") %>% #removing the misc in the data grid creation 1/31/23
+    mutate(category = droplevels(category))#retrieve annotation from above
   #remove misc and remove values for misc specifically, but DONT remove other 
   #or ensure that PRIOR to doing this, that any category values that are is.na = TRUE, are mutated and filled with a 0.01 
   #so that the droplevels doesn't affect them 
-  
+  data = data_nomisc %>%
+    full_join(data_empty)
   #data = droplevels(data) #but this won't render rankings of "0" on the plot, and when it does happen
   #it causes an hjust error and short circuits the plotting. So I need to find a way to instead make sure 0's added.
   #maybe some kind of ifelse function (?)
