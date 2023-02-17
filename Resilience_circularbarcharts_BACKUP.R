@@ -198,7 +198,8 @@ for(c in cities){
   data_empty = data_pre %>%
     filter(nichecounts == is.na(nichecounts) | nichecounts == "0") %>%
     mutate(nichecounts = "0.0001") %>%
-    mutate(nichecounts = as.numeric(nichecounts))#may need to do 2 sep dfs
+    mutate(nichecounts = as.numeric(nichecounts),
+           category = droplevels(category))#may need to do 2 sep dfs
     #and stitch back together 
   #will just be an empty data frame if renders nothing, 
   #so should be no problems with join
@@ -211,7 +212,7 @@ for(c in cities){
   #so that the droplevels doesn't affect them 
   data = data_nomisc %>%
     full_join(data_empty)
-  #data = droplevels(data) #but this won't render rankings of "0" on the plot, and when it does happen
+  data = droplevels(data) #but this won't render rankings of "0" on the plot, and when it does happen
   #it causes an hjust error and short circuits the plotting. So I need to find a way to instead make sure 0's added.
   #maybe some kind of ifelse function (?)
   
@@ -254,10 +255,10 @@ for(c in cities){
     geom_bar(aes(x=as.factor(id), y=nichecounts, fill=category), stat="identity", alpha=0.5) 
   p
   # Add a val=100/75/50/25 lines. I do it at the beginning to make sur barplots are OVER it.
-  p+  geom_segment(data=grid_data, aes(x = end, y = 1000, xend = start, yend = 1000), colour = "grey", alpha=1, size=0.3 , inherit.aes = FALSE ) +
-    geom_segment(data=grid_data, aes(x = end, y = 800, xend = start, yend = 800), colour = "grey", alpha=1, size=0.3 , inherit.aes = FALSE ) +
-    geom_segment(data=grid_data, aes(x = end, y = 600, xend = start, yend = 600), colour = "grey", alpha=1, size=0.3 , inherit.aes = FALSE ) +
-    geom_segment(data=grid_data, aes(x = end, y = 200, xend = start, yend = 200), colour = "grey", alpha=1, size=0.3 , inherit.aes = FALSE ) 
+  p+  geom_segment(data=grid_data, aes(x = end, y = 1000, xend = start, yend = 1000), colour = "grey", alpha=1, linewidth=0.3 , inherit.aes = FALSE ) +
+    geom_segment(data=grid_data, aes(x = end, y = 800, xend = start, yend = 800), colour = "grey", alpha=1, linewidth=0.3 , inherit.aes = FALSE ) +
+    geom_segment(data=grid_data, aes(x = end, y = 600, xend = start, yend = 600), colour = "grey", alpha=1, linewidth=0.3 , inherit.aes = FALSE ) +
+    geom_segment(data=grid_data, aes(x = end, y = 200, xend = start, yend = 200), colour = "grey", alpha=1, linewidth=0.3 , inherit.aes = FALSE ) 
   
   # Add text showing the value of each 100/75/50/25 lines
   p+ annotate("text", x = rep(max(data$id),4), y = c(200, 600, 800, 1000), label = c("20", "60", "80", "100") , color="grey", size=3 , angle=0, fontface="bold", hjust=1) +
@@ -284,7 +285,10 @@ for(c in cities){
                   colour = "black", alpha=0.8, size=4, fontface="bold", inherit.aes = FALSE, drop = FALSE)
   ggsave(paste0("test_polarplot", c,".png"), width = 7, height = 7, units = c("in"))
   
-  #iowa city now where the error is happening
+  #02_17 Bellefont now where the error is happening
+  #now the 3 vs 1 category thing is back - need to replicate niche
+  #solution for the category variable as well
+  #need to drop levels from the merged 
 }
 
 #01/31/23 St Paul test runthru works flawlessly now 
