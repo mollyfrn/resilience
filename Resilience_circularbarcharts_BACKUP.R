@@ -152,22 +152,22 @@ df_comnames = df %>%
   dplyr::select(category, niche, keyword, name, abstract, City, State)%>%
   distinct()
   
-topcities = df_comnames  %>% 
+df_topcities = df_comnames  %>% 
   filter(City %in% selectedcommunities$City)
 
-topcities = df_topcities %>% 
-  filter(City != "Bellefonte" & City != "Big Lake" & 
-           City != "Austin" & City != "Glendale" & City != "Omaha" & 
-           City != "Jonestown" & City != "New Bedford" & City != "Salinas" &
-           City != "Chico" & City != "Milesburg" & City != "Navasota" &
-           City != "West Palm Beach" & City != "Arvada" & City!= "Providence" &
-           City != "Beaufort" & City != "Winthrop" & City != "Ferguson Township")
+#topcities = df_topcities %>% 
+#  filter(City != "Bellefonte") # & City != "Big Lake" & 
+#           City != "Austin" & City != "Glendale" & City != "Omaha" & 
+#           City != "Jonestown" & City != "New Bedford" & City != "Salinas" &
+#           City != "Chico" & City != "Milesburg" & City != "Navasota" &
+#           City != "West Palm Beach" & City != "Arvada" & City!= "Providence" &
+#           City != "Beaufort" & City != "Winthrop" & City != "Ferguson Township")
 
-cities = unique(factor(topcities$City)) #maybe Pontotoc is problem child?
+cities = unique(factor(df_topcities$City)) #maybe Pontotoc is problem child?
 
-#test walkthru: c = "Saint Paul"
+#test walkthru: c = "Bellefonte"
 for(c in cities){
-  df_mini = topcities %>% 
+  df_mini = df_topcities %>% 
     filter(City == c)
   
   #count up keywords in subset according to niche and category rankings 
@@ -190,7 +190,11 @@ for(c in cities){
     mutate(niche = factor(niche),
            category = factor(category))%>%
     slice(-(1:4)) #%>% group_by(niche, .drop = FALSE)
-  
+    #2/18 need to make an empty row with the remaining ghost category factor 
+    #is there a way to pull out levels - I guess I could do a boolean? 
+    #levels(df_nichebroad$category) vs df_nichebroad$category
+    # or use a reverse %in%   
+  #filter(!category %in% df_nichebroad$category)
   data_pre = df_nichebroad %>% 
     mutate(id = seq(1:dim(df_nichebroad)),
            nichecounts = as.numeric(nichecounts)) 
@@ -199,7 +203,7 @@ for(c in cities){
     filter(nichecounts == is.na(nichecounts) | nichecounts == "0") %>%
     mutate(nichecounts = "0.0001") %>%
     mutate(nichecounts = as.numeric(nichecounts),
-           category = droplevels(category))#may need to do 2 sep dfs
+           category = droplevels(category)) #shouldn't need drop levels on category, category should still be repped #droplevels(category))#may need to do 2 sep dfs
     #and stitch back together 
   #will just be an empty data frame if renders nothing, 
   #so should be no problems with join
@@ -211,8 +215,9 @@ for(c in cities){
   #or ensure that PRIOR to doing this, that any category values that are is.na = TRUE, are mutated and filled with a 0.01 
   #so that the droplevels doesn't affect them 
   data = data_nomisc %>%
-    full_join(data_empty)
-  data = droplevels(data) #but this won't render rankings of "0" on the plot, and when it does happen
+    full_join(data_empty) #but I'm joining it to something
+  #that still has a lingering category factor
+  #data = droplevels(data) #but this won't render rankings of "0" on the plot, and when it does happen
   #it causes an hjust error and short circuits the plotting. So I need to find a way to instead make sure 0's added.
   #maybe some kind of ifelse function (?)
   
