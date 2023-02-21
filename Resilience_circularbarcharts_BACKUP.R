@@ -209,6 +209,12 @@ for(c in cities){
     #levels(df_nichebroad$category) vs df_nichebroad$category
     # or use a reverse %in%  or an ANTI-JOIN 
   #filter(!category %in% df_nichebroad$category)
+  data_emptyfactors = df %>%
+    anti_join(df_hitsniche) %>% 
+    filter(category != "Misc") %>%
+    mutate(category = as.factor(category), 
+           niche = as.factor(niche))
+  
   
   data_empty = df_hitsniche %>%
     filter(nichecounts == is.na(nichecounts) | nichecounts == "0") %>%
