@@ -177,7 +177,7 @@ for(c in cities){
     add_count(niche) %>%
     select(-keyword, -name, -abstract) %>% 
     unique() %>% 
-    rename(nichecounts = n) 
+    mutate(nichecounts = as.numeric(n)) 
   
   #need a full account of the full possible list of niches
   #and full possible list of categories 
@@ -207,13 +207,10 @@ for(c in cities){
     #2/18 need to make an empty row with the remaining ghost category factor 
     #is there a way to pull out levels - I guess I could do a boolean? 
     #levels(df_nichebroad$category) vs df_nichebroad$category
-    # or use a reverse %in%   
+    # or use a reverse %in%  or an ANTI-JOIN 
   #filter(!category %in% df_nichebroad$category)
-  data_pre = df_hitsniche %>% 
-    mutate(id = seq(1:dim(df_hitsniche)),
-           nichecounts = as.numeric(nichecounts)) 
   
-  data_empty = data_pre %>%
+  data_empty = df_hitsniche %>%
     filter(nichecounts == is.na(nichecounts) | nichecounts == "0") %>%
     mutate(nichecounts = "0.0001") %>%
     mutate(nichecounts = as.numeric(nichecounts),
@@ -234,6 +231,11 @@ for(c in cities){
   #data = droplevels(data) #but this won't render rankings of "0" on the plot, and when it does happen
   #it causes an hjust error and short circuits the plotting. So I need to find a way to instead make sure 0's added.
   #maybe some kind of ifelse function (?)
+  
+  data_pre = df_hitsniche %>% 
+    mutate(id = seq(1:dim(df_hitsniche)))
+  #this padding of ID nums needs to happen at the END of calcs
+  #02/21 moved 
   
   #data now ready to be prepped for graph #insert graphing code below 
   
