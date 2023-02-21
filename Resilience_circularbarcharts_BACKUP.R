@@ -155,19 +155,19 @@ df_comnames = df %>%
 df_topcities = df_comnames  %>% 
   filter(City %in% selectedcommunities$City)
 
-topcities = df_topcities %>% 
-filter(City != "Austin" & City != "Glendale") # & City != "Big Lake" & 
-#           City != "Austin" & City != "Glendale" & City != "Omaha" & 
+# topcities = df_topcities %>% 
+# filter(City != "Austin" & City != "Glendale") # & City != "Big Lake" & 
+# #           City != "Austin" & City != "Glendale" & City != "Omaha" & 
 #           City != "Jonestown" & City != "New Bedford" & City != "Salinas" &
 #           City != "Chico" & City != "Milesburg" & City != "Navasota" &
 #           City != "West Palm Beach" & City != "Arvada" & City!= "Providence" &
 #           City != "Beaufort" & City != "Winthrop" & City != "Ferguson Township")
 
-cities = unique(factor(topcities$City)) #maybe Pontotoc is problem child?
+cities = unique(factor(df_topcities$City)) #maybe Pontotoc is problem child?
 
-#test walkthru: c = "Bellefonte"
+#test walkthru: c = "Austin"
 for(c in cities){
-  df_mini = topcities %>% 
+  df_mini = df_topcities %>% 
     filter(City == c)
   
   #count up keywords in subset according to niche and category rankings 
@@ -176,8 +176,17 @@ for(c in cities){
            category = as.factor(category)) %>%
     add_count(niche) %>%
     select(-keyword, -name, -abstract) %>% 
-    unique() %>%
-    rename(nichecounts = n)
+    unique() %>% 
+    rename(nichecounts = n) 
+  
+  #need a full account of the full possible list of niches
+  #and full possible list of categories 
+  #do a reverse %in% to id the remaining empty factors 
+  #and create empty rows that are filled with a 0.001 
+  #to create "padding" in each output df
+  #02/21
+  
+  #should I add empty category here?
     #mutate(niche = factor(niche)) 
   #02/17 need to specify here
   #and with category calcs that empty nichecounts shoould not be dropped
