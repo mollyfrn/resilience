@@ -227,38 +227,42 @@ for(c in cities){
     mutate(category = category, 
            niche = niche, 
            City = c, 
-           nichecounts = "0.0001")
+           State = unique(df_hitsniche$State),
+           nichecounts = "0.0001") %>%
+    mutate(nichecounts = as.numeric(nichecounts))
            #can add State back in via a join, 
   #wait to gen ID seq at the END of all of this  
   
   #want to flesh out with other missing columns
   #do a row bind/make a new df
+  data = df_hitsniche %>% 
+    full_join(data_missingfactors) %>%
+    mutate(id = seq(1:dim(data)))
   
-  
-  data_empty = df_hitsniche %>%
-    filter(nichecounts == is.na(nichecounts) | nichecounts == "0") %>%
-    mutate(nichecounts = "0.0001") %>%
-    mutate(nichecounts = as.numeric(nichecounts),
-           category = droplevels(category)) #shouldn't need drop levels on category, category should still be repped #droplevels(category))#may need to do 2 sep dfs
+  # data_empty = df_hitsniche %>%
+  #   filter(nichecounts == is.na(nichecounts) | nichecounts == "0") %>%
+  #   mutate(nichecounts = "0.0001") %>%
+  #   mutate(nichecounts = as.numeric(nichecounts),
+  #          category = droplevels(category)) #shouldn't need drop levels on category, category should still be repped #droplevels(category))#may need to do 2 sep dfs
     #and stitch back together 
   #will just be an empty data frame if renders nothing, 
   #so should be no problems with join
   
-  data_nomisc= data_pre %>% 
-      filter(category != "Misc") %>% #removing the misc in the data grid creation 1/31/23
-    mutate(category = droplevels(category))#retrieve annotation from above
-  #remove misc and remove values for misc specifically, but DONT remove other 
+  # data_nomisc= data_pre %>% 
+  #     filter(category != "Misc") %>% #removing the misc in the data grid creation 1/31/23
+  #   mutate(category = droplevels(category))#retrieve annotation from above
+  # #remove misc and remove values for misc specifically, but DONT remove other 
   #or ensure that PRIOR to doing this, that any category values that are is.na = TRUE, are mutated and filled with a 0.01 
   #so that the droplevels doesn't affect them 
-  data = data_nomisc %>%
-    full_join(data_empty) #but I'm joining it to something
+  # data = data_nomisc %>%
+  #   full_join(data_empty) #but I'm joining it to something
   #that still has a lingering category factor
   #data = droplevels(data) #but this won't render rankings of "0" on the plot, and when it does happen
   #it causes an hjust error and short circuits the plotting. So I need to find a way to instead make sure 0's added.
   #maybe some kind of ifelse function (?)
   
-  data_pre = df_hitsniche %>% 
-    mutate(id = seq(1:dim(df_hitsniche)))
+  # data = data %>% 
+  #   mutate(id = seq(1:dim(df_hitsniche)))
   #this padding of ID nums needs to happen at the END of calcs
   #02/21 moved 
   
