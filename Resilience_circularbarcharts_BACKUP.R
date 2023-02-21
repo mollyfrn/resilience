@@ -155,48 +155,53 @@ df_comnames = df %>%
 df_topcities = df_comnames  %>% 
   filter(City %in% selectedcommunities$City)
 
-#topcities = df_topcities %>% 
-#  filter(City != "Bellefonte") # & City != "Big Lake" & 
+topcities = df_topcities %>% 
+filter(City != "Austin" & City != "Glendale") # & City != "Big Lake" & 
 #           City != "Austin" & City != "Glendale" & City != "Omaha" & 
 #           City != "Jonestown" & City != "New Bedford" & City != "Salinas" &
 #           City != "Chico" & City != "Milesburg" & City != "Navasota" &
 #           City != "West Palm Beach" & City != "Arvada" & City!= "Providence" &
 #           City != "Beaufort" & City != "Winthrop" & City != "Ferguson Township")
 
-cities = unique(factor(df_topcities$City)) #maybe Pontotoc is problem child?
+cities = unique(factor(topcities$City)) #maybe Pontotoc is problem child?
 
 #test walkthru: c = "Bellefonte"
 for(c in cities){
-  df_mini = df_topcities %>% 
+  df_mini = topcities %>% 
     filter(City == c)
   
   #count up keywords in subset according to niche and category rankings 
   df_hitsniche = df_mini %>% 
-    count(niche) %>% 
-    rename(nichecounts = n) %>%
-    mutate(niche = factor(niche)) #02/17 need to specify here
+    mutate(niche = as.factor(niche),
+           category = as.factor(category)) %>%
+    add_count(niche) %>%
+    select(-keyword, -name, -abstract) %>% 
+    unique() %>%
+    rename(nichecounts = n)
+    #mutate(niche = factor(niche)) 
+  #02/17 need to specify here
   #and with category calcs that empty nichecounts shoould not be dropped
   #but handled or filled with a 0.01 so the representation is still there
   #so that droplevels not necessary 
   #so make sure levels are NOT dropped and scale_x_discrete(droplevels=FALSE)
   #but also that the levels are not dropped prior to that and are allowed to persist
-  
+  #oh shit this is counting wrong bc there should be all 4 categories repped and they aren't
   
   #re-join to include broad categories
-  df_nichebroad = df_hitsniche %>% 
-    left_join(df, by = 'niche') %>% 
-    dplyr::select(-keyword, -name, -abstract) %>% 
-    distinct() %>% 
-    mutate(niche = factor(niche),
-           category = factor(category))%>%
-    slice(-(1:4)) #%>% group_by(niche, .drop = FALSE)
+  # df_nichebroad = df_hitsniche %>% 
+  #   left_join(df, by = 'niche') %>% 
+  #   dplyr::select(-keyword, -name, -abstract) %>% 
+  #   distinct() %>% 
+  #   mutate(niche = factor(niche),
+  #          category = factor(category))%>%
+  #   slice(-(1:4)) #%>% group_by(niche, .drop = FALSE)
     #2/18 need to make an empty row with the remaining ghost category factor 
     #is there a way to pull out levels - I guess I could do a boolean? 
     #levels(df_nichebroad$category) vs df_nichebroad$category
     # or use a reverse %in%   
   #filter(!category %in% df_nichebroad$category)
-  data_pre = df_nichebroad %>% 
-    mutate(id = seq(1:dim(df_nichebroad)),
+  data_pre = df_hitsniche %>% 
+    mutate(id = seq(1:dim(df_hitsniche)),
            nichecounts = as.numeric(nichecounts)) 
   
   data_empty = data_pre %>%
