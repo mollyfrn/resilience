@@ -154,20 +154,19 @@ df_comnames = df %>%
   
 df_topcities = df_comnames  %>% 
   filter(City %in% selectedcommunities$City)
-
-# topcities = df_topcities %>% 
-# filter(City != "Austin" & City != "Glendale") # & City != "Big Lake" & 
+topcities = df_topcities %>% 
+  filter(City != "Monroe") # & City != "Glendale") # & City != "Big Lake" & 
 # #           City != "Austin" & City != "Glendale" & City != "Omaha" & 
 #           City != "Jonestown" & City != "New Bedford" & City != "Salinas" &
 #           City != "Chico" & City != "Milesburg" & City != "Navasota" &
 #           City != "West Palm Beach" & City != "Arvada" & City!= "Providence" &
 #           City != "Beaufort" & City != "Winthrop" & City != "Ferguson Township")
 
-cities = unique(factor(df_topcities$City)) #maybe Pontotoc is problem child?
+cities = unique(factor(topcities$City)) #maybe Pontotoc is problem child?
 
 #test walkthru: c = "Austin"
 for(c in cities){
-  df_mini = df_topcities %>% 
+  df_mini = topcities %>% 
     filter(City == c)
   
   #count up keywords in subset according to niche and category rankings 
@@ -235,9 +234,13 @@ for(c in cities){
   
   #want to flesh out with other missing columns
   #do a row bind/make a new df
-  data = df_hitsniche %>% 
-    full_join(data_missingfactors) %>%
-    mutate(id = seq(1:dim(data)))
+  data_pre = df_hitsniche %>% 
+    full_join(data_missingfactors) 
+  
+  data = data_pre %>%
+    mutate(id = seq(1:dim(data_pre))) %>%
+    filter(category != "Misc") %>%
+    mutate(category = droplevels(category))
   
   # data_empty = df_hitsniche %>%
   #   filter(nichecounts == is.na(nichecounts) | nichecounts == "0") %>%
