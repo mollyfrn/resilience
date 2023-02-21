@@ -338,10 +338,10 @@ for(c in cities){
                   colour = "black", alpha=0.8, size=4, fontface="bold", inherit.aes = FALSE, drop = FALSE)
   ggsave(paste0("test_polarplot", c,".png"), width = 7, height = 7, units = c("in"))
   
-  #02_17 Bellefont now where the error is happening
-  #now the 3 vs 1 category thing is back - need to replicate niche
-  #solution for the category variable as well
-  #need to drop levels from the merged 
+  #02_21 fixed, fully debugged!!! 
+  #next steps: normalize values for ease of interpretation
+  #reduce white space etc 
+  #move on to word clouds
 }
 
 #01/31/23 St Paul test runthru works flawlessly now 
