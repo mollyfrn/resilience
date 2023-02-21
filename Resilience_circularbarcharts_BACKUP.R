@@ -177,7 +177,8 @@ for(c in cities){
     add_count(niche) %>%
     select(-keyword, -name, -abstract) %>% 
     unique() %>% 
-    mutate(nichecounts = as.numeric(n)) 
+    mutate(nichecounts = as.numeric(n)) %>%
+    select(-n)
   
   #need a full account of the full possible list of niches
   #and full possible list of categories 
@@ -214,14 +215,24 @@ for(c in cities){
   #but i want to keep in the graph 
   #will iteratively adapt based on what is absent from 
   #df_hitsniche so it is important for it to be inside the loop
-  data_emptyfactors = df %>%
+  #includes both missing niches and categories
+  data_missingfactors = df %>%
     anti_join(df_hitsniche) %>% 
     filter(category != "Misc") %>%
     mutate(category = as.factor(category), 
            niche = as.factor(niche)) %>%
     select(category, niche)%>%
     filter(niche == is.na(niche) | niche != "") %>%
-    unique()
+    unique() %>%
+    mutate(category = category, 
+           niche = niche, 
+           City = c, 
+           nichecounts = "0.0001")
+           #can add State back in via a join, 
+  #wait to gen ID seq at the END of all of this  
+  
+  #want to flesh out with other missing columns
+  #do a row bind/make a new df
   
   
   data_empty = df_hitsniche %>%
