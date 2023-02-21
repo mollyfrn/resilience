@@ -209,11 +209,19 @@ for(c in cities){
     #levels(df_nichebroad$category) vs df_nichebroad$category
     # or use a reverse %in%  or an ANTI-JOIN 
   #filter(!category %in% df_nichebroad$category)
+  #this block helps me ID whichever niches and categories 
+  #are NOT represented in a given city 
+  #but i want to keep in the graph 
+  #will iteratively adapt based on what is absent from 
+  #df_hitsniche so it is important for it to be inside the loop
   data_emptyfactors = df %>%
     anti_join(df_hitsniche) %>% 
     filter(category != "Misc") %>%
     mutate(category = as.factor(category), 
-           niche = as.factor(niche))
+           niche = as.factor(niche)) %>%
+    select(category, niche)%>%
+    filter(niche == is.na(niche) | niche != "") %>%
+    unique()
   
   
   data_empty = df_hitsniche %>%
