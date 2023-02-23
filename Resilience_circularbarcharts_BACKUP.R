@@ -154,15 +154,23 @@ df_comnames = df %>%
   
 df_topcities = df_comnames  %>% 
   filter(City %in% selectedcommunities$City)
-topcities = df_topcities %>% 
-  filter(City != "Monroe") # & City != "Glendale") # & City != "Big Lake" & 
+#topcities = df_topcities %>% 
+#  filter(City != "Monroe") # & City != "Glendale") # & City != "Big Lake" & 
 # #           City != "Austin" & City != "Glendale" & City != "Omaha" & 
 #           City != "Jonestown" & City != "New Bedford" & City != "Salinas" &
 #           City != "Chico" & City != "Milesburg" & City != "Navasota" &
 #           City != "West Palm Beach" & City != "Arvada" & City!= "Providence" &
 #           City != "Beaufort" & City != "Winthrop" & City != "Ferguson Township")
 
-cities = unique(factor(topcities$City)) #maybe Pontotoc is problem child?
+cities = unique(factor(df_topcities$City)) #maybe Pontotoc is problem child?
+
+####Fixing data input error at Monroe####
+topcities_Monroesub = df_topcities %>%
+  filter(City == "Monroe") %>%
+  mutate(State = "Wisconsin")
+topcities = df_topcities %>%
+  filter(City != "Monroe") %>%
+  full_join(topcities_Monroesub)
 
 #test walkthru: c = "Austin"
 for(c in cities){
