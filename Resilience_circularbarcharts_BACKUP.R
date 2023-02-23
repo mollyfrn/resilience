@@ -3,9 +3,6 @@
 ####Molly Jenkins 
 ####02/23/2023
 
-#setwd 
-setwd("C:/Users/mjenkins/OneDrive - Environmental Protection Agency (EPA)/Analyses/Resilience_EpicN")
-
 #want to restructure as a normalized index on a scale of 0-1 so the scaling on the plots is again, more easily comparable 
 #just because a community had a more longstanding relationship with epicn and more database entries, and therefore more text, it shouldn't 
 #should 'score' higher in all categories. 
@@ -15,9 +12,31 @@ setwd("C:/Users/mjenkins/OneDrive - Environmental Protection Agency (EPA)/Analys
 #compare with tf_idf rankings and see about using those or rolling those up into the niche categories since tf-idf incorporates normalization
 #vs manual min-max feature scaling normalization
 
+#Justification for 'empty' bars in radar plots#
+#join padded-negligible niches and categories 
+#with real data 
+#so that empty categories still are shown in the graph 
+#so it is visually apparent to non-scientist users 
+#that the category is still there, just their 
+#community of interest does not have substantial weight
+#behind that category or niche being a priority
+#this will make it easier to visually compare with a 
+#community where it IS a priority 
+#e.g. Monroe WI may have a very very short social capital bar
+#while Miami may have a comparitively large social capital bar 
+#it will facilitate interpretation by non-scientist, where
+#it is appropriate in this context for us to include "NA" type data, or "non-data" 
+#whereas in technical contexts, this is typically discouraged
+#in favor of only drawing data that IS there and maximizing 
+#utility and meaning of "ink" used 
 
+#Forloop to generate plots for all selected case study cities 
+#--------------notes-------------------
+####start of code####
+#setwd 
+setwd("C:/Users/mjenkins/OneDrive - Environmental Protection Agency (EPA)/Analyses/Resilience_EpicN")
 
-####Forloop to generate plots for all selected case study cities 
+#libraries
 library(tidyverse)
 library(geomtextpath)
 
@@ -46,6 +65,7 @@ topcities = df_topcities %>%
   full_join(topcities_Monroesub) #insert the fixed Monroe entries 
 
 ####forloop summarizing resilience priorities of communities####
+#c = "Ramsey City" 
 for(c in cities){
   df_mini = topcities %>% 
     filter(City == c) #create a subset of data for just 
@@ -59,10 +79,42 @@ for(c in cities){
     select(-keyword, -name, -abstract) %>% 
     unique() %>% 
     mutate(nichecounts = as.numeric(n)) %>%
-    select(-n) 
+    mutate(nichecounts_minmaxnorm = 
+             ((nichecounts - min(nichecounts))/
+                 (max(nichecounts) - min(nichecounts)))) %>% #normalize counts
+    select(-n) #do want to keep and compare diff "counts"
   #02/23 this is where I need to add 
-  #the normalizing mutate argument 
+  #the normalizing mutate argument ? unless I maybe need to later 
+  #and normalize *across* cities in an outer forloop 
+  #right now this works but I might want to do that instead
+  #((x - min(x) )/ (max(x) - min(x)))
+  #because right now its just normalized across niches WITHIN a community example 
+  #this enables us to compare categories within a city, 
+  #but doesn't readily let us compare cities with each other
+  #which is what I want to do ultimately - right?
+  #I would also love feedback of course on whether or not
+  #this kind of normalization would be appropriate 
+  #for this kind of data 
+  #and also where else I would alternatively normalize? 
   #to put all of these counts on a scale of 0-1
+  #I suppose if I normalized these ACROSS cities as opposed to within
+  #it would also diminish the differences between city priorities (?) 
+  #I guess I could look at both and then present both for a statistical consultation
+  
+  #also noting that the nichecounts associated with misc 
+  #also show up once in each category 
+  #but only on of those got binned into a specific niche
+  #so go back to the source keyword-framework doc 
+  #and clean up/allocate formally 
+  #do I want to have counted the # of times a key word 
+  #appears within the abstract or title of a project? 
+  #right now I just count the # of times it appears 
+  #in a given CITY after just counting presence/absence 
+  #for each project, so that an individual project doesn't 
+  #totally skew the priorities of the whole city 
+  #this reduces weight on individual projects and 
+  #puts emphasis on trends across the city, across projects
+  #so how I have it is almost certainly fine 
   
 #this block helps me ID whichever niches and categories 
 #are NOT represented in a given city but i want to keep in the graph 
@@ -169,21 +221,3 @@ for(c in cities){
 #next steps: normalize values for ease of interpretation
 #reduce white space etc 
 #move on to word clouds
-
-####Justification for 'empty' bars in radar plots####
-#join padded-negligible niches and categories 
-#with real data 
-#so that empty categories still are shown in the graph 
-#so it is visually apparent to non-scientist users 
-#that the category is still there, just their 
-#community of interest does not have substantial weight
-#behind that category or niche being a priority
-#this will make it easier to visually compare with a 
-#community where it IS a priority 
-#e.g. Monroe WI may have a very very short social capital bar
-#while Miami may have a comparitively large social capital bar 
-#it will facilitate interpretation by non-scientist, where
-#it is appropriate in this context for us to include "NA" type data, or "non-data" 
-#whereas in technical contexts, this is typically discouraged
-#in favor of only drawing data that IS there and maximizing 
-#utility and meaning of "ink" used 
