@@ -133,8 +133,10 @@ for(c in cities){
            niche = niche, 
            City = c, 
            State = unique(df_hitsniche$State),
-           nichecounts = "0.0001") %>%
-    mutate(nichecounts = as.numeric(nichecounts))
+           nichecounts = "0.0001",
+           nichecounts_minmaxnorm = "0.00000001") %>%
+    mutate(nichecounts = as.numeric(nichecounts), 
+           nichecounts_minmaxnorm = as.numeric(nichecounts_minmaxnorm))
   
   data_pre = df_hitsniche %>% 
     full_join(data_missingfactors) 
@@ -155,7 +157,7 @@ for(c in cities){
   colnames(to_add) <- colnames(data)
   to_add$category <- rep(levels(data$category), each=empty_bar)
   data <- rbind(data, to_add)
-  data <- data %>% arrange(category, nichecounts)
+  data <- data %>% arrange(category, nichecounts_minmaxnorm)
   data$id <- seq(1, nrow(data))
   
   # Get the name and the y position of each label
@@ -178,23 +180,23 @@ for(c in cities){
   grid_data$start <- grid_data$start - 1
   grid_data <- grid_data[-1,]
   
-  
+#all of the prep stuff works 02/23  
   #plot 
-  p <- ggplot(data, aes(x=as.factor(id), y=nichecounts, fill=category)) +       # Note that id is a factor. If x is numeric, there is some space between the first bar
+  p <- ggplot(data, aes(x=as.factor(id), y=nichecounts_minmaxnorm, fill=category)) +       # Note that id is a factor. If x is numeric, there is some space between the first bar
     
-    geom_bar(aes(x=as.factor(id), y=nichecounts, fill=category), stat="identity", alpha=0.5) 
+    geom_bar(aes(x=as.factor(id), y=nichecounts_minmaxnorm, fill=category), stat="identity", alpha=0.5) 
   p
   # Add a val=100/75/50/25 lines. I do it at the beginning to make sur barplots are OVER it.
-  p+  geom_segment(data=grid_data, aes(x = end, y = 1000, xend = start, yend = 1000), colour = "grey", alpha=1, linewidth=0.3 , inherit.aes = FALSE ) +
-    geom_segment(data=grid_data, aes(x = end, y = 800, xend = start, yend = 800), colour = "grey", alpha=1, linewidth=0.3 , inherit.aes = FALSE ) +
-    geom_segment(data=grid_data, aes(x = end, y = 600, xend = start, yend = 600), colour = "grey", alpha=1, linewidth=0.3 , inherit.aes = FALSE ) +
-    geom_segment(data=grid_data, aes(x = end, y = 200, xend = start, yend = 200), colour = "grey", alpha=1, linewidth=0.3 , inherit.aes = FALSE ) 
+  p+  geom_segment(data=grid_data, aes(x = end, y = 1.000, xend = start, yend = 1000), colour = "grey", alpha=1, linewidth=0.3 , inherit.aes = FALSE ) +
+    geom_segment(data=grid_data, aes(x = end, y = 0.800, xend = start, yend = 800), colour = "grey", alpha=1, linewidth=0.3 , inherit.aes = FALSE ) +
+    geom_segment(data=grid_data, aes(x = end, y = 0.600, xend = start, yend = 600), colour = "grey", alpha=1, linewidth=0.3 , inherit.aes = FALSE ) +
+    geom_segment(data=grid_data, aes(x = end, y = 0.200, xend = start, yend = 200), colour = "grey", alpha=1, linewidth=0.3 , inherit.aes = FALSE ) 
   
   # Add text showing the value of each 100/75/50/25 lines
-  p+ annotate("text", x = rep(max(data$id),4), y = c(200, 600, 800, 1000), label = c("20", "60", "80", "100") , color="grey", size=3 , angle=0, fontface="bold", hjust=1) +
+  p+ annotate("text", x = rep(max(data$id),4), y = c(0.200, 0.600, 0.800, 1.000), label = c("0.2", "0.6", "0.8", "1.0") , color="grey", size=3 , angle=0, fontface="bold", hjust=1) +
     
-    geom_bar(aes(x=as.factor(id), y=nichecounts, fill=category), stat="identity", alpha=0.5) +
-    ylim(-100,1500) +
+    geom_bar(aes(x=as.factor(id), y=nichecounts_minmaxnorm, fill=category), stat="identity", alpha=0.5) +
+    ylim(-1.00,1.500) +
     theme_minimal() +
     theme(
       legend.position = "none",
@@ -204,17 +206,23 @@ for(c in cities){
       plot.margin = unit(rep(-1,4), "in") 
     ) +
     coord_polar() + 
-    geom_text(data=label_data, aes(x=id, y=nichecounts+10, label=niche, hjust=hjust),
+    geom_text(data=label_data, aes(x=id, y=nichecounts_minmaxnorm+10, label=niche, hjust=hjust),
               color="black", fontface="bold",alpha=0.6, size=2, angle= label_data$angle, 
               inherit.aes = FALSE) +
     #annotate(geom = "text", x = 1)
     # Add base line information
     #geom_segment(data=base_data, aes(x = start, y = -5, xend = end, yend = 0), colour = "black", alpha=0.8, size=0.4 , inherit.aes = FALSE )  +
-    geom_textpath(data=base_data, aes(x = title, y = 1500, label=category), 
+    geom_textpath(data=base_data, aes(x = title, y = 1.450, label=category), 
                   hjust=c(1,1,1,1), 
                   colour = "black", alpha=0.8, size=4, fontface="bold", inherit.aes = FALSE, drop = FALSE)
-  ggsave(paste0("test_polarplot", c,".png"), width = 7, height = 7, units = c("in"))
-  
+  ggsave(paste0("test2_polarplot", c,".png"), width = 7, height = 7, units = c("in"))
+  #2/23 CLOSE, it DOES plot and the scaling looks good 
+  #butttttt the niche labels are missing altogether
+  #and one of the niches is squished into a different category 
+  #giving one category 4 niches, and one only 2 niches
+  #so we gotta fix this - probably a) an error in the 
+  #foundational grid data apportioning 
+  #and b) an error in the geom_text
 }
 
 #02_21 fixed, fully debugged!!! 
