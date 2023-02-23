@@ -42,8 +42,8 @@ topcities_Monroesub = df_topcities %>%
   filter(City == "Monroe") %>%
   mutate(State = "Wisconsin")
 topcities = df_topcities %>%
-  filter(City != "Monroe") %>%
-  full_join(topcities_Monroesub)
+  filter(City != "Monroe") %>% #remove the problematic Monroe entries
+  full_join(topcities_Monroesub) #insert the fixed Monroe entries 
 
 ####forloop summarizing resilience priorities of communities####
 for(c in cities){
@@ -59,7 +59,10 @@ for(c in cities){
     select(-keyword, -name, -abstract) %>% 
     unique() %>% 
     mutate(nichecounts = as.numeric(n)) %>%
-    select(-n)
+    select(-n) 
+  #02/23 this is where I need to add 
+  #the normalizing mutate argument 
+  #to put all of these counts on a scale of 0-1
   
 #this block helps me ID whichever niches and categories 
 #are NOT represented in a given city but i want to keep in the graph 
