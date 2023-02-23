@@ -28,8 +28,9 @@ case_studies <- read.csv("EPICN4ORD_rawdata07_14_22.csv") #database file
 #case_studies = case_studies2 %>% 
   #filter(City %in% examplecities)
 
+
 resilience_keywords <- read.csv("ResilienceKeywords_tidy.csv") #resilience keyword file 
-res_updated <- read.csv("resilience_keywords_51921.csv")
+res_updated <- read.csv("resilience_keywords_02_23_23.csv")
 
 res_updated = res_updated %>% 
   rename(BroadCategories = ?..BroadCategories,

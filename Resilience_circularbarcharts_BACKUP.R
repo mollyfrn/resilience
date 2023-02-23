@@ -221,7 +221,10 @@ for(c in cities){
   #and one of the niches is squished into a different category 
   #giving one category 4 niches, and one only 2 niches
   #so we gotta fix this - probably a) an error in the 
-  #foundational grid data apportioning 
+  #foundational grid data apportioning  - yeah it's those 38 hits
+  #so I need to go back to 
+  #the OG allocation/keyword framework guide 
+  #sourced in resilience_coding.R and rerun THAT
   #and b) an error in the geom_text
 }
 
