@@ -41,7 +41,7 @@ library(tidyverse)
 library(geomtextpath)
 
 # Read in and count data 
-df = read.csv("Cases_EPICN_Josekeywords.csv") 
+df = read.csv("Cases_EPICN_Josekeywords_cleaned02_23_23.csv") 
 #retain or re-add community name column; subset to just communities we are interested in 
 data_full = read.csv("EPICN4ORD_rawdata.csv")
 selectedcommunities = read.csv("CitiestoHighlight.csv") #want city names probs

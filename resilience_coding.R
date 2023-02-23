@@ -32,9 +32,9 @@ case_studies <- read.csv("EPICN4ORD_rawdata07_14_22.csv") #database file
 resilience_keywords <- read.csv("ResilienceKeywords_tidy.csv") #resilience keyword file 
 res_updated <- read.csv("resilience_keywords_02_23_23.csv")
 
-res_updated = res_updated %>% 
-  rename(BroadCategories = ?..BroadCategories,
-         search.terms = SearchTerm)
+# res_updated = res_updated %>% 
+#   rename(BroadCategories = ?..BroadCategories,
+#          search.terms = SearchTerm)
 
 
 #take database, comb for matches with each resilience search term, 
@@ -71,8 +71,8 @@ for(c in categories){
   for(n in niches){
     res_mini = res_one %>% 
       filter(NicheCategories == n) 
-    searchterms = res_mini$search.terms
-  for(s in searchterms){ #for each search term
+    searchterms = res_mini$SearchTerm
+  for(s in searchterms){ #for each search term #02_23 this isn't working
 
     abstract_match = str_subset(as.character(case_studies$Project.Abstract), #find if search term occurs
                                 regex(s, ignore_case = TRUE)) #in abstract or project name
@@ -100,9 +100,10 @@ for(c in categories){
 }}
 
 df_final2 = df_final %>%
-  distinct() #deduplication 
+  distinct() #deduplication #would remove this if interested in
+#counting the #of times a keyword appears per project
 
-write.csv(df_final2, "Cases_EPICN_Josekeywords_cleaned07_14_2022.csv", row.names = FALSE)
+write.csv(df_final2, "Cases_EPICN_Josekeywords_cleaned02_23_23.csv", row.names = FALSE)
 
 #code works but need to account for * operator for search terms to optimize search 
 #need to make sure it's KEEPING everything from each iteration 
