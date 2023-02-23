@@ -45,7 +45,7 @@ topcities = df_topcities %>%
   filter(City != "Monroe") %>%
   full_join(topcities_Monroesub)
 
-#test walkthru: c = "Austin"
+####forloop summarizing resilience priorities of communities####
 for(c in cities){
   df_mini = topcities %>% 
     filter(City == c) #create a subset of data for just 
@@ -81,22 +81,6 @@ for(c in cities){
            nichecounts = "0.0001") %>%
     mutate(nichecounts = as.numeric(nichecounts))
   
-  #join padded-negligible niches and categories 
-  #with real data 
-  #so that empty categories still are shown in the graph 
-  #so it is visually apparent to non-scientist users 
-  #that the category is still there, just their 
-  #community of interest does not have substantial weight
-  #behind that category or niche being a priority
-  #this will make it easier to visually compare with a 
-  #community where it IS a priority 
-  #e.g. Monroe WI may have a very very short social capital bar
-  #while Miami may have a ccomparitively large social capital bar 
-  #it will facilittate interpretation by non-scientist, where
-  #it is appropriate in this context for us to include "NA" type data, or "non-data" 
-  #whereas in technical contexts, this is typically discouraged
-  #in favor of only drawing data that IS there and maximizing 
-  #utility and meaning of "ink" used 
   data_pre = df_hitsniche %>% 
     full_join(data_missingfactors) 
   
@@ -182,3 +166,21 @@ for(c in cities){
 #next steps: normalize values for ease of interpretation
 #reduce white space etc 
 #move on to word clouds
+
+####Justification for 'empty' bars in radar plots####
+#join padded-negligible niches and categories 
+#with real data 
+#so that empty categories still are shown in the graph 
+#so it is visually apparent to non-scientist users 
+#that the category is still there, just their 
+#community of interest does not have substantial weight
+#behind that category or niche being a priority
+#this will make it easier to visually compare with a 
+#community where it IS a priority 
+#e.g. Monroe WI may have a very very short social capital bar
+#while Miami may have a comparitively large social capital bar 
+#it will facilitate interpretation by non-scientist, where
+#it is appropriate in this context for us to include "NA" type data, or "non-data" 
+#whereas in technical contexts, this is typically discouraged
+#in favor of only drawing data that IS there and maximizing 
+#utility and meaning of "ink" used 
