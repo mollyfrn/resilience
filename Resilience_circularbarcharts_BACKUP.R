@@ -65,6 +65,11 @@ topcities = df_topcities %>%
   full_join(topcities_Monroesub) #insert the fixed Monroe entries 
 
 ####forloop summarizing resilience priorities of communities####
+radarplot_input = data.frame(category = NULL, niche = NULL, City = NULL, 
+                             State = NULL, nichecounts = NULL, 
+                             nichecounts_minmaxnorm = NULL,
+                             id = NULL)
+
 #c = "Ramsey City" 
 for(c in cities){
   df_mini = topcities %>% 
@@ -147,7 +152,12 @@ for(c in cities){
     mutate(id = seq(1:dim(data_pre))) %>%
     filter(category != "Misc") %>%
     mutate(category = droplevels(category))
-  
+  #maybe I should end the loop here, save this as intermediate
+  #and have a sep loop for graphing? 
+  radarplot_input = rbind(radarplot_input, data)
+}
+
+write.csv(radarplot_input, "radarplot_input.csv", row.names = FALSE)
   #data now ready to be prepped for graph 
   #insert graphing code below 
   #prepping data for grid/scales 
