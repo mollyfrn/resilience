@@ -138,8 +138,8 @@ for(c in cities){
            niche = niche, 
            City = c, 
            State = unique(df_hitsniche$State),
-           nichecounts = "0.0001",
-           nichecounts_minmaxnorm = "0.00000001") %>%
+           nichecounts = "0.001",
+           nichecounts_minmaxnorm = "0.001") %>%
     mutate(nichecounts = as.numeric(nichecounts), 
            nichecounts_minmaxnorm = as.numeric(nichecounts_minmaxnorm))
   
@@ -167,8 +167,8 @@ write.csv(radarplot_input, "radarplot_input.csv", row.names = FALSE)
 #c) still missing niche bars 
 #- the inserted 0.00001 might be too negligible
 for(c in cities){
-  miniradar = radarplot_input %>%
-    filter(City = c)
+  data = radarplot_input %>%
+    filter(City == c)
   #prepping data for grid/scales 
   # Set a number of 'empty bar' to add at the end of each group
   empty_bar <- 1
@@ -225,19 +225,19 @@ for(c in cities){
       plot.margin = unit(rep(-1,4), "in") 
     ) +
     coord_polar() + 
-    geom_text(data=label_data, aes(x=id, y=nichecounts_minmaxnorm+10, label=niche, hjust=hjust),
-              color="black", fontface="bold",alpha=0.6, size=2, angle= label_data$angle, 
+    geom_text(data=label_data, aes(x=id, y=nichecounts_minmaxnorm, label= niche, hjust=hjust),
+              color="black", fontface="bold",alpha=0.2, size=2, angle= angle, 
               inherit.aes = FALSE) +
     #annotate(geom = "text", x = 1)
     # Add base line information
     #geom_segment(data=base_data, aes(x = start, y = -5, xend = end, yend = 0), colour = "black", alpha=0.8, size=0.4 , inherit.aes = FALSE )  +
     geom_textpath(data=base_data, aes(x = title, y = 1.450, label=category), 
                   hjust=c(1,1,1,1), 
-                  colour = "black", alpha=0.8, size=4, fontface="bold", inherit.aes = FALSE, drop = FALSE)
+                  colour = "black", alpha=0.8, size=4, fontface="bold", 
+                  inherit.aes = FALSE)
   ggsave(paste0("test2_polarplot", c,".png"), width = 7, height = 7, units = c("in"))
 }
-   #2/23 CLOSE, it DOES plot and the scaling looks good 
-  #butttttt the niche labels are missing altogether
+   #2/27 niche labels no longer missing but rendering dumb still
   #and one of the niches is squished into a different category 
   #giving one category 4 niches, and one only 2 niches
   #so we gotta fix this - probably a) an error in the 
