@@ -160,6 +160,15 @@ for(c in cities){
 write.csv(radarplot_input, "radarplot_input.csv", row.names = FALSE)
   #data now ready to be prepped for graph 
   #insert graphing code below 
+
+####Graphing radar plots####
+#02/27 need to debug a) missing niche labels 
+#b) add white space/background theme b&w to plot 
+#c) still missing niche bars 
+#- the inserted 0.00001 might be too negligible
+for(c in cities){
+  miniradar = radarplot_input %>%
+    filter(City = c)
   #prepping data for grid/scales 
   # Set a number of 'empty bar' to add at the end of each group
   empty_bar <- 1
@@ -226,7 +235,8 @@ write.csv(radarplot_input, "radarplot_input.csv", row.names = FALSE)
                   hjust=c(1,1,1,1), 
                   colour = "black", alpha=0.8, size=4, fontface="bold", inherit.aes = FALSE, drop = FALSE)
   ggsave(paste0("test2_polarplot", c,".png"), width = 7, height = 7, units = c("in"))
-  #2/23 CLOSE, it DOES plot and the scaling looks good 
+}
+   #2/23 CLOSE, it DOES plot and the scaling looks good 
   #butttttt the niche labels are missing altogether
   #and one of the niches is squished into a different category 
   #giving one category 4 niches, and one only 2 niches
@@ -236,7 +246,7 @@ write.csv(radarplot_input, "radarplot_input.csv", row.names = FALSE)
   #the OG allocation/keyword framework guide 
   #sourced in resilience_coding.R and rerun THAT
   #and b) an error in the geom_text
-}
+
 
 #02_21 fixed, fully debugged!!! 
 #next steps: normalize values for ease of interpretation
