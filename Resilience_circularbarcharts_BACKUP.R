@@ -240,15 +240,10 @@ for(c in cities){
     theme(panel.background = element_rect(fill = "white"))
   ggsave(paste0("test2_polarplot", c,".png"), width = 7, height = 7, units = c("in"))
 }
-   #2/27 niche labels no longer missing but rendering dumb still
-  #and one of the niches is squished into a different category 
-  #giving one category 4 niches, and one only 2 niches
-  #so we gotta fix this - probably a) an error in the 
-  #foundational grid data apportioning  - yeah it's those 38 hits
-  #so I need to go back to 
-  #the OG allocation/keyword framework guide 
-  #sourced in resilience_coding.R and rerun THAT
-  #and b) an error in the geom_text
+   #2/28 niche labels no longer missing but rendering dumb still
+  #also empty NA categories no longer rendering space between categories, need to fix
+#because it means the scale delineations are being covered by a  bar plot
+#also need to dodge, jitter, nudge etc the niche label text, or find a way to make it wrap and also be bolder
 
 
 #02_21 fixed, fully debugged!!! 
