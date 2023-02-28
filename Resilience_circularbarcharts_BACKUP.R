@@ -245,8 +245,3 @@ for(c in cities){
 #because it means the scale delineations are being covered by a  bar plot
 #also need to dodge, jitter, nudge etc the niche label text, or find a way to make it wrap and also be bolder
 
-
-#02_21 fixed, fully debugged!!! 
-#next steps: normalize values for ease of interpretation
-#reduce white space etc 
-#move on to word clouds
