@@ -17,16 +17,58 @@
 
 #or instead of clustering; 2 facet wrapped groups of the topic models for the control vs experimental category topics? 
 library(topicmodels)
+library(tidyverse)
+library(tm)
+library(tidytext)
+
+setwd("C:/Users/mjenkins/OneDrive - Environmental Protection Agency (EPA)/Analyses/Resilience_EpicN")
+# Read in and count data 
+res_casestudies = read.csv("Cases_EPICN_Josekeywords_cleaned02_23_23.csv") 
+#retain or re-add community name column; subset to just communities we are interested in 
+keywords = read.csv("resilience_keywords_02_23_23.csv")
 
 ####read in control data, prep by transforming into a DTM####
-control_df = read.csv(case_studies.csv)
+data_full = read.csv("EPICN4ORD_rawdata.csv")
+#filter out common words like community, city, students, and county, program, and project
+
+generics = c("community", "city", "students", "student", "county", "program", "project")
+
+#make it control_dtm
+control_dtm = data_full %>%
+  unnest_tokens(word, Project.Abstract) %>%
+  filter(!word %in% stop_words$word & !word %in% generics) %>%
+  count(Project.Name, word) %>%
+  cast_dtm(Project.Name, word, n)
+
+control_dtm
+
+# case_words = case_studies %>% 
+#   unnest_tokens(word, Project.Abstract) %>% 
+#   filter(!word %in% stop_words$word) %>% 
+#   count(Project.Name, word, sort = TRUE)
+
 
 
 ####Run topic model on control data####
 # set a seed so that the output of the model is predictable
-control_lda <- LDA(control_DTM, k = 4, control = list(seed = 8752))
+control_lda <- LDA(control_dtm, k = 12, control = list(seed = 2719))
 control_lda
 #> A LDA_VEM topic model with 4 topics.
+control_topics <- tidy(control_lda, matrix = "beta")
+
+control_top_terms <- control_topics %>%
+  group_by(topic) %>%
+  slice_max(beta, n = 10) %>% 
+  ungroup() %>%
+  arrange(topic, -beta)
+
+control_top_terms %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  scale_y_reordered()
+
 
 ####read in experimental data keywords, prep by transforming into a DTM####
 exp_df = read.csv(case_studies.csv)
