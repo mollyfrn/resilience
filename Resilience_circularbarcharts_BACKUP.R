@@ -166,6 +166,8 @@ write.csv(radarplot_input, "radarplot_input.csv", row.names = FALSE)
 #b) add white space/background theme b&w to plot 
 #c) still missing niche bars 
 #- the inserted 0.00001 might be too negligible
+radarplot_input = read.csv("radarplot_input.csv", header = TRUE)
+cities = unique(factor(radarplot_input$City))
 for(c in cities){
   data = radarplot_input %>%
     filter(City == c)
@@ -206,10 +208,10 @@ for(c in cities){
     geom_bar(aes(x=as.factor(id), y=nichecounts_minmaxnorm, fill=category), stat="identity", alpha=0.5) 
   p
   # Add a val=100/75/50/25 lines. I do it at the beginning to make sur barplots are OVER it.
-  p+  geom_segment(data=grid_data, aes(x = end, y = 1.000, xend = start, yend = 1000), colour = "grey", alpha=1, linewidth=0.3 , inherit.aes = FALSE ) +
-    geom_segment(data=grid_data, aes(x = end, y = 0.800, xend = start, yend = 800), colour = "grey", alpha=1, linewidth=0.3 , inherit.aes = FALSE ) +
-    geom_segment(data=grid_data, aes(x = end, y = 0.600, xend = start, yend = 600), colour = "grey", alpha=1, linewidth=0.3 , inherit.aes = FALSE ) +
-    geom_segment(data=grid_data, aes(x = end, y = 0.200, xend = start, yend = 200), colour = "grey", alpha=1, linewidth=0.3 , inherit.aes = FALSE ) 
+  p+  geom_segment(data=grid_data, aes(x = end, y = 1.000, xend = start, yend = 1.000), colour = "grey", alpha=1, linewidth=0.03 , inherit.aes = FALSE ) +
+    geom_segment(data=grid_data, aes(x = end, y = 0.800, xend = start, yend = .800), colour = "grey", alpha=1, linewidth=0.03 , inherit.aes = FALSE ) +
+    geom_segment(data=grid_data, aes(x = end, y = 0.600, xend = start, yend = .600), colour = "grey", alpha=1, linewidth=0.03 , inherit.aes = FALSE ) +
+    geom_segment(data=grid_data, aes(x = end, y = 0.200, xend = start, yend = .200), colour = "grey", alpha=1, linewidth=0.03 , inherit.aes = FALSE ) 
   
   # Add text showing the value of each 100/75/50/25 lines
   p+ annotate("text", x = rep(max(data$id),4), y = c(0.200, 0.600, 0.800, 1.000), label = c("0.2", "0.6", "0.8", "1.0") , color="grey", size=3 , angle=0, fontface="bold", hjust=1) +
@@ -231,10 +233,11 @@ for(c in cities){
     #annotate(geom = "text", x = 1)
     # Add base line information
     #geom_segment(data=base_data, aes(x = start, y = -5, xend = end, yend = 0), colour = "black", alpha=0.8, size=0.4 , inherit.aes = FALSE )  +
-    geom_textpath(data=base_data, aes(x = title, y = 1.450, label=category), 
+    geom_textpath(data=base_data, aes(x = title, y = 1.430, label=category), 
                   hjust=c(1,1,1,1), 
                   colour = "black", alpha=0.8, size=4, fontface="bold", 
-                  inherit.aes = FALSE)
+                  inherit.aes = FALSE) +
+    theme(panel.background = element_rect(fill = "white"))
   ggsave(paste0("test2_polarplot", c,".png"), width = 7, height = 7, units = c("in"))
 }
    #2/27 niche labels no longer missing but rendering dumb still
