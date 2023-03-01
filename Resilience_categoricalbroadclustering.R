@@ -30,28 +30,34 @@ keywords = read.csv("resilience_keywords_02_23_23.csv")
 ####read in control data, prep by transforming into a DTM####
 data_full = read.csv("EPICN4ORD_rawdata.csv")
 #filter out common words like community, city, students, and county, program, and project
+#fix monroe issue 
+datafull_Monroesub = data_full %>%
+  filter(City == "Monroe") %>%
+  mutate(State = "Wisconsin")
+datafull = data_full %>%
+  filter(City != "Monroe") %>% #remove the problematic Monroe entries
+  full_join(datafull_Monroesub) #insert the fixed Monroe entries 
 
-generics = c("community", "city", "students", "student", "county", "program", "project")
+
+generics = c("community", "city", "students", 
+             "student", "county", "program", "project",
+             "report", "plan", "research", "report")
 
 #make it control_dtm
-control_dtm = data_full %>%
+control_dtm = datafull %>%
   unnest_tokens(word, Project.Abstract) %>%
   filter(!word %in% stop_words$word & !word %in% generics) %>%
-  count(Project.Name, word) %>%
-  cast_dtm(Project.Name, word, n)
+  count(City, word) %>%
+  cast_dtm(City, word, n)
+
+#try also for cities/communities? 
+#^ see if  topic model works when split that way
 
 control_dtm
 
-# case_words = case_studies %>% 
-#   unnest_tokens(word, Project.Abstract) %>% 
-#   filter(!word %in% stop_words$word) %>% 
-#   count(Project.Name, word, sort = TRUE)
-
-
-
 ####Run topic model on control data####
 # set a seed so that the output of the model is predictable
-control_lda <- LDA(control_dtm, k = 12, control = list(seed = 2719))
+control_lda <- LDA(control_dtm, k = 4, control = list(seed = 2719))
 control_lda
 #> A LDA_VEM topic model with 4 topics.
 control_topics <- tidy(control_lda, matrix = "beta")
@@ -69,7 +75,7 @@ control_top_terms %>%
   facet_wrap(~ topic, scales = "free") +
   scale_y_reordered()
 
-
+#can I manually assign topic categories? do they sync? 
 ####read in experimental data keywords, prep by transforming into a DTM####
 exp_df = read.csv(case_studies.csv)
 
