@@ -20,6 +20,8 @@ library(topicmodels)
 library(tidyverse)
 library(tm)
 library(tidytext)
+library(SnowballC)
+library(hunspell)
 
 setwd("C:/Users/mjenkins/OneDrive - Environmental Protection Agency (EPA)/Analyses/Resilience_EpicN")
 # Read in and count data 
@@ -39,14 +41,27 @@ datafull = data_full %>%
   full_join(datafull_Monroesub) #insert the fixed Monroe entries 
 
 
-generics = c("community", "city", "students", 
+generics = data.frame( word = c("community", "city", "students", 
              "student", "county", "program", "project",
-             "report", "plan", "research", "report")
+             "report", "plan", "research", "reports", 
+             "analysis", "develop", "design"))
+
 
 #make it control_dtm
 control_dtm = datafull %>%
-  unnest_tokens(word, Project.Abstract) %>%
-  filter(!word %in% stop_words$word & !word %in% generics) %>%
+  unnest_tokens(word, Project.Abstract) %>% #way to stem tokens?
+  filter(!word %in% stop_words$word &
+           !word %in% generics) %>%
+  mutate(wordstem = wordStem(word))%>%
+  count(City, wordstem) %>%
+  cast_dtm(City, wordstem, n)
+stop_df = as.data.frame(stop_words)
+
+control_dtm = datafull %>%
+  unnest_tokens(word, Project.Abstract) %>% #way to stem tokens?
+  anti_join(stop_df, by = "word") %>% 
+  anti_join(generics, by = "word") %>%
+  #mutate(wordstem = wordStem(word))%>% consider not stemming ahead of topic modeling, plenty of lit discourages or is mixed
   count(City, word) %>%
   cast_dtm(City, word, n)
 
@@ -64,7 +79,7 @@ control_topics <- tidy(control_lda, matrix = "beta")
 
 control_top_terms <- control_topics %>%
   group_by(topic) %>%
-  slice_max(beta, n = 10) %>% 
+  slice_max(beta, n = 20) %>% 
   ungroup() %>%
   arrange(topic, -beta)
 
@@ -74,11 +89,31 @@ control_top_terms %>%
   geom_col(show.legend = FALSE) +
   facet_wrap(~ topic, scales = "free") +
   scale_y_reordered()
-
+ggsave("control_4topicmodel_nostem.png", plot = last_plot(), width = 7, height = 7, units = c("in"))
 #can I manually assign topic categories? do they sync? 
+#e.g. should I use the exp categories 
+#to do a supervised topic model 
+#and eval how well that model fits/predicts
+#the tokenized corpuses/lexicon? 
+#bonus benefit of slda is that it uses likelihood
+#might be more appropriate to using a 
+#response variable like location 
+#e.g.(coastal, west, north, south, east, etc) to predict topics
+#outputs 1 and 4 most salient 
+#output 1 uses stemming, output 4 ignores 
+#environmental consistently its own topic; 
+#health & wellbeing, socioeconomic health, 
+#business and governance often 
+#somewhat blended in topic models 
+#but nonetheless apparent or emergent 
+
+
+
 ####read in experimental data keywords, prep by transforming into a DTM####
 exp_df = read.csv(case_studies.csv)
-
+#do outputs from topic models bear similarity to exp lexicons by category?
+#how well does topic 1 correspond to public health & wellbeing etc 
+#get 
 ####See if topic model correctly allocates key words into 4 topics that correspond to the categories####
 
 exp_lda <- LDA(Exp_DTM, k = 4, control = list(seed = 8752))
