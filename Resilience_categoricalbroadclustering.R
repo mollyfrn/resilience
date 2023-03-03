@@ -3,7 +3,7 @@
 #Examining category or Niche agreement between expert/academic lit lexicon and community applied lexicon 
 #e.g. broad categorical agreement of priority topic areas in spite of specific language dissimilarity?
 #initial inspiration in resilience_coding.R doc, but this is much more neat 
-
+#https://sicss.io/2019/materials/day3-text-analysis/topic-modeling/rmarkdown/Topic_Modeling.html
 #Need to find a way to clearly visually demonstrate the similarity in categorical topics 
 #use frameowkr keyword doc to roll up categorical assignments
 #vs manual coding into categories using the organic language in the text 
@@ -151,7 +151,7 @@ exp_dtm = datafull %>%
   filter(word %in% keyword_toks$word) %>%
   #mutate(wordstem = wordStem(word))%>% consider not stemming ahead of topic modeling, plenty of lit discourages or is mixed
   count(City, word) %>%
-  cast_dtm(City, word, n) #oh shoot I probably don't want to count by City
+  cast_dtm(City, word, n)
 ####See if topic model correctly allocates key words into 4 topics that correspond to the categories####
 
 exp_lda <- LDA(exp_dtm, k = 4, control = list(seed = 8705))
@@ -247,8 +247,7 @@ Jac2.1 = stringsim(exptop2, controltop1, method = "jaccard")
 Jac1.1 = stringsim(exptop1, controltop1, method = "jaccard")
 
 #all of the terms in the topic model groupings 
-#bear high similarity regardless of exp vs control group origin 
-
+#bear high similarity regardless of exp
 
 Jacfull = stringsim(control_top_terms$term, exp_top_terms$term, method = "jaccard")
 Jacfull
