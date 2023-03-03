@@ -83,12 +83,20 @@ control_top_terms2 <- control_topics %>%
   slice_max(beta, n = 20) %>% 
   ungroup() %>%
   arrange(topic, -beta) %>%
+  mutate(topic = factor(topic),
+         Group = "Control")
+         
+control_top_terms2 <- control_topics %>%
+  group_by(topic) %>%
+  slice_max(beta, n = 20) %>% 
+  ungroup() %>%
+  arrange(topic, -beta) %>%
   mutate(topic = factor(topic, 
                         labels = c("public & social health",
                         "public & social health pt2", 
                         "physical & natural infra", 
                         "leadership and governance"))) 
-
+#graph w/out labels
 control_top_terms %>%
   mutate(term = reorder_within(term, beta, topic)) %>%
   ggplot(aes(beta, term, fill = factor(topic))) +
@@ -96,6 +104,7 @@ control_top_terms %>%
   facet_wrap(~ topic, scales = "free") +
   scale_y_reordered()
 
+#graph w/labels
 control_top_terms2 %>%
   mutate(term = reorder_within(term, beta, topic)) %>%
   ggplot(aes(beta, term, fill = topic)) +
@@ -155,7 +164,8 @@ exp_top_terms <- exp_topics %>%
   slice_max(beta, n = 20) %>% 
   ungroup() %>%
   arrange(topic, -beta) %>%
-  mutate(topic = factor(topic)) #topic, 
+  mutate(topic = factor(topic),
+         Group = "Experimental") #topic, 
                         #labels = c("public & social health",
                                    #"public & social health pt2", 
                                    #"physical & natural infra", 
@@ -176,6 +186,7 @@ ggsave("exp_4topicmodel_nostem_nogenerics.png", plot = last_plot(), width = 7, h
 #do a cosine or Jaccard's similarity between THESE sets 
 #is there greater similarity? 
 
+#exp top terms vs control top terms
 ####Naive bayes for topic classification and prediction?#### 
 #can, if trained on 1/4 of the resilience framework, a model correctly assign the keywords to the right 4 categories? 
 #this might be a question for another time, or at least 
