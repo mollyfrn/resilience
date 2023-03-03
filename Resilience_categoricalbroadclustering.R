@@ -39,8 +39,9 @@ datafull_Monroesub = data_full %>%
 datafull = data_full %>%
   filter(City != "Monroe") %>% #remove the problematic Monroe entries
   full_join(datafull_Monroesub) #insert the fixed Monroe entries 
+####end cleaning, start text tokenizing etc####
 
-
+####Control text processing####
 generics = data.frame( word = c("community", "city", "students", 
              "student", "county", "program", "project",
              "report", "plan", "research", "reports", 
@@ -77,11 +78,16 @@ control_lda
 #> A LDA_VEM topic model with 4 topics.
 control_topics <- tidy(control_lda, matrix = "beta")
 
-control_top_terms <- control_topics %>%
+control_top_terms2 <- control_topics %>%
   group_by(topic) %>%
   slice_max(beta, n = 20) %>% 
   ungroup() %>%
-  arrange(topic, -beta)
+  arrange(topic, -beta) %>%
+  mutate(topic = factor(topic, 
+                        labels = c("public & social health",
+                        "public & social health pt2", 
+                        "physical & natural infra", 
+                        "leadership and governance"))) 
 
 control_top_terms %>%
   mutate(term = reorder_within(term, beta, topic)) %>%
@@ -89,7 +95,14 @@ control_top_terms %>%
   geom_col(show.legend = FALSE) +
   facet_wrap(~ topic, scales = "free") +
   scale_y_reordered()
-ggsave("control_4topicmodel_nostem.png", plot = last_plot(), width = 7, height = 7, units = c("in"))
+
+control_top_terms2 %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  ggplot(aes(beta, term, fill = topic)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  scale_y_reordered()
+ggsave("controllabeled_4topicmodel_nostem.png", plot = last_plot(), width = 7, height = 7, units = c("in"))
 #can I manually assign topic categories? do they sync? 
 #e.g. should I use the exp categories 
 #to do a supervised topic model 
@@ -114,7 +127,60 @@ exp_df = read.csv(case_studies.csv)
 #do outputs from topic models bear similarity to exp lexicons by category?
 #how well does topic 1 correspond to public health & wellbeing etc 
 #get 
+####Control text processing####
+generics = data.frame( word = c("community", "city", "students", 
+                                "student", "county", "program", "project",
+                                "report", "plan", "research", "reports", 
+                                "analysis", "develop", "design"))
+stop_df = as.data.frame(stop_words)
+keyword_toks = keywords %>%
+  unnest_tokens(word, SearchTerm)
+exp_dtm = datafull %>%
+  unnest_tokens(word, Project.Abstract) %>% #way to stem tokens?
+  anti_join(stop_df, by = "word") %>% 
+  anti_join(generics, by = "word") %>%
+  filter(word %in% keyword_toks$word) %>%
+  #mutate(wordstem = wordStem(word))%>% consider not stemming ahead of topic modeling, plenty of lit discourages or is mixed
+  count(City, word) %>%
+  cast_dtm(City, word, n)
 ####See if topic model correctly allocates key words into 4 topics that correspond to the categories####
 
-exp_lda <- LDA(Exp_DTM, k = 4, control = list(seed = 8752))
+exp_lda <- LDA(exp_dtm, k = 4, control = list(seed = 8705))
 exp_lda
+
+exp_topics <- tidy(exp_lda, matrix = "beta")
+
+exp_top_terms <- exp_topics %>%
+  group_by(topic) %>%
+  slice_max(beta, n = 20) %>% 
+  ungroup() %>%
+  arrange(topic, -beta) %>%
+  mutate(topic = factor(topic)) #topic, 
+                        #labels = c("public & social health",
+                                   #"public & social health pt2", 
+                                   #"physical & natural infra", 
+                                   #"leadership and governance"))) 
+
+exp_top_terms %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  ggplot(aes(beta, term, fill = topic)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  scale_y_reordered()
+
+ggsave("exp_4topicmodel_nostem_nogenerics.png", plot = last_plot(), width = 7, height = 7, units = c("in"))
+
+####Merge 2 groups of 4-set, 20 word lexicons####
+#label "control" and 'experiment" 
+#facet_wrap/stack for visual comparison
+#do a cosine or Jaccard's similarity between THESE sets 
+#is there greater similarity? 
+
+####Naive bayes for topic classification and prediction?#### 
+#can, if trained on 1/4 of the resilience framework, a model correctly assign the keywords to the right 4 categories? 
+#this might be a question for another time, or at least 
+#maybe would be useful for seeing the exp framework validation 
+#but not necessary for the control, since the control is actually 
+#pretty apparent 
+#is it ok for me to compare the lda for the control to the tf and raw freq breakdowns in the exp? 
+#does that help paint the picture of categorical overlap? 
