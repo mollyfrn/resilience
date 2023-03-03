@@ -78,9 +78,9 @@ control_lda
 #> A LDA_VEM topic model with 4 topics.
 control_topics <- tidy(control_lda, matrix = "beta")
 
-control_top_terms2 <- control_topics %>%
+control_top_terms <- control_topics %>%
   group_by(topic) %>%
-  slice_max(beta, n = 20) %>% 
+  slice_max(beta, n = 10) %>% 
   ungroup() %>%
   arrange(topic, -beta) %>%
   mutate(topic = factor(topic),
@@ -151,7 +151,7 @@ exp_dtm = datafull %>%
   filter(word %in% keyword_toks$word) %>%
   #mutate(wordstem = wordStem(word))%>% consider not stemming ahead of topic modeling, plenty of lit discourages or is mixed
   count(City, word) %>%
-  cast_dtm(City, word, n)
+  cast_dtm(City, word, n) #oh shoot I probably don't want to count by City
 ####See if topic model correctly allocates key words into 4 topics that correspond to the categories####
 
 exp_lda <- LDA(exp_dtm, k = 4, control = list(seed = 8705))
@@ -161,7 +161,7 @@ exp_topics <- tidy(exp_lda, matrix = "beta")
 
 exp_top_terms <- exp_topics %>%
   group_by(topic) %>%
-  slice_max(beta, n = 20) %>% 
+  slice_max(beta, n = 10) %>% 
   ungroup() %>%
   arrange(topic, -beta) %>%
   mutate(topic = factor(topic),
@@ -186,7 +186,75 @@ ggsave("exp_4topicmodel_nostem_nogenerics.png", plot = last_plot(), width = 7, h
 #do a cosine or Jaccard's similarity between THESE sets 
 #is there greater similarity? 
 
+merged_topicmods = data.frame(rbind(control_top_terms, exp_top_terms))
+
+factor(merged_topicmods$Group)
+#look at which topics correspond closest and plot 
+#next to each other, or reorder 
+
+
+merged_topicmods %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  ggplot(aes(beta, term, fill = topic)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(factor(Group) ~topic, scales = "free") + #add group
+  scale_y_reordered()
+
+ggsave("4topicmodel_expvscontrol.png", plot = last_plot(), width = 7, height = 7, units = c("in"))
+
 #exp top terms vs control top terms
+
+#####Similarity matrices####
+exptop1 = merged_topicmods %>% 
+  filter(topic == "1" & Group == "Experimental") %>%
+  select(term)
+exptop2 = merged_topicmods %>% 
+  filter(topic == "2" & Group == "Experimental") %>%
+  select(term)
+exptop3 = merged_topicmods %>% 
+  filter(topic == "3" & Group == "Experimental") %>%
+  select(term)
+exptop4 = merged_topicmods %>% 
+  filter(topic == "4" & Group == "Experimental") %>%
+  select(term)
+
+
+controltop1 = merged_topicmods %>% 
+  filter(topic == "1" & Group == "Control") %>%
+  select(term)
+
+controltop2= merged_topicmods %>% 
+  filter(topic == "2" & Group == "Control") %>%
+  select(term)
+
+controltop3= merged_topicmods %>% 
+  filter(topic == "3" & Group == "Control") %>%
+  select(term)
+
+controltop4= merged_topicmods %>% 
+  filter(topic == "4" & Group == "Control") %>%
+  select(term)
+#yes
+
+Jac3 = stringsim(exptop3, controltop3, method = "jaccard")
+Jac4 = stringsim(exptop4, controltop3, method = "jaccard")
+Jac3.b = stringsim(exptop3, controltop4, method = "jaccard")
+Jac4.b = stringsim(exptop4, controltop4, method = "jaccard")
+
+Jac3.1 = stringsim(exptop3, controltop1, method = "jaccard")
+Jac4.1 = stringsim(exptop4, controltop1, method = "jaccard")
+Jac2.1 = stringsim(exptop2, controltop1, method = "jaccard")
+Jac1.1 = stringsim(exptop1, controltop1, method = "jaccard")
+
+#all of the terms in the topic model groupings 
+#bear high similarity regardless of exp vs control group origin 
+
+
+Jacfull = stringsim(control_top_terms$term, exp_top_terms$term, method = "jaccard")
+Jacfull
+
+#maybe I should stem before calcs? 
+
 ####Naive bayes for topic classification and prediction?#### 
 #can, if trained on 1/4 of the resilience framework, a model correctly assign the keywords to the right 4 categories? 
 #this might be a question for another time, or at least 
@@ -195,3 +263,4 @@ ggsave("exp_4topicmodel_nostem_nogenerics.png", plot = last_plot(), width = 7, h
 #pretty apparent 
 #is it ok for me to compare the lda for the control to the tf and raw freq breakdowns in the exp? 
 #does that help paint the picture of categorical overlap? 
+
