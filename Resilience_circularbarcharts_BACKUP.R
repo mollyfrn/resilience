@@ -170,7 +170,8 @@ radarplot_input = read.csv("radarplot_input.csv", header = TRUE)
 cities = unique(factor(radarplot_input$City))
 for(c in cities){
   data = radarplot_input %>%
-    filter(City == c)
+    filter(City == c) %>%
+  mutate(category = factor(category))
   #prepping data for grid/scales 
   # Set a number of 'empty bar' to add at the end of each group
   empty_bar <- 1
@@ -178,7 +179,7 @@ for(c in cities){
   colnames(to_add) <- colnames(data)
   to_add$category <- rep(levels(data$category), each=empty_bar)
   data <- rbind(data, to_add)
-  data <- data %>% arrange(category, nichecounts_minmaxnorm)
+  data <- data %>% arrange(category, niche)
   data$id <- seq(1, nrow(data))
   
   # Get the name and the y position of each label
@@ -217,29 +218,36 @@ for(c in cities){
   p+ annotate("text", x = rep(max(data$id),4), y = c(0.200, 0.600, 0.800, 1.000), label = c("0.2", "0.6", "0.8", "1.0") , color="grey", size=3 , angle=0, fontface="bold", hjust=1) +
     
     geom_bar(aes(x=as.factor(id), y=nichecounts_minmaxnorm, fill=category), stat="identity", alpha=0.5) +
-    ylim(-1.00,1.500) +
+    ylim(-1.0, 1.9) +
+    ggtitle(paste("Resilience Profile of", c))+
     theme_minimal() +
     theme(
       legend.position = "none",
       axis.text = element_blank(),
       axis.title = element_blank(),
       panel.grid = element_blank(),
-      plot.margin = unit(rep(-1,4), "in") 
-    ) +
+      plot.margin = unit(rep(-1,4), "inches"), 
+      plot.background = element_rect(fill = "white"),
+      #plot.title.position = "panel",
+      plot.title = element_text(face = "bold",
+                                hjust = 0.5, 
+                                margin = margin(t=1.7, unit = "in")))+
     coord_polar() + 
     geom_text(data=label_data, aes(x=id, y=nichecounts_minmaxnorm, label= niche, hjust=hjust),
               color="black", fontface="bold",alpha=0.2, size=2, angle= angle, 
-              inherit.aes = FALSE) +
+              inherit.aes = FALSE) + #03/09 niche labels 
+    #appearing backwards/upsidedown in left side of plot
     #annotate(geom = "text", x = 1)
     # Add base line information
     #geom_segment(data=base_data, aes(x = start, y = -5, xend = end, yend = 0), colour = "black", alpha=0.8, size=0.4 , inherit.aes = FALSE )  +
-    geom_textpath(data=base_data, aes(x = title, y = 1.430, label=category), 
+    geom_textpath(data=base_data, aes(x = title, y = 1.80, label=category), 
                   hjust=c(1,1,1,1), 
                   colour = "black", alpha=0.8, size=4, fontface="bold", 
-                  inherit.aes = FALSE) +
-    theme(panel.background = element_rect(fill = "white"))
-  ggsave(paste0("test2_polarplot", c,".png"), width = 7, height = 7, units = c("in"))
-}
+                  inherit.aes = FALSE) 
+  
+  ggsave(paste0("test2_polarplot", c,".png"), width = 8, height = 8, units = c("in"))
+ # ggsave(paste0("mini_polarplot", c,".png"), width = 400, height = 400, units = c("px"))
+  }
    #2/28 niche labels no longer missing but rendering dumb still
   #also empty NA categories no longer rendering space between categories, need to fix
 #because it means the scale delineations are being covered by a  bar plot
