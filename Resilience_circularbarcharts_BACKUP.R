@@ -50,7 +50,7 @@ df_comnames = df %>%
   left_join(data_full, by = c("name" = "Project.Name")) %>% 
   dplyr::select(category, niche, keyword, name, abstract, City, State)%>%
   distinct()
-  
+
 df_topcities = df_comnames  %>% 
   filter(City %in% selectedcommunities$City)
 
@@ -86,7 +86,7 @@ for(c in cities){
     mutate(nichecounts = as.numeric(n)) %>%
     mutate(nichecounts_minmaxnorm = 
              ((nichecounts - min(nichecounts))/
-                 (max(nichecounts) - min(nichecounts)))) %>% #normalize counts
+                (max(nichecounts) - min(nichecounts)))) %>% #normalize counts
     select(-n) #do want to keep and compare diff "counts"
   #02/23 this is where I need to add 
   #the normalizing mutate argument ? unless I maybe need to later 
@@ -121,11 +121,11 @@ for(c in cities){
   #puts emphasis on trends across the city, across projects
   #so how I have it is almost certainly fine 
   
-#this block helps me ID whichever niches and categories 
-#are NOT represented in a given city but i want to keep in the graph 
-#will iteratively adapt based on what is absent from 
-#df_hitsniche so it is important for it to be inside the loop
-#includes both missing niches and categories
+  #this block helps me ID whichever niches and categories 
+  #are NOT represented in a given city but i want to keep in the graph 
+  #will iteratively adapt based on what is absent from 
+  #df_hitsniche so it is important for it to be inside the loop
+  #includes both missing niches and categories
   data_missingfactors = df %>%
     anti_join(df_hitsniche) %>% 
     filter(category != "Misc") %>%
@@ -138,13 +138,27 @@ for(c in cities){
            niche = niche, 
            City = c, 
            State = unique(df_hitsniche$State),
-           nichecounts = "0.06",
-           nichecounts_minmaxnorm = "0.06") %>%
+           nichecounts = "0.03",
+           nichecounts_minmaxnorm = "0.03") %>%
     mutate(nichecounts = as.numeric(nichecounts), 
            nichecounts_minmaxnorm = as.numeric(nichecounts_minmaxnorm))
   
-  data_pre = df_hitsniche %>% 
+  
+    #need to pull together data_empty, df_hitsniche, and datamissingfactors
+  
+  data_prepre = df_hitsniche %>% 
     full_join(data_missingfactors) 
+  
+  data_notempty = data_prepre %>%
+    filter(nichecounts_minmaxnorm != 0)
+  
+  data_empty = data_prepre %>%
+    filter(nichecounts_minmaxnorm == 0) %>%
+    mutate(nichecounts_minmaxnorm = "0.03") %>%
+    mutate(nichecounts_minmaxnorm = as.numeric(nichecounts_minmaxnorm))
+  
+  data_pre = data_empty %>%
+    full_join(data_notempty)
   
   #add ID numbers to help with plotting structure
   #and remove the "Misc" category and assoc level
@@ -158,8 +172,8 @@ for(c in cities){
 }
 
 write.csv(radarplot_input, "radarplot_input.csv", row.names = FALSE)
-  #data now ready to be prepped for graph 
-  #insert graphing code below 
+#data now ready to be prepped for graph 
+#insert graphing code below 
 
 ####Graphing radar plots####
 #02/27 need to debug a) missing niche labels 
@@ -171,7 +185,8 @@ cities = unique(factor(radarplot_input$City))
 for(c in cities){
   data = radarplot_input %>%
     filter(City == c) %>%
-  mutate(category = factor(category))
+    mutate(category = factor(category))
+    
   #prepping data for grid/scales 
   # Set a number of 'empty bar' to add at the end of each group
   empty_bar <- 1
@@ -202,7 +217,7 @@ for(c in cities){
   grid_data$start <- grid_data$start - 1
   grid_data <- grid_data[-1,]
   
-#all of the prep stuff works 02/23  
+  #all of the prep stuff works 02/23  
   #plot 
   p <- ggplot(data, aes(x=as.factor(id), y=nichecounts_minmaxnorm, fill=category)) +       # Note that id is a factor. If x is numeric, there is some space between the first bar
     
@@ -248,10 +263,10 @@ for(c in cities){
                   inherit.aes = FALSE) 
   
   ggsave(paste0("test2_polarplot", c,".png"), width = 8, height = 8, units = c("in"))
- # ggsave(paste0("mini_polarplot", c,".png"), width = 400, height = 400, units = c("px"))
-  }
-   #2/28 niche labels no longer missing but rendering dumb still
-  #also empty NA categories no longer rendering space between categories, need to fix
+  # ggsave(paste0("mini_polarplot", c,".png"), width = 400, height = 400, units = c("px"))
+}
+#2/28 niche labels no longer missing but rendering dumb still
+#also empty NA categories no longer rendering space between categories, need to fix
 #because it means the scale delineations are being covered by a  bar plot
 #also need to dodge, jitter, nudge etc the niche label text, or find a way to make it wrap and also be bolder
 
