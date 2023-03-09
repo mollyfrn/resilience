@@ -138,8 +138,8 @@ for(c in cities){
            niche = niche, 
            City = c, 
            State = unique(df_hitsniche$State),
-           nichecounts = "0.001",
-           nichecounts_minmaxnorm = "0.001") %>%
+           nichecounts = "0.06",
+           nichecounts_minmaxnorm = "0.06") %>%
     mutate(nichecounts = as.numeric(nichecounts), 
            nichecounts_minmaxnorm = as.numeric(nichecounts_minmaxnorm))
   
@@ -219,7 +219,7 @@ for(c in cities){
     
     geom_bar(aes(x=as.factor(id), y=nichecounts_minmaxnorm, fill=category), stat="identity", alpha=0.5) +
     ylim(-1.0, 1.9) +
-    ggtitle(paste("Resilience Profile of", c))+
+    ggtitle(paste("Resilience Indices of", c))+
     theme_minimal() +
     theme(
       legend.position = "none",
@@ -230,14 +230,16 @@ for(c in cities){
       plot.background = element_rect(fill = "white"),
       #plot.title.position = "panel",
       plot.title = element_text(face = "bold",
+                                size = 20,
                                 hjust = 0.5, 
                                 margin = margin(t=1.7, unit = "in")))+
-    coord_polar() + 
-    geom_text(data=label_data, aes(x=id, y=nichecounts_minmaxnorm, label= niche, hjust=hjust),
-              color="black", fontface="bold",alpha=0.2, size=2, angle= angle, 
+    coord_curvedpolar() + 
+    geom_text(data=label_data, aes(x=id, y= 1, label= niche),
+              color="black", fontface="bold", upright = TRUE, alpha=0.2, size=2, angle= angle, 
               inherit.aes = FALSE) + #03/09 niche labels 
     #appearing backwards/upsidedown in left side of plot
     #annotate(geom = "text", x = 1)
+    #also tweak color scheme palette to align w/enviroatlas
     # Add base line information
     #geom_segment(data=base_data, aes(x = start, y = -5, xend = end, yend = 0), colour = "black", alpha=0.8, size=0.4 , inherit.aes = FALSE )  +
     geom_textpath(data=base_data, aes(x = title, y = 1.80, label=category), 
