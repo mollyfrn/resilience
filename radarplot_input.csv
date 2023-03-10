@@ -1,0 +1,477 @@
+"category","niche","City","State","nichecounts","nichecounts_minmaxnorm","id"
+"Leadership & Strategy","Integrated Dev Planning","Saint Paul","Minnesota",2,0.03,1
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Saint Paul","Minnesota",2,0.03,2
+"Leadership & Strategy","Effective Leadership & Management ","Saint Paul","Minnesota",3,0.0357142857142857,4
+"Leadership & Strategy","Empowered Stakeholders","Saint Paul","Minnesota",7,0.178571428571429,5
+"Health & Wellbeing","Effective Safeguards for Health & Life","Saint Paul","Minnesota",4,0.0714285714285714,6
+"Health & Wellbeing","Diverse Livelihood & Employment","Saint Paul","Minnesota",11,0.321428571428571,7
+"Health & Wellbeing","Minimum Human Vulnerability ","Saint Paul","Minnesota",13,0.392857142857143,8
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Saint Paul","Minnesota",11,0.321428571428571,9
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Saint Paul","Minnesota",6,0.142857142857143,10
+"Economy & Society","Collective ID & Cohesion","Saint Paul","Minnesota",30,1,11
+"Economy & Society","Security & Law","Saint Paul","Minnesota",7,0.178571428571429,12
+"Economy & Society","Sustainable Econ","Saint Paul","Minnesota",17,0.535714285714286,13
+"Health & Wellbeing","Effective Safeguards for Health & Life","Elk River","Minnesota",2,0.03,2
+"Leadership & Strategy","Effective Leadership & Management ","Elk River","Minnesota",3,0.0294117647058824,3
+"Leadership & Strategy","Empowered Stakeholders","Elk River","Minnesota",10,0.235294117647059,4
+"Leadership & Strategy","Integrated Dev Planning","Elk River","Minnesota",4,0.0588235294117647,5
+"Health & Wellbeing","Diverse Livelihood & Employment","Elk River","Minnesota",4,0.0588235294117647,6
+"Health & Wellbeing","Minimum Human Vulnerability ","Elk River","Minnesota",3,0.0294117647058824,7
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Elk River","Minnesota",36,1,8
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Elk River","Minnesota",3,0.0294117647058824,9
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Elk River","Minnesota",6,0.117647058823529,10
+"Economy & Society","Collective ID & Cohesion","Elk River","Minnesota",15,0.382352941176471,11
+"Economy & Society","Sustainable Econ","Elk River","Minnesota",18,0.470588235294118,12
+"Economy & Society","Security & Law","Elk River","Minnesota",0.03,0.03,13
+"Leadership & Strategy","Effective Leadership & Management ","Pontotoc","Mississippi",1,0.03,2
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Pontotoc","Mississippi",1,0.03,3
+"Leadership & Strategy","Empowered Stakeholders","Pontotoc","Mississippi",4,0.428571428571429,4
+"Leadership & Strategy","Integrated Dev Planning","Pontotoc","Mississippi",3,0.285714285714286,5
+"Health & Wellbeing","Effective Safeguards for Health & Life","Pontotoc","Mississippi",2,0.142857142857143,6
+"Health & Wellbeing","Diverse Livelihood & Employment","Pontotoc","Mississippi",2,0.142857142857143,7
+"Health & Wellbeing","Minimum Human Vulnerability ","Pontotoc","Mississippi",2,0.142857142857143,8
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Pontotoc","Mississippi",2,0.142857142857143,9
+"Economy & Society","Collective ID & Cohesion","Pontotoc","Mississippi",6,0.714285714285714,10
+"Economy & Society","Sustainable Econ","Pontotoc","Mississippi",8,1,11
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Pontotoc","Mississippi",0.03,0.03,12
+"Economy & Society","Security & Law","Pontotoc","Mississippi",0.03,0.03,13
+"Economy & Society","Security & Law","Ramsey City","Minnesota",3,0.03,1
+"Leadership & Strategy","Effective Leadership & Management ","Ramsey City","Minnesota",12,0.204545454545455,3
+"Leadership & Strategy","Empowered Stakeholders","Ramsey City","Minnesota",16,0.295454545454545,4
+"Leadership & Strategy","Integrated Dev Planning","Ramsey City","Minnesota",29,0.590909090909091,5
+"Health & Wellbeing","Diverse Livelihood & Employment","Ramsey City","Minnesota",7,0.0909090909090909,6
+"Health & Wellbeing","Minimum Human Vulnerability ","Ramsey City","Minnesota",7,0.0909090909090909,7
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Ramsey City","Minnesota",16,0.295454545454545,8
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Ramsey City","Minnesota",7,0.0909090909090909,9
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Ramsey City","Minnesota",13,0.227272727272727,10
+"Economy & Society","Collective ID & Cohesion","Ramsey City","Minnesota",47,1,11
+"Economy & Society","Sustainable Econ","Ramsey City","Minnesota",38,0.795454545454545,12
+"Health & Wellbeing","Effective Safeguards for Health & Life","Ramsey City","Minnesota",0.03,0.03,13
+"Leadership & Strategy","Effective Leadership & Management ","Monroe","Wisconsin",10,0.243243243243243,2
+"Leadership & Strategy","Empowered Stakeholders","Monroe","Wisconsin",20,0.513513513513513,3
+"Leadership & Strategy","Integrated Dev Planning","Monroe","Wisconsin",6,0.135135135135135,4
+"Health & Wellbeing","Effective Safeguards for Health & Life","Monroe","Wisconsin",4,0.0810810810810811,5
+"Health & Wellbeing","Diverse Livelihood & Employment","Monroe","Wisconsin",13,0.324324324324324,6
+"Health & Wellbeing","Minimum Human Vulnerability ","Monroe","Wisconsin",22,0.567567567567568,7
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Monroe","Wisconsin",25,0.648648648648649,8
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Monroe","Wisconsin",5,0.108108108108108,9
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Monroe","Wisconsin",13,0.324324324324324,10
+"Economy & Society","Collective ID & Cohesion","Monroe","Wisconsin",38,1,11
+"Economy & Society","Security & Law","Monroe","Wisconsin",5,0.108108108108108,12
+"Economy & Society","Sustainable Econ","Monroe","Wisconsin",31,0.810810810810811,13
+"Health & Wellbeing","Effective Safeguards for Health & Life","Lemon Grove","California",1,0.03,1
+"Leadership & Strategy","Effective Leadership & Management ","Lemon Grove","California",8,0.291666666666667,2
+"Leadership & Strategy","Empowered Stakeholders","Lemon Grove","California",4,0.125,3
+"Leadership & Strategy","Integrated Dev Planning","Lemon Grove","California",8,0.291666666666667,4
+"Health & Wellbeing","Diverse Livelihood & Employment","Lemon Grove","California",9,0.333333333333333,5
+"Health & Wellbeing","Minimum Human Vulnerability ","Lemon Grove","California",9,0.333333333333333,6
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Lemon Grove","California",13,0.5,7
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Lemon Grove","California",6,0.208333333333333,8
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Lemon Grove","California",8,0.291666666666667,9
+"Economy & Society","Collective ID & Cohesion","Lemon Grove","California",23,0.916666666666667,10
+"Economy & Society","Security & Law","Lemon Grove","California",7,0.25,11
+"Economy & Society","Sustainable Econ","Lemon Grove","California",25,1,12
+"Health & Wellbeing","Diverse Livelihood & Employment","Salem","Oregon",3,0.03,1
+"Economy & Society","Security & Law","Salem","Oregon",3,0.03,2
+"Leadership & Strategy","Effective Leadership & Management ","Salem","Oregon",4,0.0555555555555556,3
+"Leadership & Strategy","Integrated Dev Planning","Salem","Oregon",8,0.277777777777778,4
+"Health & Wellbeing","Minimum Human Vulnerability ","Salem","Oregon",10,0.388888888888889,5
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Salem","Oregon",15,0.666666666666667,6
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Salem","Oregon",10,0.388888888888889,7
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Salem","Oregon",9,0.333333333333333,8
+"Economy & Society","Collective ID & Cohesion","Salem","Oregon",13,0.555555555555556,9
+"Economy & Society","Sustainable Econ","Salem","Oregon",21,1,10
+"Leadership & Strategy","Empowered Stakeholders","Salem","Oregon",0.03,0.03,11
+"Health & Wellbeing","Effective Safeguards for Health & Life","Salem","Oregon",0.03,0.03,12
+"Health & Wellbeing","Effective Safeguards for Health & Life","National City","California",5,0.03,1
+"Leadership & Strategy","Effective Leadership & Management ","National City","California",18,0.240740740740741,2
+"Leadership & Strategy","Empowered Stakeholders","National City","California",22,0.314814814814815,3
+"Leadership & Strategy","Integrated Dev Planning","National City","California",18,0.240740740740741,4
+"Health & Wellbeing","Diverse Livelihood & Employment","National City","California",17,0.222222222222222,5
+"Health & Wellbeing","Minimum Human Vulnerability ","National City","California",21,0.296296296296296,6
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","National City","California",42,0.685185185185185,7
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","National City","California",12,0.12962962962963,8
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","National City","California",17,0.222222222222222,9
+"Economy & Society","Collective ID & Cohesion","National City","California",53,0.888888888888889,10
+"Economy & Society","Security & Law","National City","California",30,0.462962962962963,11
+"Economy & Society","Sustainable Econ","National City","California",59,1,12
+"Leadership & Strategy","Empowered Stakeholders","Bellefonte","Pennsylvania",1,0.03,1
+"Health & Wellbeing","Minimum Human Vulnerability ","Bellefonte","Pennsylvania",1,0.03,2
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Bellefonte","Pennsylvania",1,0.03,3
+"Leadership & Strategy","Effective Leadership & Management ","Bellefonte","Pennsylvania",2,0.2,4
+"Leadership & Strategy","Integrated Dev Planning","Bellefonte","Pennsylvania",3,0.4,5
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Bellefonte","Pennsylvania",6,1,6
+"Economy & Society","Collective ID & Cohesion","Bellefonte","Pennsylvania",2,0.2,7
+"Economy & Society","Sustainable Econ","Bellefonte","Pennsylvania",2,0.2,8
+"Health & Wellbeing","Effective Safeguards for Health & Life","Bellefonte","Pennsylvania",0.03,0.03,9
+"Health & Wellbeing","Diverse Livelihood & Employment","Bellefonte","Pennsylvania",0.03,0.03,10
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Bellefonte","Pennsylvania",0.03,0.03,11
+"Economy & Society","Security & Law","Bellefonte","Pennsylvania",0.03,0.03,12
+"Leadership & Strategy","Empowered Stakeholders","Iowa City","Iowa",1,0.03,1
+"Leadership & Strategy","Effective Leadership & Management ","Iowa City","Iowa",2,0.0909090909090909,2
+"Leadership & Strategy","Integrated Dev Planning","Iowa City","Iowa",6,0.454545454545455,3
+"Health & Wellbeing","Diverse Livelihood & Employment","Iowa City","Iowa",3,0.181818181818182,4
+"Health & Wellbeing","Minimum Human Vulnerability ","Iowa City","Iowa",5,0.363636363636364,5
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Iowa City","Iowa",8,0.636363636363636,6
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Iowa City","Iowa",3,0.181818181818182,7
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Iowa City","Iowa",4,0.272727272727273,8
+"Economy & Society","Collective ID & Cohesion","Iowa City","Iowa",12,1,9
+"Economy & Society","Security & Law","Iowa City","Iowa",2,0.0909090909090909,10
+"Economy & Society","Sustainable Econ","Iowa City","Iowa",12,1,11
+"Health & Wellbeing","Effective Safeguards for Health & Life","Iowa City","Iowa",0.03,0.03,12
+"Health & Wellbeing","Effective Safeguards for Health & Life","Apache Junction","Arizona",1,0.03,1
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Apache Junction","Arizona",1,0.03,2
+"Economy & Society","Security & Law","Apache Junction","Arizona",1,0.03,3
+"Leadership & Strategy","Effective Leadership & Management ","Apache Junction","Arizona",4,0.428571428571429,4
+"Leadership & Strategy","Empowered Stakeholders","Apache Junction","Arizona",7,0.857142857142857,5
+"Leadership & Strategy","Integrated Dev Planning","Apache Junction","Arizona",6,0.714285714285714,6
+"Health & Wellbeing","Diverse Livelihood & Employment","Apache Junction","Arizona",3,0.285714285714286,7
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Apache Junction","Arizona",8,1,8
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Apache Junction","Arizona",4,0.428571428571429,9
+"Economy & Society","Collective ID & Cohesion","Apache Junction","Arizona",6,0.714285714285714,10
+"Economy & Society","Sustainable Econ","Apache Junction","Arizona",5,0.571428571428571,11
+"Health & Wellbeing","Minimum Human Vulnerability ","Apache Junction","Arizona",0.03,0.03,12
+"Leadership & Strategy","Effective Leadership & Management ","Bozeman","Montana",1,0.03,1
+"Leadership & Strategy","Empowered Stakeholders","Bozeman","Montana",1,0.03,2
+"Health & Wellbeing","Minimum Human Vulnerability ","Bozeman","Montana",1,0.03,3
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Bozeman","Montana",1,0.03,4
+"Leadership & Strategy","Integrated Dev Planning","Bozeman","Montana",2,0.5,5
+"Health & Wellbeing","Diverse Livelihood & Employment","Bozeman","Montana",2,0.5,6
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Bozeman","Montana",2,0.5,7
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Bozeman","Montana",3,1,8
+"Economy & Society","Collective ID & Cohesion","Bozeman","Montana",3,1,9
+"Economy & Society","Sustainable Econ","Bozeman","Montana",2,0.5,10
+"Health & Wellbeing","Effective Safeguards for Health & Life","Bozeman","Montana",0.03,0.03,11
+"Economy & Society","Security & Law","Bozeman","Montana",0.03,0.03,12
+"Leadership & Strategy","Integrated Dev Planning","Minneapolis","Minnesota",1,0.03,1
+"Economy & Society","Security & Law","Minneapolis","Minnesota",1,0.03,2
+"Leadership & Strategy","Effective Leadership & Management ","Minneapolis","Minnesota",2,0.0714285714285714,3
+"Leadership & Strategy","Empowered Stakeholders","Minneapolis","Minnesota",6,0.357142857142857,4
+"Health & Wellbeing","Diverse Livelihood & Employment","Minneapolis","Minnesota",3,0.142857142857143,5
+"Health & Wellbeing","Minimum Human Vulnerability ","Minneapolis","Minnesota",4,0.214285714285714,6
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Minneapolis","Minnesota",10,0.642857142857143,7
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Minneapolis","Minnesota",10,0.642857142857143,8
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Minneapolis","Minnesota",3,0.142857142857143,9
+"Economy & Society","Collective ID & Cohesion","Minneapolis","Minnesota",14,0.928571428571429,10
+"Economy & Society","Sustainable Econ","Minneapolis","Minnesota",15,1,11
+"Health & Wellbeing","Effective Safeguards for Health & Life","Minneapolis","Minnesota",0.03,0.03,12
+"Leadership & Strategy","Effective Leadership & Management ","Big Lake","Minnesota",1,0.03,1
+"Health & Wellbeing","Diverse Livelihood & Employment","Big Lake","Minnesota",1,0.03,2
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Big Lake","Minnesota",1,0.03,3
+"Leadership & Strategy","Empowered Stakeholders","Big Lake","Minnesota",2,0.5,4
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Big Lake","Minnesota",3,1,5
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Big Lake","Minnesota",2,0.5,6
+"Economy & Society","Sustainable Econ","Big Lake","Minnesota",2,0.5,7
+"Leadership & Strategy","Integrated Dev Planning","Big Lake","Minnesota",0.03,0.03,8
+"Health & Wellbeing","Effective Safeguards for Health & Life","Big Lake","Minnesota",0.03,0.03,9
+"Health & Wellbeing","Minimum Human Vulnerability ","Big Lake","Minnesota",0.03,0.03,10
+"Economy & Society","Collective ID & Cohesion","Big Lake","Minnesota",0.03,0.03,11
+"Economy & Society","Security & Law","Big Lake","Minnesota",0.03,0.03,12
+"Health & Wellbeing","Effective Safeguards for Health & Life","Tacoma","Washington",1,0.03,1
+"Leadership & Strategy","Effective Leadership & Management ","Tacoma","Washington",8,0.304347826086957,2
+"Leadership & Strategy","Empowered Stakeholders","Tacoma","Washington",12,0.478260869565217,3
+"Leadership & Strategy","Integrated Dev Planning","Tacoma","Washington",7,0.260869565217391,4
+"Health & Wellbeing","Diverse Livelihood & Employment","Tacoma","Washington",7,0.260869565217391,5
+"Health & Wellbeing","Minimum Human Vulnerability ","Tacoma","Washington",11,0.434782608695652,6
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Tacoma","Washington",10,0.391304347826087,7
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Tacoma","Washington",5,0.173913043478261,8
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Tacoma","Washington",13,0.521739130434783,9
+"Economy & Society","Collective ID & Cohesion","Tacoma","Washington",19,0.782608695652174,10
+"Economy & Society","Security & Law","Tacoma","Washington",4,0.130434782608696,11
+"Economy & Society","Sustainable Econ","Tacoma","Washington",24,1,12
+"Leadership & Strategy","Effective Leadership & Management ","Portland","Oregon",2,0.03,1
+"Leadership & Strategy","Empowered Stakeholders","Portland","Oregon",6,0.0869565217391304,2
+"Leadership & Strategy","Integrated Dev Planning","Portland","Oregon",17,0.326086956521739,3
+"Health & Wellbeing","Diverse Livelihood & Employment","Portland","Oregon",6,0.0869565217391304,4
+"Health & Wellbeing","Minimum Human Vulnerability ","Portland","Oregon",14,0.260869565217391,5
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Portland","Oregon",26,0.521739130434783,6
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Portland","Oregon",9,0.152173913043478,7
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Portland","Oregon",44,0.91304347826087,8
+"Economy & Society","Collective ID & Cohesion","Portland","Oregon",18,0.347826086956522,9
+"Economy & Society","Security & Law","Portland","Oregon",11,0.195652173913043,10
+"Economy & Society","Sustainable Econ","Portland","Oregon",48,1,11
+"Health & Wellbeing","Effective Safeguards for Health & Life","Portland","Oregon",0.03,0.03,12
+"Leadership & Strategy","Effective Leadership & Management ","Alton","Illinois",1,0.03,1
+"Leadership & Strategy","Integrated Dev Planning","Alton","Illinois",1,0.03,2
+"Health & Wellbeing","Effective Safeguards for Health & Life","Alton","Illinois",1,0.03,3
+"Health & Wellbeing","Minimum Human Vulnerability ","Alton","Illinois",1,0.03,4
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Alton","Illinois",1,0.03,5
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Alton","Illinois",1,0.03,6
+"Economy & Society","Collective ID & Cohesion","Alton","Illinois",1,0.03,7
+"Economy & Society","Security & Law","Alton","Illinois",1,0.03,8
+"Leadership & Strategy","Empowered Stakeholders","Alton","Illinois",2,0.333333333333333,9
+"Health & Wellbeing","Diverse Livelihood & Employment","Alton","Illinois",2,0.333333333333333,10
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Alton","Illinois",2,0.333333333333333,11
+"Economy & Society","Sustainable Econ","Alton","Illinois",4,1,12
+"Leadership & Strategy","Empowered Stakeholders","Austin","Texas",0.03,0.03,1
+"Leadership & Strategy","Integrated Dev Planning","Austin","Texas",0.03,0.03,2
+"Health & Wellbeing","Effective Safeguards for Health & Life","Austin","Texas",0.03,0.03,3
+"Health & Wellbeing","Diverse Livelihood & Employment","Austin","Texas",0.03,0.03,4
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Austin","Texas",0.03,0.03,5
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Austin","Texas",0.03,0.03,6
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Austin","Texas",0.03,0.03,7
+"Economy & Society","Collective ID & Cohesion","Austin","Texas",0.03,0.03,8
+"Economy & Society","Security & Law","Austin","Texas",0.03,0.03,9
+"Leadership & Strategy","Effective Leadership & Management ","Pflugerville","Texas",1,0.03,1
+"Health & Wellbeing","Diverse Livelihood & Employment","Pflugerville","Texas",1,0.03,2
+"Economy & Society","Sustainable Econ","Pflugerville","Texas",1,0.03,3
+"Leadership & Strategy","Empowered Stakeholders","Pflugerville","Texas",2,0.125,4
+"Leadership & Strategy","Integrated Dev Planning","Pflugerville","Texas",4,0.375,5
+"Health & Wellbeing","Minimum Human Vulnerability ","Pflugerville","Texas",3,0.25,6
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Pflugerville","Texas",6,0.625,7
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Pflugerville","Texas",2,0.125,8
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Pflugerville","Texas",2,0.125,9
+"Economy & Society","Collective ID & Cohesion","Pflugerville","Texas",9,1,10
+"Health & Wellbeing","Effective Safeguards for Health & Life","Pflugerville","Texas",0.03,0.03,11
+"Economy & Society","Security & Law","Pflugerville","Texas",0.03,0.03,12
+"Leadership & Strategy","Effective Leadership & Management ","Chattanooga","Tennessee",1,0.03,1
+"Leadership & Strategy","Empowered Stakeholders","Chattanooga","Tennessee",8,0.333333333333333,2
+"Leadership & Strategy","Integrated Dev Planning","Chattanooga","Tennessee",4,0.142857142857143,3
+"Health & Wellbeing","Effective Safeguards for Health & Life","Chattanooga","Tennessee",3,0.0952380952380952,4
+"Health & Wellbeing","Diverse Livelihood & Employment","Chattanooga","Tennessee",4,0.142857142857143,5
+"Health & Wellbeing","Minimum Human Vulnerability ","Chattanooga","Tennessee",6,0.238095238095238,6
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Chattanooga","Tennessee",10,0.428571428571429,7
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Chattanooga","Tennessee",5,0.19047619047619,8
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Chattanooga","Tennessee",3,0.0952380952380952,9
+"Economy & Society","Collective ID & Cohesion","Chattanooga","Tennessee",10,0.428571428571429,10
+"Economy & Society","Security & Law","Chattanooga","Tennessee",2,0.0476190476190476,11
+"Economy & Society","Sustainable Econ","Chattanooga","Tennessee",22,1,12
+"Leadership & Strategy","Effective Leadership & Management ","Logan","Utah",1,0.03,1
+"Health & Wellbeing","Minimum Human Vulnerability ","Logan","Utah",1,0.03,2
+"Economy & Society","Security & Law","Logan","Utah",1,0.03,3
+"Leadership & Strategy","Empowered Stakeholders","Logan","Utah",6,0.5,4
+"Leadership & Strategy","Integrated Dev Planning","Logan","Utah",2,0.1,5
+"Health & Wellbeing","Diverse Livelihood & Employment","Logan","Utah",5,0.4,6
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Logan","Utah",6,0.5,7
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Logan","Utah",4,0.3,8
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Logan","Utah",2,0.1,9
+"Economy & Society","Collective ID & Cohesion","Logan","Utah",11,1,10
+"Economy & Society","Sustainable Econ","Logan","Utah",2,0.1,11
+"Health & Wellbeing","Effective Safeguards for Health & Life","Logan","Utah",0.03,0.03,12
+"Leadership & Strategy","Effective Leadership & Management ","Leander","Texas",1,0.03,1
+"Health & Wellbeing","Diverse Livelihood & Employment","Leander","Texas",1,0.03,2
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Leander","Texas",1,0.03,3
+"Leadership & Strategy","Empowered Stakeholders","Leander","Texas",2,0.125,4
+"Leadership & Strategy","Integrated Dev Planning","Leander","Texas",8,0.875,5
+"Health & Wellbeing","Minimum Human Vulnerability ","Leander","Texas",7,0.75,6
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Leander","Texas",2,0.125,7
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Leander","Texas",7,0.75,8
+"Economy & Society","Collective ID & Cohesion","Leander","Texas",9,1,9
+"Economy & Society","Sustainable Econ","Leander","Texas",7,0.75,10
+"Health & Wellbeing","Effective Safeguards for Health & Life","Leander","Texas",0.03,0.03,11
+"Economy & Society","Security & Law","Leander","Texas",0.03,0.03,12
+"Economy & Society","Security & Law","Keokuk","Iowa",1,0.03,1
+"Leadership & Strategy","Effective Leadership & Management ","Keokuk","Iowa",2,0.0666666666666667,2
+"Leadership & Strategy","Empowered Stakeholders","Keokuk","Iowa",3,0.133333333333333,3
+"Leadership & Strategy","Integrated Dev Planning","Keokuk","Iowa",2,0.0666666666666667,4
+"Health & Wellbeing","Minimum Human Vulnerability ","Keokuk","Iowa",4,0.2,5
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Keokuk","Iowa",12,0.733333333333333,6
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Keokuk","Iowa",4,0.2,7
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Keokuk","Iowa",3,0.133333333333333,8
+"Economy & Society","Collective ID & Cohesion","Keokuk","Iowa",16,1,9
+"Economy & Society","Sustainable Econ","Keokuk","Iowa",9,0.533333333333333,10
+"Health & Wellbeing","Effective Safeguards for Health & Life","Keokuk","Iowa",0.03,0.03,11
+"Health & Wellbeing","Diverse Livelihood & Employment","Keokuk","Iowa",0.03,0.03,12
+"Leadership & Strategy","Integrated Dev Planning","Glendale","Arizona",1,0.03,1
+"Leadership & Strategy","Effective Leadership & Management ","Glendale","Arizona",2,0.0769230769230769,2
+"Leadership & Strategy","Empowered Stakeholders","Glendale","Arizona",7,0.461538461538462,3
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Glendale","Arizona",3,0.153846153846154,4
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Glendale","Arizona",4,0.230769230769231,5
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Glendale","Arizona",6,0.384615384615385,6
+"Economy & Society","Collective ID & Cohesion","Glendale","Arizona",6,0.384615384615385,7
+"Economy & Society","Sustainable Econ","Glendale","Arizona",14,1,8
+"Health & Wellbeing","Effective Safeguards for Health & Life","Glendale","Arizona",0.03,0.03,9
+"Health & Wellbeing","Diverse Livelihood & Employment","Glendale","Arizona",0.03,0.03,10
+"Health & Wellbeing","Minimum Human Vulnerability ","Glendale","Arizona",0.03,0.03,11
+"Economy & Society","Security & Law","Glendale","Arizona",0.03,0.03,12
+"Leadership & Strategy","Integrated Dev Planning","Peoria","Arizona",1,0.03,1
+"Leadership & Strategy","Effective Leadership & Management ","Peoria","Arizona",2,0.2,2
+"Health & Wellbeing","Diverse Livelihood & Employment","Peoria","Arizona",2,0.2,3
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Peoria","Arizona",3,0.4,4
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Peoria","Arizona",2,0.2,5
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Peoria","Arizona",6,1,6
+"Economy & Society","Collective ID & Cohesion","Peoria","Arizona",6,1,7
+"Economy & Society","Sustainable Econ","Peoria","Arizona",4,0.6,8
+"Leadership & Strategy","Empowered Stakeholders","Peoria","Arizona",0.03,0.03,9
+"Health & Wellbeing","Effective Safeguards for Health & Life","Peoria","Arizona",0.03,0.03,10
+"Health & Wellbeing","Minimum Human Vulnerability ","Peoria","Arizona",0.03,0.03,11
+"Economy & Society","Security & Law","Peoria","Arizona",0.03,0.03,12
+"Leadership & Strategy","Effective Leadership & Management ","Omaha","Nebraska",1,0.03,1
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Omaha","Nebraska",1,0.03,2
+"Health & Wellbeing","Minimum Human Vulnerability ","Omaha","Nebraska",6,0.833333333333333,3
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Omaha","Nebraska",7,1,4
+"Leadership & Strategy","Empowered Stakeholders","Omaha","Nebraska",0.03,0.03,5
+"Leadership & Strategy","Integrated Dev Planning","Omaha","Nebraska",0.03,0.03,6
+"Health & Wellbeing","Effective Safeguards for Health & Life","Omaha","Nebraska",0.03,0.03,7
+"Health & Wellbeing","Diverse Livelihood & Employment","Omaha","Nebraska",0.03,0.03,8
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Omaha","Nebraska",0.03,0.03,9
+"Economy & Society","Collective ID & Cohesion","Omaha","Nebraska",0.03,0.03,10
+"Economy & Society","Security & Law","Omaha","Nebraska",0.03,0.03,11
+"Economy & Society","Sustainable Econ","Omaha","Nebraska",0.03,0.03,12
+"Leadership & Strategy","Effective Leadership & Management ","Jonestown","Texas",1,0.03,1
+"Health & Wellbeing","Minimum Human Vulnerability ","Jonestown","Texas",1,0.03,2
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Jonestown","Texas",1,0.03,3
+"Economy & Society","Collective ID & Cohesion","Jonestown","Texas",1,0.03,4
+"Economy & Society","Sustainable Econ","Jonestown","Texas",5,1,5
+"Leadership & Strategy","Empowered Stakeholders","Jonestown","Texas",0.03,0.03,6
+"Leadership & Strategy","Integrated Dev Planning","Jonestown","Texas",0.03,0.03,7
+"Health & Wellbeing","Effective Safeguards for Health & Life","Jonestown","Texas",0.03,0.03,8
+"Health & Wellbeing","Diverse Livelihood & Employment","Jonestown","Texas",0.03,0.03,9
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Jonestown","Texas",0.03,0.03,10
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Jonestown","Texas",0.03,0.03,11
+"Economy & Society","Security & Law","Jonestown","Texas",0.03,0.03,12
+"Leadership & Strategy","Effective Leadership & Management ","Lexington","Mississippi",1,0.03,1
+"Health & Wellbeing","Minimum Human Vulnerability ","Lexington","Mississippi",1,0.03,2
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Lexington","Mississippi",1,0.03,3
+"Economy & Society","Security & Law","Lexington","Mississippi",1,0.03,4
+"Leadership & Strategy","Empowered Stakeholders","Lexington","Mississippi",7,0.5,5
+"Health & Wellbeing","Diverse Livelihood & Employment","Lexington","Mississippi",2,0.0833333333333333,6
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Lexington","Mississippi",2,0.0833333333333333,7
+"Economy & Society","Collective ID & Cohesion","Lexington","Mississippi",13,1,8
+"Economy & Society","Sustainable Econ","Lexington","Mississippi",4,0.25,9
+"Leadership & Strategy","Integrated Dev Planning","Lexington","Mississippi",0.03,0.03,10
+"Health & Wellbeing","Effective Safeguards for Health & Life","Lexington","Mississippi",0.03,0.03,11
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Lexington","Mississippi",0.03,0.03,12
+"Economy & Society","Security & Law","New Albany","Mississippi",1,0.03,1
+"Leadership & Strategy","Effective Leadership & Management ","New Albany","Mississippi",2,0.0416666666666667,2
+"Leadership & Strategy","Empowered Stakeholders","New Albany","Mississippi",7,0.25,3
+"Leadership & Strategy","Integrated Dev Planning","New Albany","Mississippi",3,0.0833333333333333,4
+"Health & Wellbeing","Effective Safeguards for Health & Life","New Albany","Mississippi",2,0.0416666666666667,5
+"Health & Wellbeing","Diverse Livelihood & Employment","New Albany","Mississippi",6,0.208333333333333,6
+"Health & Wellbeing","Minimum Human Vulnerability ","New Albany","Mississippi",6,0.208333333333333,7
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","New Albany","Mississippi",2,0.0416666666666667,8
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","New Albany","Mississippi",2,0.0416666666666667,9
+"Economy & Society","Collective ID & Cohesion","New Albany","Mississippi",25,1,10
+"Economy & Society","Sustainable Econ","New Albany","Mississippi",15,0.583333333333333,11
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","New Albany","Mississippi",0.03,0.03,12
+"Leadership & Strategy","Effective Leadership & Management ","New Bedford","Massachusetts",0.03,0.03,1
+"Health & Wellbeing","Effective Safeguards for Health & Life","New Bedford","Massachusetts",0.03,0.03,2
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","New Bedford","Massachusetts",0.03,0.03,3
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","New Bedford","Massachusetts",0.03,0.03,4
+"Economy & Society","Collective ID & Cohesion","New Bedford","Massachusetts",0.03,0.03,5
+"Economy & Society","Security & Law","New Bedford","Massachusetts",0.03,0.03,6
+"Health & Wellbeing","Diverse Livelihood & Employment","Salinas","California",1,0.03,1
+"Health & Wellbeing","Minimum Human Vulnerability ","Salinas","California",1,0.03,2
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Salinas","California",1,0.03,3
+"Leadership & Strategy","Empowered Stakeholders","Salinas","California",12,0.916666666666667,4
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Salinas","California",3,0.166666666666667,5
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Salinas","California",13,1,6
+"Economy & Society","Collective ID & Cohesion","Salinas","California",11,0.833333333333333,7
+"Economy & Society","Security & Law","Salinas","California",8,0.583333333333333,8
+"Economy & Society","Sustainable Econ","Salinas","California",13,1,9
+"Leadership & Strategy","Effective Leadership & Management ","Salinas","California",0.03,0.03,10
+"Leadership & Strategy","Integrated Dev Planning","Salinas","California",0.03,0.03,11
+"Health & Wellbeing","Effective Safeguards for Health & Life","Salinas","California",0.03,0.03,12
+"Health & Wellbeing","Minimum Human Vulnerability ","Chico","California",1,0.03,1
+"Leadership & Strategy","Empowered Stakeholders","Chico","California",4,0.375,2
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Chico","California",8,0.875,3
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Chico","California",4,0.375,4
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Chico","California",3,0.25,5
+"Economy & Society","Collective ID & Cohesion","Chico","California",4,0.375,6
+"Economy & Society","Security & Law","Chico","California",9,1,7
+"Economy & Society","Sustainable Econ","Chico","California",8,0.875,8
+"Leadership & Strategy","Effective Leadership & Management ","Chico","California",0.03,0.03,9
+"Leadership & Strategy","Integrated Dev Planning","Chico","California",0.03,0.03,10
+"Health & Wellbeing","Effective Safeguards for Health & Life","Chico","California",0.03,0.03,11
+"Health & Wellbeing","Diverse Livelihood & Employment","Chico","California",0.03,0.03,12
+"Leadership & Strategy","Empowered Stakeholders","Gresham","Oregon",1,0.03,1
+"Health & Wellbeing","Diverse Livelihood & Employment","Gresham","Oregon",1,0.03,2
+"Leadership & Strategy","Integrated Dev Planning","Gresham","Oregon",3,0.2,3
+"Health & Wellbeing","Minimum Human Vulnerability ","Gresham","Oregon",2,0.1,4
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Gresham","Oregon",8,0.7,5
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Gresham","Oregon",5,0.4,6
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Gresham","Oregon",6,0.5,7
+"Economy & Society","Collective ID & Cohesion","Gresham","Oregon",11,1,8
+"Economy & Society","Sustainable Econ","Gresham","Oregon",11,1,9
+"Leadership & Strategy","Effective Leadership & Management ","Gresham","Oregon",0.03,0.03,10
+"Health & Wellbeing","Effective Safeguards for Health & Life","Gresham","Oregon",0.03,0.03,11
+"Economy & Society","Security & Law","Gresham","Oregon",0.03,0.03,12
+"Leadership & Strategy","Empowered Stakeholders","Milesburg","Pennsylvania",1,0.03,1
+"Leadership & Strategy","Integrated Dev Planning","Milesburg","Pennsylvania",1,0.03,2
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Milesburg","Pennsylvania",5,1,3
+"Economy & Society","Collective ID & Cohesion","Milesburg","Pennsylvania",4,0.75,4
+"Economy & Society","Sustainable Econ","Milesburg","Pennsylvania",5,1,5
+"Leadership & Strategy","Effective Leadership & Management ","Milesburg","Pennsylvania",0.03,0.03,6
+"Health & Wellbeing","Effective Safeguards for Health & Life","Milesburg","Pennsylvania",0.03,0.03,7
+"Health & Wellbeing","Diverse Livelihood & Employment","Milesburg","Pennsylvania",0.03,0.03,8
+"Health & Wellbeing","Minimum Human Vulnerability ","Milesburg","Pennsylvania",0.03,0.03,9
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Milesburg","Pennsylvania",0.03,0.03,10
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Milesburg","Pennsylvania",0.03,0.03,11
+"Economy & Society","Security & Law","Milesburg","Pennsylvania",0.03,0.03,12
+"Leadership & Strategy","Integrated Dev Planning","Navasota","Texas",2,0.03,1
+"Health & Wellbeing","Minimum Human Vulnerability ","Navasota","Texas",2,0.03,2
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Navasota","Texas",2,0.03,3
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Navasota","Texas",2,0.03,4
+"Economy & Society","Collective ID & Cohesion","Navasota","Texas",2,0.03,5
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Navasota","Texas",4,0.333333333333333,6
+"Economy & Society","Sustainable Econ","Navasota","Texas",8,1,7
+"Leadership & Strategy","Effective Leadership & Management ","Navasota","Texas",0.03,0.03,8
+"Leadership & Strategy","Empowered Stakeholders","Navasota","Texas",0.03,0.03,9
+"Health & Wellbeing","Effective Safeguards for Health & Life","Navasota","Texas",0.03,0.03,10
+"Health & Wellbeing","Diverse Livelihood & Employment","Navasota","Texas",0.03,0.03,11
+"Economy & Society","Security & Law","Navasota","Texas",0.03,0.03,12
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","West Palm Beach","Florida",1,0.03,1
+"Economy & Society","Collective ID & Cohesion","West Palm Beach","Florida",1,0.03,2
+"Economy & Society","Sustainable Econ","West Palm Beach","Florida",1,0.03,3
+"Leadership & Strategy","Integrated Dev Planning","West Palm Beach","Florida",2,1,4
+"Leadership & Strategy","Effective Leadership & Management ","West Palm Beach","Florida",0.03,0.03,5
+"Leadership & Strategy","Empowered Stakeholders","West Palm Beach","Florida",0.03,0.03,6
+"Health & Wellbeing","Effective Safeguards for Health & Life","West Palm Beach","Florida",0.03,0.03,7
+"Health & Wellbeing","Diverse Livelihood & Employment","West Palm Beach","Florida",0.03,0.03,8
+"Health & Wellbeing","Minimum Human Vulnerability ","West Palm Beach","Florida",0.03,0.03,9
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","West Palm Beach","Florida",0.03,0.03,10
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","West Palm Beach","Florida",0.03,0.03,11
+"Economy & Society","Security & Law","West Palm Beach","Florida",0.03,0.03,12
+"Health & Wellbeing","Diverse Livelihood & Employment","Arvada","Colorado",1,0.03,1
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Arvada","Colorado",1,0.03,2
+"Health & Wellbeing","Minimum Human Vulnerability ","Arvada","Colorado",3,1,3
+"Leadership & Strategy","Effective Leadership & Management ","Arvada","Colorado",0.03,0.03,4
+"Leadership & Strategy","Empowered Stakeholders","Arvada","Colorado",0.03,0.03,5
+"Leadership & Strategy","Integrated Dev Planning","Arvada","Colorado",0.03,0.03,6
+"Health & Wellbeing","Effective Safeguards for Health & Life","Arvada","Colorado",0.03,0.03,7
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Arvada","Colorado",0.03,0.03,8
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Arvada","Colorado",0.03,0.03,9
+"Economy & Society","Collective ID & Cohesion","Arvada","Colorado",0.03,0.03,10
+"Economy & Society","Security & Law","Arvada","Colorado",0.03,0.03,11
+"Economy & Society","Sustainable Econ","Arvada","Colorado",0.03,0.03,12
+"Leadership & Strategy","Effective Leadership & Management ","Providence","Rhode Island",0.03,0.03,1
+"Leadership & Strategy","Empowered Stakeholders","Providence","Rhode Island",0.03,0.03,2
+"Leadership & Strategy","Integrated Dev Planning","Providence","Rhode Island",0.03,0.03,3
+"Health & Wellbeing","Effective Safeguards for Health & Life","Providence","Rhode Island",0.03,0.03,4
+"Health & Wellbeing","Diverse Livelihood & Employment","Providence","Rhode Island",0.03,0.03,5
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Providence","Rhode Island",0.03,0.03,6
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Providence","Rhode Island",0.03,0.03,7
+"Economy & Society","Security & Law","Providence","Rhode Island",0.03,0.03,8
+"Health & Wellbeing","Minimum Human Vulnerability ","Beaufort","South Carolina",2,0.03,1
+"Economy & Society","Sustainable Econ","Beaufort","South Carolina",2,0.03,2
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Beaufort","South Carolina",5,1,3
+"Economy & Society","Collective ID & Cohesion","Beaufort","South Carolina",3,0.333333333333333,4
+"Leadership & Strategy","Effective Leadership & Management ","Beaufort","South Carolina",0.03,0.03,5
+"Leadership & Strategy","Empowered Stakeholders","Beaufort","South Carolina",0.03,0.03,6
+"Leadership & Strategy","Integrated Dev Planning","Beaufort","South Carolina",0.03,0.03,7
+"Health & Wellbeing","Effective Safeguards for Health & Life","Beaufort","South Carolina",0.03,0.03,8
+"Health & Wellbeing","Diverse Livelihood & Employment","Beaufort","South Carolina",0.03,0.03,9
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Beaufort","South Carolina",0.03,0.03,10
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Beaufort","South Carolina",0.03,0.03,11
+"Economy & Society","Security & Law","Beaufort","South Carolina",0.03,0.03,12
+"Leadership & Strategy","Effective Leadership & Management ","Winthrop","Massachusetts",0.03,0.03,1
+"Leadership & Strategy","Empowered Stakeholders","Winthrop","Massachusetts",0.03,0.03,2
+"Leadership & Strategy","Integrated Dev Planning","Winthrop","Massachusetts",0.03,0.03,3
+"Health & Wellbeing","Effective Safeguards for Health & Life","Winthrop","Massachusetts",0.03,0.03,4
+"Health & Wellbeing","Diverse Livelihood & Employment","Winthrop","Massachusetts",0.03,0.03,5
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Winthrop","Massachusetts",0.03,0.03,6
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Winthrop","Massachusetts",0.03,0.03,7
+"Economy & Society","Collective ID & Cohesion","Winthrop","Massachusetts",0.03,0.03,8
+"Economy & Society","Security & Law","Winthrop","Massachusetts",0.03,0.03,9
+"Economy & Society","Sustainable Econ","Ferguson Township","Pennsylvania",1,0.03,1
+"Infrastructure & Ecosystems","Reduced Exposure & Fragility","Ferguson Township","Pennsylvania",7,1,2
+"Economy & Society","Collective ID & Cohesion","Ferguson Township","Pennsylvania",3,0.333333333333333,3
+"Leadership & Strategy","Effective Leadership & Management ","Ferguson Township","Pennsylvania",0.03,0.03,4
+"Leadership & Strategy","Empowered Stakeholders","Ferguson Township","Pennsylvania",0.03,0.03,5
+"Leadership & Strategy","Integrated Dev Planning","Ferguson Township","Pennsylvania",0.03,0.03,6
+"Health & Wellbeing","Effective Safeguards for Health & Life","Ferguson Township","Pennsylvania",0.03,0.03,7
+"Health & Wellbeing","Diverse Livelihood & Employment","Ferguson Township","Pennsylvania",0.03,0.03,8
+"Health & Wellbeing","Minimum Human Vulnerability ","Ferguson Township","Pennsylvania",0.03,0.03,9
+"Infrastructure & Ecosystems","Effective Provision of Critical Services","Ferguson Township","Pennsylvania",0.03,0.03,10
+"Infrastructure & Ecosystems","Reliable Mobility & Communication","Ferguson Township","Pennsylvania",0.03,0.03,11
+"Economy & Society","Security & Law","Ferguson Township","Pennsylvania",0.03,0.03,12
