@@ -36,34 +36,64 @@ data_full = read.csv("EPICN4ORD_rawdata.csv")
 datafull_Monroesub = data_full %>%
   filter(City == "Monroe") %>%
   mutate(State = "Wisconsin")
-datafull = data_full %>%
+datafull_pre = data_full %>%
   filter(City != "Monroe") %>% #remove the problematic Monroe entries
   full_join(datafull_Monroesub) #insert the fixed Monroe entries 
+
+datafull_StPaulsub = datafull_pre %>%
+  filter(City == "St. Paul" | City == "St Paul"| City == "Saint Paul") %>%
+  mutate(City = "Saint Paul") 
+
+datafull = datafull_pre %>%
+  filter(City != "St. Paul" & City != "St Paul" & City != "Saint Paul") %>%
+  full_join(datafull_StPaulsub)
+
 ####end cleaning, start text tokenizing etc####
 
 ####Control text processing####
-generics = data.frame( word = c("community", "city", "students", 
-             "student", "county", "program", "project",
-             "report", "plan", "research", "reports", 
-             "analysis", "develop", "design"))
-
-
-#make it control_dtm
-control_dtm = datafull %>%
-  unnest_tokens(word, Project.Abstract) %>% #way to stem tokens?
-  filter(!word %in% stop_words$word &
-           !word %in% generics) %>%
-  mutate(wordstem = wordStem(word))%>%
-  count(City, wordstem) %>%
-  cast_dtm(City, wordstem, n)
 stop_df = as.data.frame(stop_words)
 
-control_dtm = datafull %>%
+control_tidydata_full = datafull %>%
   unnest_tokens(word, Project.Abstract) %>% #way to stem tokens?
   anti_join(stop_df, by = "word") %>% 
-  anti_join(generics, by = "word") %>%
+  #mutate(wordstem = wordStem(word))%>% consider not stemming ahead of topic modeling, plenty of lit discourages or is mixed
+  count(word) %>%
+  mutate(Group = "Control") %>%
+  bind_tf_idf(word, Group, n) %>%
+  arrange(desc(n)) %>%
+  slice(1:100)
+
+control_tidydata_cities = datafull %>%
+  unnest_tokens(word, Project.Abstract) %>% #way to stem tokens?
+  anti_join(stop_df, by = "word") %>% 
   #mutate(wordstem = wordStem(word))%>% consider not stemming ahead of topic modeling, plenty of lit discourages or is mixed
   count(City, word) %>%
+  mutate(Group = "Control") %>%
+  bind_tf_idf(word, City, n) %>%
+  arrange(desc(n)) %>%
+  slice(1:100) %>%
+  arrange(desc(tf_idf))
+
+control_tidydata_proj = datafull %>%
+  unnest_tokens(word, Project.Abstract) %>% #way to stem tokens?
+  anti_join(stop_df, by = "word") %>% 
+  #mutate(wordstem = wordStem(word))%>% consider not stemming ahead of topic modeling, plenty of lit discourages or is mixed
+  count(Project.Name, word) %>%
+  mutate(Group = "Control") %>%
+  bind_tf_idf(word, Project.Name, n)%>%
+  arrange(desc(n)) %>%
+  slice(1:100) %>%
+  arrange(desc(tf_idf))
+
+
+write.csv(control_tidydata_full, "control_tidydata_full.csv", row.names =  FALSE)
+write.csv(control_tidydata_cities, "control_tidydata_cities.csv", row.names =  FALSE)
+write.csv(control_tidydata_proj, "control_tidydata_proj.csv", row.names =  FALSE)
+
+
+
+
+control_dtm = control_tidydata %>%
   cast_dtm(City, word, n)
 
 #try also for cities/communities? 
@@ -132,27 +162,126 @@ ggsave("controllabeled_4topicmodel_nostem.png", plot = last_plot(), width = 7, h
 
 
 ####read in experimental data keywords, prep by transforming into a DTM####
-exp_df = read.csv(case_studies.csv)
+#exp_df = read.csv(case_studies.csv)
 #do outputs from topic models bear similarity to exp lexicons by category?
 #how well does topic 1 correspond to public health & wellbeing etc 
 #get 
 ####Control text processing####
-generics = data.frame( word = c("community", "city", "students", 
-                                "student", "county", "program", "project",
-                                "report", "plan", "research", "reports", 
-                                "analysis", "develop", "design"))
 stop_df = as.data.frame(stop_words)
 keyword_toks = keywords %>%
   unnest_tokens(word, SearchTerm)
-exp_dtm = datafull %>%
+
+exp_tidydata_full = datafull %>%
   unnest_tokens(word, Project.Abstract) %>% #way to stem tokens?
   anti_join(stop_df, by = "word") %>% 
-  anti_join(generics, by = "word") %>%
   filter(word %in% keyword_toks$word) %>%
+  filter(word != "city" & word != "community") %>%
+  #mutate(wordstem = wordStem(word))%>% consider not stemming ahead of topic modeling, plenty of lit discourages or is mixed
+  count(word) %>%
+  mutate(Group = "Experimental") %>%
+  bind_tf_idf(word, Group, n)  %>%
+  arrange(desc(n)) %>%
+  slice(1:100) 
+
+exp_tidydata_cities = datafull %>%
+  unnest_tokens(word, Project.Abstract) %>% #way to stem tokens?
+  anti_join(stop_df, by = "word") %>% 
+  filter(word %in% keyword_toks$word) %>%
+  filter(word != "city" & word != "community") %>%
   #mutate(wordstem = wordStem(word))%>% consider not stemming ahead of topic modeling, plenty of lit discourages or is mixed
   count(City, word) %>%
+  mutate(Group = "Experimental") %>%
+  bind_tf_idf(word, City, n)  %>%
+  arrange(desc(n)) %>%
+  slice(1:100) %>%
+  arrange(desc(tf_idf))
+
+exp_tidydata_proj = datafull %>%
+  unnest_tokens(word, Project.Abstract) %>% #way to stem tokens?
+  anti_join(stop_df, by = "word") %>% 
+  filter(word %in% keyword_toks$word) %>%
+  filter(word != "city" & word != "community") %>%
+  #mutate(wordstem = wordStem(word))%>% consider not stemming ahead of topic modeling, plenty of lit discourages or is mixed
+  count(Project.Name, word) %>%
+  mutate(Group = "Experimental") %>%
+  bind_tf_idf(word, Project.Name, n) %>%
+  arrange(desc(n)) %>%
+  slice(1:100) %>%
+  arrange(desc(tf_idf))
+
+write.csv(exp_tidydata_full, "exp_tidydata_fullexpgroup.csv", row.names =  FALSE)
+write.csv(exp_tidydata_cities, "exp_tidydata_cities.csv", row.names =  FALSE)
+write.csv(exp_tidydata_proj, "exp_tidydata_proj.csv", row.names =  FALSE)
+
+
+
+
+
+
+exp_dtm = exp_tidydata %>%
   cast_dtm(City, word, n)
+
+####Use tidy data to examine rankings####
+#I want two tables (Experimental, Control) with the following columns: 
+
+#Term 
+# Number of Cities Highlighting this term 
+# Number of Project Abstracts with this term 
+# tf-idf of term (overall?)
+# raw frequency of term (overall?)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#don't try to merge bc on completely different scales
+
+terms_top = exp_tidydata %>%
+  full_join(control_tidydata)
+
+terms_tf = terms_top %>%
+  bind_tf_idf(word, Group, n)
+
+
+terms_tf %>%
+  group_by(Group) %>%
+  slice_max(tf_idf, n = 15) %>%
+  ungroup() %>%
+  mutate(word = reorder(word, tf_idf)) %>%
+  ggplot(aes(tf_idf, word, fill = Group)) +
+  geom_col(show.legend =  FALSE) +
+  labs(x = "tf-idf", y = NULL) +
+  facet_wrap(~Group, ncol = 2, scales = "free")
+
+
+
+
+
+
+
+
+
 ####See if topic model correctly allocates key words into 4 topics that correspond to the categories####
+
+
+
+
+
+
+
+
+
 
 exp_lda <- LDA(exp_dtm, k = 4, control = list(seed = 8705))
 exp_lda

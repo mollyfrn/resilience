@@ -19,7 +19,7 @@ library(quanteda.textstats)
 
 setwd("C:/Users/mjenkins/OneDrive - Environmental Protection Agency (EPA)/Analyses/Resilience_EpicN")
 case_studies <- read.csv("EPICN4ORD_rawdata07_14_22.csv") #database file
-res_updated <- read.csv("resilience_keywords_51921.csv")
+res_updated <- read.csv("resilience_keywords_02_23_23.csv")
 
 res_updated = res_updated %>% 
   rename(BroadCategories = BroadCategories,
