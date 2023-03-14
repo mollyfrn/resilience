@@ -231,9 +231,8 @@ for(c in cities){
   
   # Add text showing the value of each 100/75/50/25 lines
   p+ annotate("text", x = rep(max(data$id),4), y = c(0.200, 0.600, 0.800, 1.000), label = c("0.2", "0.6", "0.8", "1.0") , color="grey", size=3 , angle=0, fontface="bold", hjust=1) +
-    
     geom_bar(aes(x=as.factor(id), y=nichecounts_minmaxnorm, fill=category), stat="identity", alpha=0.5) +
-    ylim(-1.0, 1.9) +
+    ylim(-0.8, 1.9) +
     ggtitle(paste("Resilience Indices of", c))+
     theme_minimal() +
     theme(
@@ -241,16 +240,16 @@ for(c in cities){
       axis.text = element_blank(),
       axis.title = element_blank(),
       panel.grid = element_blank(),
-      plot.margin = unit(rep(-1,4), "inches"), 
-      plot.background = element_rect(fill = "white"),
+      plot.margin = unit(rep(-.9,4), "inches"), 
+      #plot.background = element_rect(fill = "white"),
       #plot.title.position = "panel",
       plot.title = element_text(face = "bold",
                                 size = 20,
                                 hjust = 0.5, 
-                                margin = margin(t=1.7, unit = "in")))+
+                                margin = margin(t=1.2, unit = "in")))+
     coord_curvedpolar() + 
     geom_text(data=label_data, aes(x=id, y= 1, label= niche),
-              color="black", fontface="bold", upright = TRUE, alpha=0.2, size=2, angle= angle, 
+              color="black", fontface="bold", upright = TRUE, alpha=0.6, size=2.5, angle= angle, 
               inherit.aes = FALSE) + #03/09 niche labels 
     #appearing backwards/upsidedown in left side of plot
     #annotate(geom = "text", x = 1)
@@ -258,11 +257,11 @@ for(c in cities){
     # Add base line information
     #geom_segment(data=base_data, aes(x = start, y = -5, xend = end, yend = 0), colour = "black", alpha=0.8, size=0.4 , inherit.aes = FALSE )  +
     geom_textpath(data=base_data, aes(x = title, y = 1.80, label=category), 
-                  hjust=c(1,1,1,1), 
-                  colour = "black", alpha=0.8, size=4, fontface="bold", 
+                  hjust=c(.5,.5,.5,.5), vjust = c(1.9, 1.9, 1.9, 1.9),  
+                  colour = "black", size=6, fontface="bold", 
                   inherit.aes = FALSE) 
   
-  ggsave(paste0("test2_polarplot", c,".png"), width = 8, height = 8, units = c("in"))
+  ggsave(paste0("test2_polarplot", c,".png"), bg = 'white', width = 12, height = 12, units = c("in"))
   # ggsave(paste0("mini_polarplot", c,".png"), width = 400, height = 400, units = c("px"))
 }
 #2/28 niche labels no longer missing but rendering dumb still

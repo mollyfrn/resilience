@@ -2,6 +2,20 @@
 #Method part 2, NLP extensions 
 #Molly Jenkins
 #03/13/2023
+
+library(tidyverse)
+library(tidytext)
+library(igraph)
+library(ggraph)
+library(tm)
+library(wordcloud)
+library(SnowballC)
+library(widyr)
+library(ggplot2)
+setwd("C:/Users/mjenkins/OneDrive - Environmental Protection Agency (EPA)/Analyses/Resilience_EpicN")
+
+case_studies <- read.csv("EPICN4ORD_rawdata07_14_22.csv") #database file
+#make case_studies
 ####bigrams and trigrams####
 cases_bigrams = case_studies %>%
   unnest_tokens(bigram, Project.Abstract, token = "ngrams", n = 2)
@@ -163,13 +177,13 @@ bigram_graph <- bigram_counts %>%
 bigram_graph
 
 #visualize
-set.seed(2057)
+set.seed(2098)
 
 ggraph(bigram_graph, layout = "fr") +
   geom_edge_link() +
   geom_node_point() +
-  geom_node_text(aes(label = name), vjust = 1, hjust = 1)
-ggsave("bigram_basic.png", width = 7, height = 7, units = c("in"))
+  geom_node_text(aes(label = name), hjust = 0.5, vjust = 1, position = "nudge")
+ggsave("bigram_basic_0323.png", width = 12, height = 7, units = c("in"))
 
 
 set.seed(5722)
