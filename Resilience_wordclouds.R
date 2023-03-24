@@ -10,11 +10,13 @@ library(tidytext)
 library(SnowballC)
 library(hunspell)
 library(wesanderson)
+library(wordcloud)
 
 
 #################
 stop_df = as.data.frame(stop_words)
 data_full = read.csv("EPICN4ORD_rawdata.csv")
+selectedcities = read.csv("CitiestoHighlight.csv") 
 #filter out common words like community, city, students, and county, program, and project
 #fix monroe issue 
 datafull_Monroesub = data_full %>%
@@ -30,7 +32,8 @@ datafull_StPaulsub = datafull_pre %>%
 
 datafull = datafull_pre %>%
   filter(City != "St. Paul" & City != "St Paul" & City != "Saint Paul") %>%
-  full_join(datafull_StPaulsub)
+  full_join(datafull_StPaulsub) %>%
+  filter(City %in% selectedcities$City)
 
 ####end cleaning, start text tokenizing etc####
 
@@ -65,7 +68,7 @@ for(c in cities){
     unique()
   
   set.seed(2308) #use random num gen to set seed
-  png(paste0("wordcloudn_", c,".png"), width=1200,height=1200) #add hi res specs and margins
+  png(paste0("wordcloudn_", c,".png"), width=1200,height=1200, res = 300) #add hi res specs and margins
   
   wordcloud(words = df_mini$word, freq = df_mini$n, min.freq = 2,
             max.words=200, random.order=FALSE, random.color = TRUE, 
