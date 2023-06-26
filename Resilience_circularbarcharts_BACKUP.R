@@ -39,6 +39,7 @@ setwd("C:/Users/mjenkins/OneDrive - Environmental Protection Agency (EPA)/Analys
 #libraries
 library(tidyverse)
 library(geomtextpath)
+library(wesanderson)
 
 # Read in and count data 
 df = read.csv("Cases_EPICN_Josekeywords_cleaned02_23_23.csv") 
@@ -54,7 +55,7 @@ df_comnames = df %>%
 df_topcities = df_comnames  %>% 
   filter(City %in% selectedcommunities$City)
 
-cities = unique(factor(df_topcities$City)) #maybe Pontotoc is problem child?
+ #maybe Pontotoc is problem child?
 
 ####Fixing data input error at Monroe####
 topcities_Monroesub = df_topcities %>%
@@ -62,7 +63,11 @@ topcities_Monroesub = df_topcities %>%
   mutate(State = "Wisconsin")
 topcities = df_topcities %>%
   filter(City != "Monroe") %>% #remove the problematic Monroe entries
-  full_join(topcities_Monroesub) #insert the fixed Monroe entries 
+  full_join(topcities_Monroesub) %>% #insert the fixed Monroe entries 
+  filter(City != "Providence" & City != "Winthrop") %>% #may need to remove Austin and New Bedford too
+  filter((name != " " | name == is.na(name) | name != "0") & 
+           (abstract != " " | abstract == is.na(abstract) | abstract != "0"))
+cities = unique(factor(topcities$City))
 
 ####forloop summarizing resilience priorities of communities####
 radarplot_input = data.frame(category = NULL, niche = NULL, City = NULL, 
@@ -181,7 +186,12 @@ write.csv(radarplot_input, "radarplot_input.csv", row.names = FALSE)
 #c) still missing niche bars 
 #- the inserted 0.00001 might be too negligible
 radarplot_input = read.csv("radarplot_input.csv", header = TRUE)
-cities = unique(factor(radarplot_input$City))
+radarplot_input = radarplot_input %>%
+  filter(City != "Austin" & City != "New Bedford")
+cities = unique(factor(radarplot_input$City)) 
+palette = wes_palette("Darjeeling1")[-4]
+palette2 = wes_palette("FantasticFox1")[-1]
+
 for(c in cities){
   data = radarplot_input %>%
     filter(City == c) %>%
@@ -232,8 +242,12 @@ for(c in cities){
   # Add text showing the value of each 100/75/50/25 lines
   p+ annotate("text", x = rep(max(data$id),4), y = c(0.200, 0.600, 0.800, 1.000), label = c("0.2", "0.6", "0.8", "1.0") , color="grey", size=3 , angle=0, fontface="bold", hjust=1) +
     geom_bar(aes(x=as.factor(id), y=nichecounts_minmaxnorm, fill=category), stat="identity", alpha=0.5) +
+    scale_fill_manual(values = c("#5BBCD6",
+                                 "#F2AD00",
+                                 "#00A08A",
+                                 '#FF0000'))+
     ylim(-0.8, 1.9) +
-    ggtitle(paste("Resilience Indices of", c))+
+    ggtitle(paste(c))+
     theme_minimal() +
     theme(
       legend.position = "none",
@@ -246,22 +260,22 @@ for(c in cities){
       plot.title = element_text(face = "bold",
                                 size = 20,
                                 hjust = 0.5, 
-                                margin = margin(t=1.2, unit = "in")))+
-    coord_curvedpolar() + 
-    geom_text(data=label_data, aes(x=id, y= 1, label= niche),
-              color="black", fontface="bold", upright = TRUE, alpha=0.6, size=2.5, angle= angle, 
-              inherit.aes = FALSE) + #03/09 niche labels 
+                                margin = margin(t=3, unit = "in")))+
+    coord_curvedpolar() #+ 
+    #geom_text(data=label_data, aes(x=id, y= 1, label= niche),
+              #color="black", fontface="bold", upright = TRUE, alpha=0.6, size=2.5, angle= angle, 
+              #inherit.aes = FALSE) + #03/09 niche labels 
     #appearing backwards/upsidedown in left side of plot
     #annotate(geom = "text", x = 1)
     #also tweak color scheme palette to align w/enviroatlas
     # Add base line information
     #geom_segment(data=base_data, aes(x = start, y = -5, xend = end, yend = 0), colour = "black", alpha=0.8, size=0.4 , inherit.aes = FALSE )  +
-    geom_textpath(data=base_data, aes(x = title, y = 1.80, label=category), 
-                  hjust=c(.5,.5,.5,.5), vjust = c(1.9, 1.9, 1.9, 1.9),  
-                  colour = "black", size=6, fontface="bold", 
-                  inherit.aes = FALSE) 
+    #geom_textpath(data=base_data, aes(x = title, y = 1.80, label=category), 
+                 # hjust=c(.5,.5,.5,.5), vjust = c(1.9, 1.9, 1.9, 1.9),  
+                 # colour = "black", size=6, fontface="bold", 
+                 # inherit.aes = FALSE) 
   
-  ggsave(paste0("test2_polarplot", c,".png"), bg = 'white', width = 12, height = 12, units = c("in"))
+  ggsave(paste0("clean_polarplot", c,".png"), bg = 'white', width = 12, height = 12, units = c("in"))
   # ggsave(paste0("mini_polarplot", c,".png"), width = 400, height = 400, units = c("px"))
 }
 #2/28 niche labels no longer missing but rendering dumb still
@@ -269,3 +283,131 @@ for(c in cities){
 #because it means the scale delineations are being covered by a  bar plot
 #also need to dodge, jitter, nudge etc the niche label text, or find a way to make it wrap and also be bolder
 
+
+#####Separate loop for problem children####
+# Tacoma, WA 
+# Bellefonte, PA
+# Alton, IL
+# Omaha, NE
+# Portland, OR
+# Bozeman, MT
+# Milesburg, PA
+# Providence, RI
+# Winthrop, MA
+# New Bedford, MA (take out entirely?)
+
+
+
+radarplot_input = read.csv("radarplot_input.csv", header = TRUE)
+radarplot_input = radarplot_input %>%
+  filter(City != "Austin" & City != "New Bedford" & City != "Tacoma" & City != "Bellefonte" & 
+           City != "Portland" & City != "Bozeman" & City != "Alton" & City != "Omaha"  &
+            City != "Milesburg" & City != "Providence" & City != "Winthrop")
+# radarplot_input = radarplot_input %>%
+#   filter(City != "Austin" & City != "New Bedford" 
+#          & City == "Tacoma" | City == "Bellefonte" | City == "Alton" | City == "Omaha" |
+#            City == "Portland" | City == "Bozeman" | City == "Milesburg" | City == "Providence" |
+#            City == "Winthrop")
+cities = unique(factor(radarplot_input$City)) 
+cities
+#there just aren't entries for Winthrop or Providence - investigate 06/26
+palette = wes_palette("Darjeeling1")[-4]
+palette2 = wes_palette("FantasticFox1")[-1]
+#c = "Navasota"
+for(c in cities){
+  data = radarplot_input %>%
+    filter(City == c) %>%
+    mutate(category = factor(category))
+  
+  #prepping data for grid/scales 
+  # Set a number of 'empty bar' to add at the end of each group
+  empty_bar <- 1
+  to_add <- data.frame( matrix(NA, empty_bar*nlevels(data$category), ncol(data)) )
+  colnames(to_add) <- colnames(data)
+  to_add$category <- rep(levels(data$category), each=empty_bar)
+  data <- rbind(data, to_add)
+  data <- data %>% arrange(category, niche)
+  data$id <- seq(1, nrow(data))
+  
+  # Get the name and the y position of each label
+  label_data <- data
+  number_of_bar <- nrow(label_data)
+  angle <- 90 - 360 * (label_data$id-0.5) /number_of_bar     # I substract 0.5 because the letter must have the angle of the center of the bars. Not extreme right(1) or extreme left (0)
+  label_data$hjust <- ifelse( angle < -90, 1, 0)
+  label_data$angle <- ifelse(angle < -90, angle+180, angle)
+  
+  # prepare a data frame for base lines
+  base_data <- data %>% 
+    group_by(category) %>% 
+    summarize(start=min(id), end=max(id) - empty_bar) %>% 
+    rowwise() %>% 
+    mutate(title=mean(c(start, end)))
+  
+  # prepare a data frame for grid (scales)
+  grid_data <- base_data
+  grid_data$end <- grid_data$end[ c( nrow(grid_data), 1:nrow(grid_data)-1)] + 1
+  grid_data$start <- grid_data$start - 1
+  grid_data <- grid_data[-1,]
+  
+  #all of the prep stuff works 02/23  
+  #plot 
+  p <- ggplot(data, aes(x=as.factor(id), y=nichecounts_minmaxnorm, fill=category)) +       # Note that id is a factor. If x is numeric, there is some space between the first bar
+    
+    geom_bar(aes(x=as.factor(id), y=nichecounts_minmaxnorm, fill=category), stat="identity", alpha=0.5) 
+  p
+  # Add a val=100/75/50/25 lines. I do it at the beginning to make sur barplots are OVER it.
+  p+  geom_segment(data=grid_data, aes(x = end, y = 1.000, xend = start, yend = 1.000), colour = "grey", alpha=1, linewidth=0.03 , inherit.aes = FALSE ) +
+    geom_segment(data=grid_data, aes(x = end, y = 0.800, xend = start, yend = .800), colour = "grey", alpha=1, linewidth=0.03 , inherit.aes = FALSE ) +
+    geom_segment(data=grid_data, aes(x = end, y = 0.600, xend = start, yend = .600), colour = "grey", alpha=1, linewidth=0.03 , inherit.aes = FALSE ) +
+    geom_segment(data=grid_data, aes(x = end, y = 0.200, xend = start, yend = .200), colour = "grey", alpha=1, linewidth=0.03 , inherit.aes = FALSE ) 
+  
+  # Add text showing the value of each 100/75/50/25 lines
+  p+ annotate("text", x = rep(max(data$id),4), y = c(0.200, 0.600, 0.800, 1.000), label = c("0.2", "0.6", "0.8", "1.0") , color="grey", size=3 , angle=0, fontface="bold", hjust=1) +
+    geom_bar(aes(x=as.factor(id), y=nichecounts_minmaxnorm, fill=category), stat="identity", alpha=0.5) +
+    scale_fill_manual(values = c("#5BBCD6",
+                                 "#F2AD00",
+                                 "#00A08A",
+                                 '#FF0000'))+
+    ylim(-0.8, 1.9) +
+    ggtitle(paste(c))+
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      axis.text = element_blank(),
+      axis.title = element_blank(),
+      panel.grid = element_blank(),
+      plot.margin = unit(rep(-.9,4), "inches"), 
+      #plot.background = element_rect(fill = "white"),
+      #plot.title.position = "panel",
+      plot.title = element_text(face = "bold",
+                                size = 20,
+                                hjust = 0.5, 
+                                margin = margin(t=3, unit = "in")))+
+    coord_curvedpolar() #+ 
+  #geom_text(data=label_data, aes(x=id, y= 1, label= niche),
+  #color="black", fontface="bold", upright = TRUE, alpha=0.6, size=2.5, angle= angle, 
+  #inherit.aes = FALSE) + #03/09 niche labels 
+  #appearing backwards/upsidedown in left side of plot
+  #annotate(geom = "text", x = 1)
+  #also tweak color scheme palette to align w/enviroatlas
+  # Add base line information
+  #geom_segment(data=base_data, aes(x = start, y = -5, xend = end, yend = 0), colour = "black", alpha=0.8, size=0.4 , inherit.aes = FALSE )  +
+  #geom_textpath(data=base_data, aes(x = title, y = 1.80, label=category), 
+  # hjust=c(.5,.5,.5,.5), vjust = c(1.9, 1.9, 1.9, 1.9),  
+  # colour = "black", size=6, fontface="bold", 
+  # inherit.aes = FALSE) 
+  
+  ggsave(paste0("clean_polarplot", c,".png"), bg = 'white', width = 12, height = 12, units = c("in"))
+  # ggsave(paste0("mini_polarplot", c,".png"), width = 400, height = 400, units = c("px"))
+}
+#2/28 niche labels no longer missing but rendering dumb still
+#also empty NA categories no longer rendering space between categories, need to fix
+#because it means the scale delineations are being covered by a  bar plot
+#also need to dodge, jitter, nudge etc the niche label text, or find a way to make it wrap and also be bolder
+
+#06/26 disparity between data data, base_data, which has reps in all 4 categories
+#and grid data, which is dropping a category even when there is data for it
+#happening with Bellefonte, Bozeman, Tacoma, Portland, Alton, Omaha, & Milesburg 
+
+#structurally, successfully city inputs look the same tho, so it isn't that
+#save and compare outputs specifically, try Navasota vs Milesburg vs Bellefonte vs Ramsey City base data, grid data, label data etc

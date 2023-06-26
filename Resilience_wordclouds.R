@@ -39,7 +39,7 @@ datafull = datafull_pre %>%
 
 ####Control text processing####
 stop_df = as.data.frame(stop_words)
-
+#datafull_Arvada = datafull %>% filter(City == "Arvada")
 control_tidydata_full = datafull %>%
   unnest_tokens(word, Project.Abstract) %>% #way to stem tokens?
   anti_join(stop_df, by = "word") %>% 
@@ -60,8 +60,8 @@ control_tidydata_cities = datafull %>%
   arrange(desc(tf_idf)) #cities as 'documents', has both n sizes and tf-idf
 
 ###########forloop wordclouds####
-cities = control_tidydata_cities$City #need to subset to just selected cities
-
+cities = unique(control_tidydata_cities$City) #need to subset to just selected cities
+#c = "Arvada"
 for(c in cities){
   df_mini = control_tidydata_cities %>% 
     filter(City == c) %>%
@@ -75,7 +75,7 @@ for(c in cities){
             colors=brewer.pal(8, "Dark2")) #, scale = c(7, 0.50))
   dev.off()
   
-} #right, I ran into this with the wordclouds before - debug 
+} #right, I ran into this with the wordclouds before - need to have my large monitor up for this
 
 #with n frequency setting word size
 set.seed(8002)
@@ -90,3 +90,26 @@ wordcloud(words = idf$word, freq = idf$tf_idf, min.freq = 1,
           max.words=200, random.order=FALSE, random.color = TRUE, 
           colors=brewer.pal(8, "Dark2"), scale = c(7, 0.50))
 #ggsave("Controlwordcloud_tf_idf.png", width = 7, height = 7, units = c("in"))
+
+####Problem child: Arvada####
+datafull_Arvada = datafull %>% filter(City == "Arvada")
+abs = datafull_Arvada$Project.Abstract 
+abs #it's because there are no abstracts
+control_tidydata_Ar = datafull_Arvada %>%
+  unnest_tokens(word, Project.Abstract) %>% #way to stem tokens?
+  anti_join(stop_df, by = "word") %>% 
+  #mutate(wordstem = wordStem(word))%>% consider not stemming ahead of topic modeling, plenty of lit discourages or is mixed
+  count(word) %>%
+  mutate(Group = "Control") %>%
+  bind_tf_idf(word, Group, n) %>%
+  arrange(desc(n)) #has just n sizes bc no other grouping vars to act as 'documents'
+
+control_tidydata_cities = datafull %>%
+  unnest_tokens(word, Project.Abstract) %>% #way to stem tokens?
+  anti_join(stop_df, by = "word") %>% 
+  #mutate(wordstem = wordStem(word))%>% consider not stemming ahead of topic modeling, plenty of lit discourages or is mixed
+  count(City, word) %>%
+  mutate(Group = "Control") %>%
+  bind_tf_idf(word, City, n) %>%
+  arrange(desc(n)) %>%
+  arrange(desc(tf_idf)) #cities as 'documents', has both n sizes and tf-idf
